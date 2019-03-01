@@ -8,9 +8,10 @@ import android.util.Log;
 
 public class Character extends GameObject {
 
-    private static final int MAX_SPEED = 7;
-    private static final int START_JUMP_SPEED = -20;
-    private static final int GRAVITY = 2;
+    private static int MAX_SPEED = 0;
+    private static int ACCELERATION = 0;
+    private static double START_JUMP_SPEED = 0;
+    private static double GRAVITY = 0;
 
     private static final int ROW_TOP_TO_BOTTOM = 0;
     private static final int ROW_RIGHT_TO_LEFT = 1;
@@ -27,18 +28,13 @@ public class Character extends GameObject {
     private Bitmap[] topToBottoms;
     private Bitmap[] bottomToTops;
 
-    // Velocity of game character (pixel/millisecond)
-    public static final float VELOCITY = 0.1f;
 
-    private int movingVectorX = 0;
-    private int movingVectorY = 0;
+    private double movingVectorX = 0;
+    private double movingVectorY = 0;
 
     private boolean stopMovement = false;
     private boolean startedSlowing = false;
     private int accelerationX = 0;
-    private int accelerationY = 0;
-    private boolean stopJumping = true;
-    private int jumpDistance = 0;
 
     private int floorHeight = 0;
 
@@ -52,16 +48,21 @@ public class Character extends GameObject {
 
         this.gameSurface = gameSurface;
 
-        topToBottoms = new Bitmap[colCount]; // 3
-        rightToLefts = new Bitmap[colCount]; // 3
-        leftToRights = new Bitmap[colCount]; // 3
-        bottomToTops = new Bitmap[colCount]; // 3
+        MAX_SPEED = getWidth()/20;
+        ACCELERATION = getWidth()/10;
+        START_JUMP_SPEED = (double)(-getHeight()/8);
+        GRAVITY = (double)(getHeight())/80;
+
+        topToBottoms = new Bitmap[colCount];
+        rightToLefts = new Bitmap[colCount];
+        leftToRights = new Bitmap[colCount];
+        bottomToTops = new Bitmap[colCount];
 
         for(int col = 0; col< colCount; col++ ) {
-            topToBottoms[col] = createSubImageAt(ROW_TOP_TO_BOTTOM, col);
-            rightToLefts[col] = createSubImageAt(ROW_RIGHT_TO_LEFT, col);
-            leftToRights[col] = createSubImageAt(ROW_LEFT_TO_RIGHT, col);
-            bottomToTops[col] = createSubImageAt(ROW_BOTTOM_TO_TOP, col);
+            topToBottoms[col] = createSubImageAt(ROW_TOP_TO_BOTTOM, col, (int) (getHeight()*0.5));
+            rightToLefts[col] = createSubImageAt(ROW_RIGHT_TO_LEFT, col, (int) (getHeight()*0.5));
+            leftToRights[col] = createSubImageAt(ROW_LEFT_TO_RIGHT, col, (int) (getHeight()*0.5));
+            bottomToTops[col] = createSubImageAt(ROW_BOTTOM_TO_TOP, col, (int) (getHeight()*0.5));
         }
     }
 
@@ -149,7 +150,6 @@ public class Character extends GameObject {
         // Change nanoseconds to milliseconds (1 nanosecond = 1000000 milliseconds).
         int deltaTime = (int) ((now - lastDrawNanoTime) / 1000000 );
 
-        jumpDistance += Math.abs(movingVectorY) * deltaTime;
 
         // Distance moves
         double velocity = Math.sqrt(movingVectorX * movingVectorX + movingVectorY * movingVectorY);
@@ -157,8 +157,8 @@ public class Character extends GameObject {
         pixelsWalked += distance;
 
         // Calculate the new position of the game character.
-        x = x + movingVectorX;
-        y = y + movingVectorY;
+        x = (int)(x + movingVectorX);
+        y = (int)(y + movingVectorY);
 
         // When the game's character touches the edge of the screen, then change direction
 
@@ -187,6 +187,7 @@ public class Character extends GameObject {
         }
         if (movingVectorY != 0) {
             rowUsing = ROW_TOP_TO_BOTTOM;
+            colUsing = 1;
         }
     }
 
@@ -213,8 +214,6 @@ public class Character extends GameObject {
         if(accY != 0 && y == floorHeight){
             movingVectorY = START_JUMP_SPEED;
         }
-        jumpDistance = 0;
-        stopJumping = false;
     }
 
     public void setFloorHeight(int height) {

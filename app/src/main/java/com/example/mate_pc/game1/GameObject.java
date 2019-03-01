@@ -35,10 +35,11 @@ public abstract class GameObject {
     }
 
 
-    public Bitmap createSubImageAt(int row, int col) {
+    public Bitmap createSubImageAt(int row, int col, int h) {
         // createBitmap(bitmap, x, y, width, height).
         Bitmap subImage = Bitmap.createBitmap(image, col * width, row * height , width, height);
-        return subImage;
+        Bitmap resized = Bitmap.createScaledBitmap(subImage, h, width*h/height, false);
+        return resized;
     }
 
     public int getX() {

@@ -1,6 +1,7 @@
 package com.example.mate_pc.game1;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
@@ -54,6 +55,7 @@ public class GameThread extends Thread {
 
             startTime = System.nanoTime();
         }
+        Log.i("MYTAG", "run end");
     }
 
     public void setRunning(boolean running)  {

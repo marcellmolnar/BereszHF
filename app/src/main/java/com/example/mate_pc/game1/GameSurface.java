@@ -15,7 +15,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private GameThread gameThread;
 
     private Character character;
-    // ToDo: secong character should be added.
+    // ToDo: second character should be added.
+
+    private int gameFlootHeight = 0;
 
     private Bitmap background;
 
@@ -27,11 +29,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
         // Set callback.
         getHolder().addCallback(this);
+
     }
 
     public void update()  {
         // ToDo: create platform class that holds a platform, which the character can jump on.
-        character.setFloorHeight(200);
+        character.setFloorHeight(gameFlootHeight);
         character.update();
     }
 
@@ -50,6 +53,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        gameFlootHeight = (int)(getHeight()*0.7);
         // Background image
         Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.game_background);
 
@@ -76,7 +80,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         background = createSubImage(scaled,x_offset,y_offset, getWidth(), getHeight());
 
         Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.guy);
-        character = new Character(this,chibiBitmap1,500,200);
+        character = new Character(this,chibiBitmap1,0,gameFlootHeight);
 
         gameThread = new GameThread(this,holder);
         gameThread.setRunning(true);
@@ -95,6 +99,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         Log.i("MYTAG", "DESTROY");
         boolean retry = true;
         while(retry) {
+            retry = false;
             try {
                 gameThread.setRunning(false);
 
@@ -102,8 +107,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
                 gameThread.join();
             }catch(InterruptedException e)  {
                 e.printStackTrace();
+                retry = true;
             }
-            retry= true;
         }
     }
 
