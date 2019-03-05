@@ -207,6 +207,10 @@ public class Character extends GameObject {
         this.movingVectorY = movingVectorY;
     }
 
+    public double getMovingVectorX() {
+       return this.movingVectorX;
+    }
+
     public void setHorizontalAcceleration(int accX, boolean stopMovement) {
         this.stopMovement = stopMovement;
         startedSlowing = false;

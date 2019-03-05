@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
@@ -23,6 +25,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private Bitmap background;
 
+    ArrayList<Bullet> myBullets;
+
     public GameSurface(Context context)  {
         super(context);
 
@@ -35,7 +39,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update()  {
+
         int highestFloorBelow = gameFlootHeight; // searching for the one with the minimal y coordinate
+        int i;
         for(Platform platform : platforms) {
             if(platform.isBelow(character)){
                 if (platform.getY() < highestFloorBelow) {
@@ -43,6 +49,21 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
+        /*for(i = 0;i<myBullets.size();i++) {
+            for (Platform platform : platforms) {
+                if (myBullets.get(i).isHit(platform)) {
+                    myBullets.remove(myBullets.get(i));
+                }
+            }
+        }
+
+        for(i = 0;i<myBullets.size();i++){
+            if(myBullets.get(i).getX() <= 0 || myBullets.get(i).getX() + myBullets.get(i).getWidth() >= this.getWidth())
+            {
+                myBullets.remove(myBullets.get(i));
+            }
+        }*/
+
         character.setFloorHeight(highestFloorBelow);
 
         character.update();
@@ -101,6 +122,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         platforms[2] = new Platform(this, platformIm, 550, 250, (int)((double)getHeight()/24));
         platforms[3] = new Platform(this, platformIm, 350, 150, (int)((double)getHeight()/24));
 
+        myBullets = new ArrayList<Bullet>();
+
         gameThread = new GameThread(this,holder);
         gameThread.setRunning(true);
         gameThread.start();
@@ -140,6 +163,18 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap createSubImage(Bitmap bm, int xStart, int yStart, int width, int height) {
         // createBitmap(bitmap, x, y, width, height).
         return Bitmap.createBitmap(bm, xStart, yStart , width, height);
+    }
+
+    public void createBullet() {
+        double extraX;
+        if(character.getMovingVectorX() > 0){
+            extraX = (character.getWidth() + (character.getWidth() * 0.2));
+        }else{
+            extraX = -(character.getWidth() * 0.2);
+        }
+        Bitmap bullBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.bullet);
+        myBullets.add(new Bullet(this, bullBitmap, (int) (character.x + extraX),character.y, (int)((double)getHeight()/3), character.getMovingVectorX()));
+
     }
 
 }

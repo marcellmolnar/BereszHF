@@ -27,7 +27,7 @@ public class Platform extends GameObject {
     }
 
     boolean isBelow(Character character) {
-        if(character.getX() + (double)character.getWidth()*4/5 < getX() || getX()+getWidth() < character.getX() + (double)character.getWidth()/5) {
+        if(character.getX() + (double)character.getWidth()*4/5 < getX() || getX()+getWidth() < character.getX() - (double)character.getWidth()/5) {
             return false;
         }
         else {
