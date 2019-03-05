@@ -17,6 +17,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private Character character;
     // ToDo: second character should be added.
 
+    private Platform[] platforms;
+
     private int gameFlootHeight = 0;
 
     private Bitmap background;
@@ -33,27 +35,36 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update()  {
-        // ToDo: create platform class that holds a platform, which the character can jump on.
-        character.setFloorHeight(gameFlootHeight);
+        int highestFloorBelow = gameFlootHeight; // searching for the one with the minimal y coordinate
+        for(Platform platform : platforms) {
+            if(platform.isBelow(character)){
+                if (platform.getY() < highestFloorBelow) {
+                    highestFloorBelow = platform.getY();
+                }
+            }
+        }
+        character.setFloorHeight(highestFloorBelow);
+
         character.update();
     }
 
 
-
-    // ToDo: do drawing with relative values! (relative to screen width and height)
     @Override
     public void draw(Canvas canvas)  {
         super.draw(canvas);
         // Draw background
         canvas.drawBitmap(background,0, 0, null);
         // Draw object(s)
+        for(Platform platform : platforms) {
+            platform.draw(canvas);
+        }
         character.draw(canvas);
     }
 
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        gameFlootHeight = (int)(getHeight()*0.7);
+        gameFlootHeight = (int)(getHeight()*0.8);
         // Background image
         Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.game_background);
 
@@ -80,7 +91,15 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         background = createSubImage(scaled,x_offset,y_offset, getWidth(), getHeight());
 
         Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.guy);
-        character = new Character(this,chibiBitmap1,0,gameFlootHeight);
+        character = new Character(this,chibiBitmap1,500, gameFlootHeight, (int) (getHeight()*0.14));
+
+        Bitmap platformIm = BitmapFactory.decodeResource(getResources(), R.drawable.platform_tr);
+        platforms = new Platform[4];
+        // ToDo: place platforms using relative positions!
+        platforms[0] = new Platform(this, platformIm, 500, 450, (int)((double)getHeight()/24));
+        platforms[1] = new Platform(this, platformIm, 400, 350, (int)((double)getHeight()/24));
+        platforms[2] = new Platform(this, platformIm, 550, 250, (int)((double)getHeight()/24));
+        platforms[3] = new Platform(this, platformIm, 350, 150, (int)((double)getHeight()/24));
 
         gameThread = new GameThread(this,holder);
         gameThread.setRunning(true);
@@ -90,13 +109,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.i("MYTAG", "CHANGE");
     }
 
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.i("MYTAG", "DESTROY");
         boolean retry = true;
         while(retry) {
             retry = false;

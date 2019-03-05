@@ -12,13 +12,16 @@ public abstract class GameObject {
     protected final int WIDTH;
     protected final int HEIGHT;
 
-    protected final int width;
-    protected final int height;
+    protected final int imWidth;
+    protected final int imHeight;
+
+    private final int realWidth;
+    private final int realHeight;
 
     protected int x;
     protected int y;
 
-    public GameObject(Bitmap image, int rowCount, int colCount, int x, int y) {
+    public GameObject(Bitmap image, int rowCount, int colCount, int x, int y, int height) {
 
         this.image = image;
         this.rowCount = rowCount;
@@ -30,15 +33,18 @@ public abstract class GameObject {
         WIDTH = image.getWidth();
         HEIGHT = image.getHeight();
 
-        width = WIDTH / colCount;
-        height = HEIGHT / rowCount;
+        imWidth = WIDTH / colCount;
+        imHeight = HEIGHT / rowCount;
+
+        realHeight = height;
+        realWidth = imWidth*realHeight/imHeight;
     }
 
 
-    public Bitmap createSubImageAt(int row, int col, int h) {
+    public Bitmap createSubImageAt(int row, int col) {
         // createBitmap(bitmap, x, y, width, height).
-        Bitmap subImage = Bitmap.createBitmap(image, col * width, row * height , width, height);
-        Bitmap resized = Bitmap.createScaledBitmap(subImage, h, width*h/height, false);
+        Bitmap subImage = Bitmap.createBitmap(image, col * imWidth, row * imHeight , imWidth, imHeight);
+        Bitmap resized = Bitmap.createScaledBitmap(subImage, realWidth, realHeight, false);
         return resized;
     }
 
@@ -52,11 +58,15 @@ public abstract class GameObject {
 
 
     public int getHeight() {
-        return height;
+        return realHeight;
     }
 
     public int getWidth() {
-        return width;
+        return realWidth;
+    }
+
+    public int getRealHeight() {
+        return realHeight;
     }
 
 }
