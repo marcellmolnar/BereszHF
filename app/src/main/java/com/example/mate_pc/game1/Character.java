@@ -137,8 +137,7 @@ public class Character extends GameObject {
             }
         }
 
-        Log.i("MYTAG", String.valueOf(pixelsWalked));
-        if (pixelsWalked > 20) {
+        if (pixelsWalked > 500) {
             colUsing++;
             if (colUsing >= colCount) {
                 colUsing = 0;

@@ -49,29 +49,34 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 
-        for(int i = 0; i < myBullets.size(); i++) {
-            for (Platform platform : platforms) {
-                if (myBullets.get(i).isHit(platform)) {
-                    myBullets.remove(myBullets.get(i));
-                }
-            }
+        for(int i = 0; i < myBullets.size(); i++){
+            myBullets.get(i).update();
         }
 
         for(int i = 0; i < myBullets.size(); i++)
         {
-            if(myBullets.get(i).getX() < 0 || myBullets.get(i).getX() + myBullets.get(i).getWidth() > this.getWidth())
+            if(myBullets.get(i).getX() + myBullets.get(i).getWidth() < 0 || myBullets.get(i).getX() > this.getWidth())
             {
                 myBullets.remove(myBullets.get(i));
             }
+        }
+
+        ArrayList<Integer> indexesToDelete = new ArrayList<>();
+        for(int i = 0; i < myBullets.size(); i++) {
+            for (Platform platform : platforms) {
+                if (myBullets.get(i).isHit(platform)) {
+                    indexesToDelete.add(i);
+                }
+            }
+        }
+        for(int ind : indexesToDelete){
+            myBullets.remove(ind);
         }
 
         character.setFloorHeight(highestFloorBelow);
 
         character.update();
 
-        for(int i = 0; i < myBullets.size(); i++){
-            myBullets.get(i).update();
-        }
     }
 
 
@@ -94,7 +99,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        gameFloorHeight = (int)(getHeight()*0.8);
+        gameFloorHeight = (int)(getHeight()*0.9);
         // Background image
         Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.game_background);
 
@@ -121,14 +126,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         background = createSubImage(scaled,x_offset,y_offset, getWidth(), getHeight());
 
         Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.guy);
-        character = new Character(this,chibiBitmap1,100, gameFloorHeight, (int) (getHeight()*0.14));
+        character = new Character(this,chibiBitmap1,(int)((double)getWidth()/5.2), gameFloorHeight, (int) (getHeight()*0.14));
 
         Bitmap platformIm = BitmapFactory.decodeResource(getResources(), R.drawable.platform_tr);
         platforms = new Platform[4];
-        platforms[0] = new Platform(this, platformIm, (int)((double)getWidth()/2.6), (int)((double)getHeight()/1.5), (int)((double)getHeight()/24));
-        platforms[1] = new Platform(this, platformIm, (int)((double)getWidth()/3.2), (int)((double)getHeight()/1.9), (int)((double)getHeight()/24));
-        platforms[2] = new Platform(this, platformIm, (int)((double)getWidth()/2.3), (int)((double)getHeight()/2.7), (int)((double)getHeight()/24));
-        platforms[3] = new Platform(this, platformIm, (int)((double)getWidth()/3.6), (int)((double)getHeight()/4.5), (int)((double)getHeight()/24));
+        platforms[0] = new Platform(this, platformIm, (int)((double)getWidth()/2.6), (int)((double)getHeight()/1.4), (int)((double)getHeight()/24));
+        platforms[1] = new Platform(this, platformIm, (int)((double)getWidth()/3.2), (int)((double)getHeight()/1.8), (int)((double)getHeight()/24));
+        platforms[2] = new Platform(this, platformIm, (int)((double)getWidth()/2.3), (int)((double)getHeight()/2.2), (int)((double)getHeight()/24));
+        platforms[3] = new Platform(this, platformIm, (int)((double)getWidth()/3.6), (int)((double)getHeight()/3.0), (int)((double)getHeight()/24));
 
         myBullets = new ArrayList<>();
 

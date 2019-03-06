@@ -31,16 +31,18 @@ public class Bullet extends GameObject {
     }
 
     boolean isHit(GameObject gameObject) {
-        if(gameObject.getY() < this.getY() + this.getHeight()*0.5
-                && this.getY() - this.getHeight()*0.5 < gameObject.getY() + gameObject.getHeight()) {
+        if(gameObject.getY() < this.getY() + this.getHeight()*0.8
+                && this.getY() + this.getHeight()*0.2 < gameObject.getY() + gameObject.getHeight()) {
 
             if (0 < this.movingVectorX) {
-                if (gameObject.getX() - (double)gameObject.getWidth()/5 < this.getX() + this.getWidth()){
+                if (gameObject.getX() + (double)gameObject.getWidth()/10 < this.getX() + this.getWidth()
+                     && this.getX() < gameObject.getX() + gameObject.getWidth()){
                     return true;
                 }
             }
             else if (this.movingVectorX < 0) {
-                if (this.getX() < gameObject.getX() + (double) gameObject.getWidth() * 4 / 5) {
+                if (this.getX() < gameObject.getX() + (double) gameObject.getWidth() * 9 / 10
+                        && gameObject.getX() < this.getX() + this.getWidth()) {
                     return true;
                 }
             }
