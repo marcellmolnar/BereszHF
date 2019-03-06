@@ -137,7 +137,8 @@ public class Character extends GameObject {
             }
         }
 
-        if (pixelsWalked > 200) {
+        Log.i("MYTAG", String.valueOf(pixelsWalked));
+        if (pixelsWalked > 20) {
             colUsing++;
             if (colUsing >= colCount) {
                 colUsing = 0;
@@ -151,7 +152,7 @@ public class Character extends GameObject {
         if(lastDrawNanoTime == -1) {
             lastDrawNanoTime = now;
         }
-        // Change nanoseconds to milliseconds (1 nanosecond = 1000000 milliseconds).
+        // Changing nanoseconds to milliseconds (1 nanosecond = 1000000 milliseconds).
         int deltaTime = (int) ((now - lastDrawNanoTime) / 1000000 );
 
 

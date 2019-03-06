@@ -88,7 +88,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
         for(int i = 0;i < myBullets.size(); i++){
             myBullets.get(i).draw(canvas);
-            Log.i("MYTAG", String.valueOf(myBullets.get(i).x));
         }
     }
 
