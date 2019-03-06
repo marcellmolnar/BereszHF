@@ -36,22 +36,22 @@ public class Character extends GameObject {
     private boolean startedSlowing = false;
     private int accelerationX = 0;
 
-    private int floorHeight = 0;
+    int floorHeight = 0;
 
     private long lastDrawNanoTime = -1;
     private double pixelsWalked = 0;
 
     private GameSurface gameSurface;
 
-    public Character(GameSurface gameSurface, Bitmap image, int x, int y) {
-        super(image, 4, 3, x, y);
+    public Character(GameSurface gameSurface, Bitmap image, int x, int y, int height) {
+        super(image, 4, 3, x, y, height);
 
         this.gameSurface = gameSurface;
 
-        MAX_SPEED = getWidth()/20;
-        ACCELERATION = getWidth()/10;
-        START_JUMP_SPEED = (double)(-getHeight()/8);
-        GRAVITY = (double)(getHeight())/80;
+        MAX_SPEED = gameSurface.getWidth()/120;
+        ACCELERATION = gameSurface.getWidth()/120;
+        START_JUMP_SPEED = (double)(-gameSurface.getHeight()/25);
+        GRAVITY = (double)(gameSurface.getHeight())/280;
 
         topToBottoms = new Bitmap[colCount];
         rightToLefts = new Bitmap[colCount];
@@ -59,10 +59,10 @@ public class Character extends GameObject {
         bottomToTops = new Bitmap[colCount];
 
         for(int col = 0; col< colCount; col++ ) {
-            topToBottoms[col] = createSubImageAt(ROW_TOP_TO_BOTTOM, col, (int) (getHeight()*0.5));
-            rightToLefts[col] = createSubImageAt(ROW_RIGHT_TO_LEFT, col, (int) (getHeight()*0.5));
-            leftToRights[col] = createSubImageAt(ROW_LEFT_TO_RIGHT, col, (int) (getHeight()*0.5));
-            bottomToTops[col] = createSubImageAt(ROW_BOTTOM_TO_TOP, col, (int) (getHeight()*0.5));
+            topToBottoms[col] = createSubImageAt(ROW_TOP_TO_BOTTOM, col);
+            rightToLefts[col] = createSubImageAt(ROW_RIGHT_TO_LEFT, col);
+            leftToRights[col] = createSubImageAt(ROW_LEFT_TO_RIGHT, col);
+            bottomToTops[col] = createSubImageAt(ROW_BOTTOM_TO_TOP, col);
         }
     }
 
@@ -124,11 +124,11 @@ public class Character extends GameObject {
             movingVectorY += GRAVITY;
         }
         else {
-            if (y + movingVectorY < floorHeight) {
+            if (movingVectorY + GRAVITY + getBottomHeight() < floorHeight) {
                 movingVectorY += GRAVITY;
             }
             else {
-                y = floorHeight;
+                y = floorHeight - getHeight() ;
                 movingVectorY = 0;
             }
         }
@@ -165,16 +165,16 @@ public class Character extends GameObject {
         if(x < 0 ) {
             x = 0;
             movingVectorX = -movingVectorX;
-        } else if(x > gameSurface.getWidth() - width) {
-            x = gameSurface.getWidth() - width;
+        } else if(x > gameSurface.getWidth() - getWidth()) {
+            x = gameSurface.getWidth() - getWidth();
             movingVectorX = -movingVectorX;
         }
 
         if(y < 0 ) {
             y = 0;
             movingVectorY = -movingVectorY;
-        } else if(y > gameSurface.getHeight() - height) {
-            y = gameSurface.getHeight() - height;
+        } else if(y > gameSurface.getHeight() - getHeight()) {
+            y = gameSurface.getHeight() - getHeight();
             movingVectorY = -movingVectorY ;
         }
 
@@ -185,10 +185,14 @@ public class Character extends GameObject {
         if( movingVectorX < 0 ) {
             rowUsing = ROW_RIGHT_TO_LEFT;
         }
-        if (movingVectorY != 0) {
+        /*if (movingVectorY != 0) {
             rowUsing = ROW_TOP_TO_BOTTOM;
             colUsing = 1;
-        }
+        }*/
+    }
+
+    public int getBottomHeight() {
+        return y+getRealHeight();
     }
 
     public void draw(Canvas canvas) {
@@ -203,15 +207,24 @@ public class Character extends GameObject {
         this.movingVectorY = movingVectorY;
     }
 
+    public double getMovingVectorX() {
+       return this.movingVectorX;
+    }
+
     public void setHorizontalAcceleration(int accX, boolean stopMovement) {
         this.stopMovement = stopMovement;
         startedSlowing = false;
         if (!stopMovement) {
-            accelerationX = accX;
+            if (accX < 0) {
+                accelerationX = -ACCELERATION;
+            }
+            else {
+                accelerationX = ACCELERATION;
+            }
         }
     }
     public void setVerticalAcceleration(int accY) {
-        if(accY != 0 && y == floorHeight){
+        if(accY != 0 && getBottomHeight() == floorHeight){
             movingVectorY = START_JUMP_SPEED;
         }
     }
