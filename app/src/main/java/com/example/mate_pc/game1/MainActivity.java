@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button right;
     Button up;
 
-    private final static int INTERVAL = 500;
+    private final static int INTERVAL = 200;
     Handler mHandler = new Handler();
 
 

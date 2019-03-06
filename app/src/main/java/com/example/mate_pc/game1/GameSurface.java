@@ -21,7 +21,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private Platform[] platforms;
 
-    private int gameFlootHeight = 0;
+    private int gameFloorHeight = 0;
 
     private Bitmap background;
 
@@ -40,8 +40,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update()  {
 
-        int highestFloorBelow = gameFlootHeight; // searching for the one with the minimal y coordinate
-        int i;
+        int highestFloorBelow = gameFloorHeight; // searching for the one with the minimal y coordinate
         for(Platform platform : platforms) {
             if(platform.isBelow(character)){
                 if (platform.getY() < highestFloorBelow) {
@@ -49,7 +48,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
         }
-        /*for(i = 0;i<myBullets.size();i++) {
+
+        for(int i = 0; i < myBullets.size(); i++) {
             for (Platform platform : platforms) {
                 if (myBullets.get(i).isHit(platform)) {
                     myBullets.remove(myBullets.get(i));
@@ -57,16 +57,21 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 
-        for(i = 0;i<myBullets.size();i++){
-            if(myBullets.get(i).getX() <= 0 || myBullets.get(i).getX() + myBullets.get(i).getWidth() >= this.getWidth())
+        for(int i = 0; i < myBullets.size(); i++)
+        {
+            if(myBullets.get(i).getX() < 0 || myBullets.get(i).getX() + myBullets.get(i).getWidth() > this.getWidth())
             {
                 myBullets.remove(myBullets.get(i));
             }
-        }*/
+        }
 
         character.setFloorHeight(highestFloorBelow);
 
         character.update();
+
+        for(int i = 0; i < myBullets.size(); i++){
+            myBullets.get(i).update();
+        }
     }
 
 
@@ -80,12 +85,17 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             platform.draw(canvas);
         }
         character.draw(canvas);
+
+        for(int i = 0;i < myBullets.size(); i++){
+            myBullets.get(i).draw(canvas);
+            Log.i("MYTAG", String.valueOf(myBullets.get(i).x));
+        }
     }
 
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        gameFlootHeight = (int)(getHeight()*0.8);
+        gameFloorHeight = (int)(getHeight()*0.8);
         // Background image
         Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.game_background);
 
@@ -112,17 +122,16 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         background = createSubImage(scaled,x_offset,y_offset, getWidth(), getHeight());
 
         Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.guy);
-        character = new Character(this,chibiBitmap1,500, gameFlootHeight, (int) (getHeight()*0.14));
+        character = new Character(this,chibiBitmap1,100, gameFloorHeight, (int) (getHeight()*0.14));
 
         Bitmap platformIm = BitmapFactory.decodeResource(getResources(), R.drawable.platform_tr);
         platforms = new Platform[4];
-        // ToDo: place platforms using relative positions!
-        platforms[0] = new Platform(this, platformIm, 500, 450, (int)((double)getHeight()/24));
-        platforms[1] = new Platform(this, platformIm, 400, 350, (int)((double)getHeight()/24));
-        platforms[2] = new Platform(this, platformIm, 550, 250, (int)((double)getHeight()/24));
-        platforms[3] = new Platform(this, platformIm, 350, 150, (int)((double)getHeight()/24));
+        platforms[0] = new Platform(this, platformIm, (int)((double)getWidth()/2.6), (int)((double)getHeight()/1.5), (int)((double)getHeight()/24));
+        platforms[1] = new Platform(this, platformIm, (int)((double)getWidth()/3.2), (int)((double)getHeight()/1.9), (int)((double)getHeight()/24));
+        platforms[2] = new Platform(this, platformIm, (int)((double)getWidth()/2.3), (int)((double)getHeight()/2.7), (int)((double)getHeight()/24));
+        platforms[3] = new Platform(this, platformIm, (int)((double)getWidth()/3.6), (int)((double)getHeight()/4.5), (int)((double)getHeight()/24));
 
-        myBullets = new ArrayList<Bullet>();
+        myBullets = new ArrayList<>();
 
         gameThread = new GameThread(this,holder);
         gameThread.setRunning(true);
@@ -167,13 +176,19 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     public void createBullet() {
         double extraX;
-        if(character.getMovingVectorX() > 0){
-            extraX = (character.getWidth() + (character.getWidth() * 0.2));
+        Bitmap bullet;
+        int velocity = (int) (Character.MAX_SPEED*1.5);
+        int bulletHeight = (int)((double)getHeight()/30);
+        if(character.isSeeingToRight()){
+            bullet = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_right);
+            extraX = (character.getWidth() );
+
         }else{
-            extraX = -(character.getWidth() * 0.2);
+            bullet = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_left);
+            extraX = -(bullet.getWidth()*bulletHeight/((double)bullet.getHeight()));
+            velocity = -velocity;
         }
-        Bitmap bullBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.bullet);
-        myBullets.add(new Bullet(this, bullBitmap, (int) (character.x + extraX),character.y, (int)((double)getHeight()/3), character.getMovingVectorX()));
+        myBullets.add(new Bullet(this, bullet, (int) (character.getX() + extraX),character.getY(), bulletHeight, velocity));
 
     }
 

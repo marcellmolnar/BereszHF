@@ -28,8 +28,8 @@ public class GameThread extends Thread {
 
                 // Synchronized
                 synchronized (canvas)  {
-                    gameSurface.update();
                     gameSurface.draw(canvas);
+                    gameSurface.update();
                 }
             }catch(Exception e)  {
                 // Do nothing.

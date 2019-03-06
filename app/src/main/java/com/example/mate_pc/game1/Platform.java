@@ -22,12 +22,13 @@ public class Platform extends GameObject {
     }
 
     void draw(Canvas canvas) {
+        super.draw(canvas);
         Bitmap bitmap = getCurrentMoveBitmap();
         canvas.drawBitmap(bitmap, x, y, null);
     }
 
     boolean isBelow(Character character) {
-        if(character.getX() + (double)character.getWidth()*4/5 < getX() || getX()+getWidth() < character.getX() - (double)character.getWidth()/5) {
+        if(character.getX() + character.getWidth()*4/5 < this.getX() || this.getX()+this.getWidth() < character.getX()) {
             return false;
         }
         else {

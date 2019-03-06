@@ -1,6 +1,9 @@
 package com.example.mate_pc.game1;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 public abstract class GameObject {
 
@@ -40,6 +43,15 @@ public abstract class GameObject {
         realWidth = imWidth*realHeight/imHeight;
     }
 
+    void draw(Canvas canvas) {
+        /*
+        Paint paint = new Paint();
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(3);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(x, y, x+getWidth(), y+getHeight(), paint);
+        */
+    }
 
     public Bitmap createSubImageAt(int row, int col) {
         // createBitmap(bitmap, x, y, width, height).
@@ -63,10 +75,6 @@ public abstract class GameObject {
 
     public int getWidth() {
         return realWidth;
-    }
-
-    public int getRealHeight() {
-        return realHeight;
     }
 
 }

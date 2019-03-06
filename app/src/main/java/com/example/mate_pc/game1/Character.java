@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class Character extends GameObject {
 
-    private static int MAX_SPEED = 0;
+    public static int MAX_SPEED = 0;
     private static int ACCELERATION = 0;
     private static double START_JUMP_SPEED = 0;
     private static double GRAVITY = 0;
@@ -36,7 +36,9 @@ public class Character extends GameObject {
     private boolean startedSlowing = false;
     private int accelerationX = 0;
 
-    int floorHeight = 0;
+    private boolean seeingToRight;
+
+    private int floorHeight = 0;
 
     private long lastDrawNanoTime = -1;
     private double pixelsWalked = 0;
@@ -47,6 +49,8 @@ public class Character extends GameObject {
         super(image, 4, 3, x, y, height);
 
         this.gameSurface = gameSurface;
+
+        seeingToRight = true;
 
         MAX_SPEED = gameSurface.getWidth()/120;
         ACCELERATION = gameSurface.getWidth()/120;
@@ -181,9 +185,11 @@ public class Character extends GameObject {
         // rowUsing
         if( movingVectorX > 0 ) {
             rowUsing = ROW_LEFT_TO_RIGHT;
+            seeingToRight = true;
         }
         if( movingVectorX < 0 ) {
             rowUsing = ROW_RIGHT_TO_LEFT;
+            seeingToRight = false;
         }
         /*if (movingVectorY != 0) {
             rowUsing = ROW_TOP_TO_BOTTOM;
@@ -192,10 +198,11 @@ public class Character extends GameObject {
     }
 
     public int getBottomHeight() {
-        return y+getRealHeight();
+        return y+getHeight();
     }
 
     public void draw(Canvas canvas) {
+        super.draw(canvas);
         Bitmap bitmap = getCurrentMoveBitmap();
         canvas.drawBitmap(bitmap,x, y, null);
         // Last draw time.
@@ -207,8 +214,8 @@ public class Character extends GameObject {
         this.movingVectorY = movingVectorY;
     }
 
-    public double getMovingVectorX() {
-       return this.movingVectorX;
+    public boolean isSeeingToRight() {
+       return this.seeingToRight;
     }
 
     public void setHorizontalAcceleration(int accX, boolean stopMovement) {

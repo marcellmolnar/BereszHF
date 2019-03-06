@@ -25,14 +25,24 @@ public class Bullet extends GameObject {
     }
 
     void draw(Canvas canvas) {
+        super.draw(canvas);
         Bitmap bitmap = getCurrentMoveBitmap();
         canvas.drawBitmap(bitmap, x, y, null);
     }
 
     boolean isHit(GameObject gameObject) {
-        if(gameObject.getY()>(this.getY()+this.getRealHeight()*0.5) && gameObject.getY()+gameObject.getRealHeight()*0.5<this.getY()) {
-            if(gameObject.getX() + (double)gameObject.getWidth()*4/5 < getX() || getX()+getWidth() < gameObject.getX() - (double)gameObject.getWidth()/5){
-                return true;
+        if(gameObject.getY() < this.getY() + this.getHeight()*0.5
+                && this.getY() - this.getHeight()*0.5 < gameObject.getY() + gameObject.getHeight()) {
+
+            if (0 < this.movingVectorX) {
+                if (gameObject.getX() - (double)gameObject.getWidth()/5 < this.getX() + this.getWidth()){
+                    return true;
+                }
+            }
+            else if (this.movingVectorX < 0) {
+                if (this.getX() < gameObject.getX() + (double) gameObject.getWidth() * 4 / 5) {
+                    return true;
+                }
             }
         }
         else {
@@ -43,8 +53,6 @@ public class Bullet extends GameObject {
 
     public void update() {
         this.x = this.x + (int)this.movingVectorX;
-
-
     }
 
 
