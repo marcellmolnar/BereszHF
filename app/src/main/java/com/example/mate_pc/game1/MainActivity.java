@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         shootButton = findViewById(R.id.shoot);
         shootButton.setOnClickListener(onClickListener);
 
+        alreadyShooting = false;
+
         up = findViewById(R.id.button);
         up.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -106,11 +108,17 @@ public class MainActivity extends AppCompatActivity {
         gameSurface.setCharacterVerticalAcceleration(-1);
     }
 
+    boolean alreadyShooting;
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            gameSurface.createBullet();
-            startRepeatingTask();
+
+            if(!alreadyShooting) {
+                alreadyShooting = true;
+                gameSurface.createBullet();
+                startRepeatingTask();
+            }
         }
     };
 
@@ -120,12 +128,10 @@ public class MainActivity extends AppCompatActivity {
     {
         @Override
         public void run() {
-            if(counter == 0) {
-                shootButton.setOnClickListener(null);
-            }
             if(counter == 4){
                 stopRepeatingTask();
                 counter=0;
+                alreadyShooting = false;
                 return;
             }
 
@@ -158,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
             case 3: {
                 shootButton.setBackground(getDrawable(R.drawable.pistol3));
                 counter++;
-                shootButton.setOnClickListener(onClickListener);
                 break;
 
             }
