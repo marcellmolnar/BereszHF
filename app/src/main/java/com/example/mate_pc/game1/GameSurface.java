@@ -5,7 +5,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.util.Log;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -24,6 +26,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private int gameFloorHeight = 0;
 
     private Bitmap background;
+    private Bitmap joystick_bg;
+    private Bitmap joystick;
+    private double joystick_size;
 
     ArrayList<Bullet> myBullets;
 
@@ -94,6 +99,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         for(int i = 0;i < myBullets.size(); i++){
             myBullets.get(i).draw(canvas);
         }
+
+        if (isJoystickOn) {
+            // ToDo: comment out next line to get transparent joystick
+            canvas.drawBitmap(joystick_bg, (int)(startPosX-joystick_size/2.0), (int)(startPosY-joystick_size/2.0), null);
+            canvas.drawBitmap(joystick, (int)(currPosX-joystick_size/6.0), (int)(currPosY-joystick_size/6.0), null);
+        }
     }
 
     // Implements method of SurfaceHolder.Callback
@@ -135,11 +146,32 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         platforms[2] = new Platform(this, platformIm, (int)((double)getWidth()/2.3), (int)((double)getHeight()/2.2), (int)((double)getHeight()/24));
         platforms[3] = new Platform(this, platformIm, (int)((double)getWidth()/3.6), (int)((double)getHeight()/3.0), (int)((double)getHeight()/24));
 
+        joystick_size = (int)(getHeight()/1.7);
+        Bitmap js_bg = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp));
+        joystick_bg = Bitmap.createScaledBitmap(js_bg, (int)(joystick_size), (int)(joystick_size), false);
+        Bitmap js = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp_stick));
+        joystick = Bitmap.createScaledBitmap(js, (int)((double)(joystick_size)/3), (int)((double)(joystick_size)/3), false);
+
+
         myBullets = new ArrayList<>();
 
         gameThread = new GameThread(this,holder);
         gameThread.setRunning(true);
         gameThread.start();
+    }
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable)drawable).getBitmap();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
     }
 
     // Implements method of SurfaceHolder.Callback
@@ -194,6 +226,54 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         }
         myBullets.add(new Bullet(this, bullet, (int) (character.getX() + extraX),character.getY(), bulletHeight, velocity));
 
+    }
+
+
+
+    boolean usingJoystick = true;
+
+    private boolean isJoystickOn = false;
+    private float startPosX;
+    private float startPosY;
+    private float currPosX;
+    private float currPosY;
+
+
+    public void onJoystickTouchListener(MotionEvent motionEvent) {
+        int action = motionEvent.getAction();
+        if (action == MotionEvent.ACTION_DOWN) {
+            isJoystickOn = true;
+            startPosX = motionEvent.getX();
+            startPosY = motionEvent.getY();
+        }
+        else if (action == MotionEvent.ACTION_UP) {
+            isJoystickOn = false;
+            setCharacterHorizontalAcceleration(0, true);
+        }
+        else if (action == MotionEvent.ACTION_MOVE) {
+            float cx = motionEvent.getX();
+            float cy = motionEvent.getY();
+            if (cx > startPosX + joystick_size/4) {
+                currPosX = (float) (startPosX + joystick_size/2.0 - joystick_size/3.0);
+                setCharacterHorizontalAcceleration(1, false);
+            }
+            else if (cx < startPosX - joystick_size/4) {
+                currPosX = (float) (startPosX - joystick_size/2.0 + joystick_size/3.0);
+                setCharacterHorizontalAcceleration(-1, false);
+            }
+            else {
+                currPosX = startPosX;
+                setCharacterHorizontalAcceleration(0, true);
+            }
+            if (cy < startPosY - joystick_size/4) {
+                currPosX = startPosX;
+                currPosY = (float) (startPosY - joystick_size/2.0 + joystick_size/3.0);
+                setCharacterVerticalAcceleration(-1);
+            }
+            else {
+                currPosY = startPosY;
+            }
+        }
     }
 
 }

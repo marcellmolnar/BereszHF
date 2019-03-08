@@ -7,11 +7,18 @@
     tools:context="com.example.mate_pc.game1.MainActivity">
 
 
+
     <LinearLayout
         android:id="@+id/gameSurface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/joystickSurface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
 
     <!--
     <ImageView

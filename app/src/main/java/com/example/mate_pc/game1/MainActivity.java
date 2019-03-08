@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     Button right;
     Button up;
 
+    LinearLayout joystickSurface;
+
     private final static int INTERVAL = 200;
     Handler mHandler = new Handler();
 
@@ -33,6 +35,15 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout surface = findViewById(R.id.gameSurface);
         gameSurface = new GameSurface(this);
         surface.addView(gameSurface);
+
+        joystickSurface = findViewById(R.id.joystickSurface);
+        joystickSurface.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                gameSurface.onJoystickTouchListener(motionEvent);
+                return true;
+            }
+        });
 
         shootButton = findViewById(R.id.shoot);
         shootButton.setOnClickListener(onClickListener);
@@ -65,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    View.OnTouchListener myTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+
+            return true;
+        }
+    };
 
     private void handleTouch(View view, MotionEvent event) {
         int action = event.getAction();
@@ -143,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
     public void doSomething() {
         switch (counter) {
             case 0: {
-                // ToDo: when counter is 0, it is the moment we should shoot. Bullet class should be added.
                 shootButton.setBackground(getDrawable(R.drawable.pistol0));
                 counter++;
                 break;
@@ -179,5 +196,10 @@ public class MainActivity extends AppCompatActivity {
     {
         mHandler.removeCallbacks(mHandlerTask);
     }
+
+
+
+
+
 
 }
