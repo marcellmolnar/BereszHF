@@ -7,13 +7,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
+public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, Parcelable {
 
 
     private GameThread gameThread;
@@ -284,4 +287,13 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
 }

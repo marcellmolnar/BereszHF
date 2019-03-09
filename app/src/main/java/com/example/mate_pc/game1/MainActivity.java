@@ -1,28 +1,16 @@
 package com.example.mate_pc.game1;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.Formatter;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.mate_pc.game1.network_stuff.ConnecterClass;
-
-import java.math.BigInteger;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
+import com.example.mate_pc.game1.network_stuff.ConnectorClass;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,12 +33,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, ConnecterClass.class);
+        gameSurface = new GameSurface(this);
+
+        Intent intent = new Intent(this, ConnectorClass.class);
+        Bundle mBundle = new Bundle();
+        mBundle.putParcelable("gamesf",gameSurface);
         startActivity(intent);
 
 
         LinearLayout surface = findViewById(R.id.gameSurface);
-        gameSurface = new GameSurface(this);
         surface.addView(gameSurface);
 
         joystickSurface = findViewById(R.id.joystickSurface);
