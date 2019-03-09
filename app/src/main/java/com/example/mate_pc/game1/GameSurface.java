@@ -146,7 +146,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         platforms[2] = new Platform(this, platformIm, (int)((double)getWidth()/2.3), (int)((double)getHeight()/2.2), (int)((double)getHeight()/24));
         platforms[3] = new Platform(this, platformIm, (int)((double)getWidth()/3.6), (int)((double)getHeight()/3.0), (int)((double)getHeight()/24));
 
-        joystick_size = (int)(getHeight()/1.7);
+        joystick_size = (int)(getHeight()/2.75);
         Bitmap js_bg = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp));
         joystick_bg = Bitmap.createScaledBitmap(js_bg, (int)(joystick_size), (int)(joystick_size), false);
         Bitmap js = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp_stick));
@@ -224,7 +224,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             extraX = -(bullet.getWidth()*bulletHeight/((double)bullet.getHeight()));
             velocity = -velocity;
         }
-        myBullets.add(new Bullet(this, bullet, (int) (character.getX() + extraX),character.getY(), bulletHeight, velocity));
+        myBullets.add(new Bullet(this, bullet, (int) (character.getX() + extraX),(character.getY() + character.getHeight()/2), bulletHeight, velocity));
 
     }
 
@@ -238,9 +238,15 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private float currPosX;
     private float currPosY;
 
+    private boolean jumpFlag = true;
+    long now;
+
 
     public void onJoystickTouchListener(MotionEvent motionEvent) {
         int action = motionEvent.getAction();
+        if(System.nanoTime() >= now + 500000000){
+            jumpFlag = true;
+        }
         if (action == MotionEvent.ACTION_DOWN) {
             isJoystickOn = true;
             startPosX = motionEvent.getX();
@@ -253,11 +259,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         else if (action == MotionEvent.ACTION_MOVE) {
             float cx = motionEvent.getX();
             float cy = motionEvent.getY();
-            if (cx > startPosX + joystick_size/4) {
+            if (cx > startPosX + joystick_size/8) {
                 currPosX = (float) (startPosX + joystick_size/2.0 - joystick_size/3.0);
                 setCharacterHorizontalAcceleration(1, false);
             }
-            else if (cx < startPosX - joystick_size/4) {
+            else if (cx < startPosX - joystick_size/8) {
                 currPosX = (float) (startPosX - joystick_size/2.0 + joystick_size/3.0);
                 setCharacterHorizontalAcceleration(-1, false);
             }
@@ -265,10 +271,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
                 currPosX = startPosX;
                 setCharacterHorizontalAcceleration(0, true);
             }
-            if (cy < startPosY - joystick_size/4) {
+            if ((cy < startPosY - joystick_size/8) && (jumpFlag !=false)){
                 currPosX = startPosX;
                 currPosY = (float) (startPosY - joystick_size/2.0 + joystick_size/3.0);
                 setCharacterVerticalAcceleration(-1);
+                now = System.nanoTime();
+                jumpFlag = false;
             }
             else {
                 currPosY = startPosY;

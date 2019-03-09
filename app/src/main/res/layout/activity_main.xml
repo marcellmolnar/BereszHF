@@ -14,20 +14,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"/>
 
-        <LinearLayout
-            android:id="@+id/joystickSurface"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
-
-    <!--
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/game_background"
-        android:scaleType = "centerCrop"/>
-    -->
+    <LinearLayout
+        android:id="@+id/joystickSurface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
 
     <FrameLayout
         android:layout_width="140dp"
@@ -71,7 +62,6 @@
         android:layout_width="118dp"
         android:layout_height="77dp"
         android:layout_marginBottom="50dp"
-        android:layout_gravity="bottom|start"
-        />
+        android:layout_gravity="bottom|start" />
 
 </FrameLayout>
