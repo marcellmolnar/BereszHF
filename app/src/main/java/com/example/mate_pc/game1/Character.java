@@ -52,7 +52,7 @@ public class Character extends GameObject {
 
         seeingToRight = true;
 
-        MAX_SPEED = gameSurface.getWidth()/120;
+        MAX_SPEED = gameSurface.getWidth()/150;
         ACCELERATION = gameSurface.getWidth()/120;
         START_JUMP_SPEED = (double)(-gameSurface.getHeight()/25);
         GRAVITY = (double)(gameSurface.getHeight())/280;
