@@ -2,6 +2,7 @@ package com.example.mate_pc.game1;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,12 +11,12 @@ import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
+import android.view.View;
 import java.util.ArrayList;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
-
+    boolean isJoystick = false;
     private GameThread gameThread;
 
     private Character character;
@@ -29,6 +30,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap joystick_bg;
     private Bitmap joystick;
     private double joystick_size;
+    String controlSettingsKey = "controlSettings_isJoystick";
 
     ArrayList<Bullet> myBullets;
 
@@ -100,7 +102,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             myBullets.get(i).draw(canvas);
         }
 
-        if (isJoystickOn) {
+        if (isJoystickOn && isJoystick) {
             // ToDo: comment out next line to get transparent joystick
             canvas.drawBitmap(joystick_bg, (int)(startPosX-joystick_size/2.0), (int)(startPosY-joystick_size/2.0), null);
             canvas.drawBitmap(joystick, (int)(currPosX-joystick_size/6.0), (int)(currPosY-joystick_size/6.0), null);
@@ -158,6 +160,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         gameThread = new GameThread(this,holder);
         gameThread.setRunning(true);
         gameThread.start();
+
     }
 
     public static Bitmap drawableToBitmap (Drawable drawable) {
@@ -243,43 +246,40 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void onJoystickTouchListener(MotionEvent motionEvent) {
-        int action = motionEvent.getAction();
-        if(System.nanoTime() >= now + 500000000){
-            jumpFlag = true;
-        }
-        if (action == MotionEvent.ACTION_DOWN) {
-            isJoystickOn = true;
-            startPosX = motionEvent.getX();
-            startPosY = motionEvent.getY();
-        }
-        else if (action == MotionEvent.ACTION_UP) {
-            isJoystickOn = false;
-            setCharacterHorizontalAcceleration(0, true);
-        }
-        else if (action == MotionEvent.ACTION_MOVE) {
-            float cx = motionEvent.getX();
-            float cy = motionEvent.getY();
-            if (cx > startPosX + joystick_size/8) {
-                currPosX = (float) (startPosX + joystick_size/2.0 - joystick_size/3.0);
-                setCharacterHorizontalAcceleration(1, false);
+        if(isJoystick) {
+            int action = motionEvent.getAction();
+            if (System.nanoTime() >= now + 500000000) {
+                jumpFlag = true;
             }
-            else if (cx < startPosX - joystick_size/8) {
-                currPosX = (float) (startPosX - joystick_size/2.0 + joystick_size/3.0);
-                setCharacterHorizontalAcceleration(-1, false);
-            }
-            else {
-                currPosX = startPosX;
+            if (action == MotionEvent.ACTION_DOWN) {
+                isJoystickOn = true;
+                startPosX = motionEvent.getX();
+                startPosY = motionEvent.getY();
+            } else if (action == MotionEvent.ACTION_UP) {
+                isJoystickOn = false;
                 setCharacterHorizontalAcceleration(0, true);
-            }
-            if ((cy < startPosY - joystick_size/8) && (jumpFlag !=false)){
-                currPosX = startPosX;
-                currPosY = (float) (startPosY - joystick_size/2.0 + joystick_size/3.0);
-                setCharacterVerticalAcceleration(-1);
-                now = System.nanoTime();
-                jumpFlag = false;
-            }
-            else {
-                currPosY = startPosY;
+            } else if (action == MotionEvent.ACTION_MOVE) {
+                float cx = motionEvent.getX();
+                float cy = motionEvent.getY();
+                if (cx > startPosX + joystick_size / 8) {
+                    currPosX = (float) (startPosX + joystick_size / 2.0 - joystick_size / 3.0);
+                    setCharacterHorizontalAcceleration(1, false);
+                } else if (cx < startPosX - joystick_size / 8) {
+                    currPosX = (float) (startPosX - joystick_size / 2.0 + joystick_size / 3.0);
+                    setCharacterHorizontalAcceleration(-1, false);
+                } else {
+                    currPosX = startPosX;
+                    setCharacterHorizontalAcceleration(0, true);
+                }
+                if ((cy < startPosY - joystick_size / 8) && (jumpFlag != false)) {
+                    currPosX = startPosX;
+                    currPosY = (float) (startPosY - joystick_size / 2.0 + joystick_size / 3.0);
+                    setCharacterVerticalAcceleration(-1);
+                    now = System.nanoTime();
+                    jumpFlag = false;
+                } else {
+                    currPosY = startPosY;
+                }
             }
         }
     }

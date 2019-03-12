@@ -119,11 +119,13 @@ public class MainActivity extends AppCompatActivity {
             up.setVisibility(View.INVISIBLE);
             left.setVisibility(View.INVISIBLE);
             right.setVisibility(View.INVISIBLE);
+            gameSurface.isJoystick = true;
         }
         else{
             up.setVisibility(View.VISIBLE);
             left.setVisibility(View.VISIBLE);
             right.setVisibility(View.VISIBLE);
+            gameSurface.isJoystick = false;
         }
     }
 
