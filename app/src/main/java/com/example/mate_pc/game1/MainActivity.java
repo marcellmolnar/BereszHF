@@ -1,6 +1,7 @@
 package com.example.mate_pc.game1;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,16 +21,23 @@ public class MainActivity extends AppCompatActivity {
     Button left;
     Button right;
     Button up;
+    Button settingsBtn;
 
     LinearLayout joystickSurface;
 
     private final static int INTERVAL = 200;
     Handler mHandler = new Handler();
 
+    boolean isJoystick = false;
+    String controlSettingsKey = "controlSettings_isJoystick";
+
+
+
 
     @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Delete line to see affect.
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -45,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        settingsBtn = findViewById(R.id.settings_Btn);
+        settingsBtn.setBackground(getDrawable(R.drawable.settings_icon));
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(MainActivity.this, MyOtherActivity.class),121);
+            }
+        });
+
+
         shootButton = findViewById(R.id.shoot);
         shootButton.setOnClickListener(onClickListener);
 
@@ -58,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         left = findViewById(R.id.button2);
         left.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -74,6 +95,36 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        SharedPreferences prefs = getSharedPreferences("controlSettings", MODE_PRIVATE);
+        isJoystick = prefs.getBoolean(controlSettingsKey, false);
+        if(isJoystick){
+            up.setVisibility(View.INVISIBLE);
+            left.setVisibility(View.INVISIBLE);
+            right.setVisibility(View.INVISIBLE);
+        }
+        else{
+            up.setVisibility(View.VISIBLE);
+            left.setVisibility(View.VISIBLE);
+            right.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        SharedPreferences prefs = getSharedPreferences("controlSettings", MODE_PRIVATE);
+        isJoystick = prefs.getBoolean(controlSettingsKey, false);
+        if(isJoystick){
+            up.setVisibility(View.INVISIBLE);
+            left.setVisibility(View.INVISIBLE);
+            right.setVisibility(View.INVISIBLE);
+        }
+        else{
+            up.setVisibility(View.VISIBLE);
+            left.setVisibility(View.VISIBLE);
+            right.setVisibility(View.VISIBLE);
+        }
     }
 
     View.OnTouchListener myTouchListener = new View.OnTouchListener() {

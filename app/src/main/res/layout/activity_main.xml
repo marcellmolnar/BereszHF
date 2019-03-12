@@ -7,17 +7,27 @@
     tools:context="com.example.mate_pc.game1.MainActivity">
 
 
+    <Button
+        android:id="@+id/settings_Btn"
+        android:background="@drawable/settings_icon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="top|right"
+        />
+
     <LinearLayout
         android:id="@+id/gameSurface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"/>
 
-        <LinearLayout
-            android:id="@+id/joystickSurface"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
+    <LinearLayout
+        android:id="@+id/joystickSurface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    </LinearLayout>
 
     <!--
     <ImageView

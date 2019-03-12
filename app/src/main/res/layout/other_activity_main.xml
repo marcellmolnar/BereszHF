@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/root"
+    tools:context="com.example.mate_pc.game1.MainActivity">
+
+
+    <FrameLayout
+        android:layout_width="400dp"
+        android:layout_height="80dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp">
+
+        <TextView
+            android:id="@+id/textControl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:text="Buttons"
+            android:textSize="32dp" />
+
+        <Switch
+            android:id="@+id/switchControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:checked="false"
+            android:thumb="@drawable/ricardo2"
+            android:track="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/textControl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:text="Joystick"
+            android:textSize="32dp" />
+
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/buttonDone"
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:text="Done" />
+
+
+</FrameLayout>
