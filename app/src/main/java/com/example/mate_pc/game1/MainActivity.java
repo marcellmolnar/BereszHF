@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button right;
     Button up;
     Button settingsBtn;
+    Button playButton;
 
     LinearLayout joystickSurface;
 
@@ -69,6 +70,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        playButton = findViewById(R.id.play);
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent playintent = new Intent(MainActivity.this, Ricardo.class);
+                startActivity(playintent);
+            }
+        });
 
         shootButton = findViewById(R.id.shoot);
         shootButton.setOnClickListener(onClickListener);
@@ -109,11 +118,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void InitBackgroundAudio(Context c, int id){
         this.mediaPlayer = MediaPlayer.create(c, id);
-        if (!this.mediaPlayer.isPlaying())
-        {
-            this.mediaPlayer.start();
-            this.mediaPlayer.setLooping(true);
-        }
     }
 
     private void StopBackgroundAudio() {
@@ -121,8 +125,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void RestartBackgroundAudio() {
-        this.mediaPlayer.start();
-        this.mediaPlayer.setLooping(true);
+        if (!this.mediaPlayer.isPlaying())
+        {
+            this.mediaPlayer.start();
+            this.mediaPlayer.setLooping(true);
+        }
     }
 
 
@@ -289,6 +296,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    protected void onResume() {
+        super.onResume();
+        RestartBackgroundAudio();
+    }
 
 
 
