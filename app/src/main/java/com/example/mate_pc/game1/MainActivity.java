@@ -1,6 +1,7 @@
 package com.example.mate_pc.game1;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +13,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.content.Intent;
+import android.media.MediaPlayer;
 
 public class MainActivity extends AppCompatActivity {
 
     GameSurface gameSurface;
+
+    private MediaPlayer mediaPlayer;    //mediaplayer for background music
 
     Button shootButton;
     Button left;
@@ -99,7 +103,28 @@ public class MainActivity extends AppCompatActivity {
 
 
         setControl();
+
+        InitBackgroundAudio(this,R.raw.background_music);
     }
+
+    private void InitBackgroundAudio(Context c, int id){
+        this.mediaPlayer = MediaPlayer.create(c, id);
+        if (!this.mediaPlayer.isPlaying())
+        {
+            this.mediaPlayer.start();
+            this.mediaPlayer.setLooping(true);
+        }
+    }
+
+    private void StopBackgroundAudio() {
+        this.mediaPlayer.stop();
+    }
+
+    private void RestartBackgroundAudio() {
+        this.mediaPlayer.start();
+        this.mediaPlayer.setLooping(true);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -183,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             if(!alreadyShooting) {
                 alreadyShooting = true;
                 gameSurface.createBullet();
+
                 startRepeatingTask();
             }
         }
@@ -245,9 +271,25 @@ public class MainActivity extends AppCompatActivity {
         mHandler.removeCallbacks(mHandlerTask);
     }
 
+    @SuppressLint("MissingSuperCall")
+    protected void onStop () {
+        super.onStop();
+        StopBackgroundAudio();
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        StopBackgroundAudio();
+        this.mediaPlayer.release();
+    }
+
+    protected void onRestart (){
+        super.onRestart();
+        RestartBackgroundAudio();
+    }
 
 
 
 
 
-}
+    }
