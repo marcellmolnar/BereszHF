@@ -101,7 +101,6 @@ public class WebSocketClass implements Parcelable {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
                     Log.i("WebSocket", "Opened");
-                    mWebSocketClient.send("Hello from " + Build.MANUFACTURER + " " + Build.MODEL);
                     WebSocketClass.this.connected = true;
                 }
 

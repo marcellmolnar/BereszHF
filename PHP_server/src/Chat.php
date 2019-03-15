@@ -49,8 +49,12 @@ class Chat implements MessageComponentInterface {
 			}
 		}
 		else {
-			$this->client1->send($msg);
-			$this->client2->send($msg);
+			if ($this->connectedClients > 0) {
+				$this->client1->send($msg);
+			}
+			if ($this->connectedClients > 1) {
+				$this->client2->send($msg);
+			}
 		}
 		
 		/*foreach ($this->clients as $client) {
