@@ -11,6 +11,7 @@ import android.widget.VideoView;
 public class Ricardo extends AppCompatActivity {
 
     Button pauseButton;
+    VideoView videoview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class Ricardo extends AppCompatActivity {
         setContentView(R.layout.activity_ricardo);
 
 
-        VideoView videoview = (VideoView) findViewById(R.id.video);
+        videoview = (VideoView) findViewById(R.id.video);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ricardo_milos);
     //    videoview.setRotation(90f);
         videoview.setVideoURI(uri);
@@ -26,4 +27,10 @@ public class Ricardo extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        videoview.stopPlayback();
+        videoview.pause();
+    }
 }

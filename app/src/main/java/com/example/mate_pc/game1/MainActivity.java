@@ -265,12 +265,14 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("MissingSuperCall")
     protected void onStop () {
         super.onStop();
+        Log.i("MYTAG", "stop");
         //StopBackgroundAudio();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.i("MYTAG", "destroy");
         //StopBackgroundAudio();
         this.mediaPlayer.stop();
         this.mediaPlayer.release();
@@ -280,28 +282,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //RestartBackgroundAudio();
+        Log.i("MYTAG", "resume");
+        if (!this.mediaPlayer.isPlaying())
+        {
+            this.mediaPlayer.setLooping(true);
+            this.mediaPlayer.start();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i("MYTAG", "pause");
         this.mediaPlayer.pause();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.i("MYTAG", "restart");
         this.mediaPlayer.start();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (!this.mediaPlayer.isPlaying())
-        {
-            this.mediaPlayer.setLooping(true);
-            this.mediaPlayer.start();
-        }
+        Log.i("MYTAG", "start");
     }
 }

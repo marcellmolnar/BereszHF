@@ -35,7 +35,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap joystick_bg;
     private Bitmap joystick;
     private double joystick_size;
-    String controlSettingsKey = "controlSettings_isJoystick";
 
     ArrayList<Bullet> myBullets;
 
