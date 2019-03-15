@@ -12,6 +12,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -58,6 +59,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         // Set callback.
         getHolder().addCallback(this);
         initSoundPool();
+
+        this.gameThread = null;
 
     }
 
@@ -215,50 +218,55 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        gameFloorHeight = (int)(getHeight()*0.9);
-        // Background image
-        Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.game_background);
+        Log.i("MYTAG2", "surf created");
 
-        // Scaling up and cropping image to size of the screen
-        int scale = 1;
-        if(bg.getWidth() < getWidth()) {
-            scale = getWidth() / bg.getWidth();
-        }
-        if(bg.getHeight() < getHeight()) {
-            int scale2 = getHeight() / bg.getHeight();
-            if (scale2 > scale) {
-                scale = scale2;
+        if (this.gameThread == null) {
+
+            gameFloorHeight = (int) (getHeight() * 0.9);
+
+            // Background image
+            Bitmap bg = BitmapFactory.decodeResource(getResources(), R.drawable.game_background);
+            // Scaling up and cropping image to size of the screen
+            int scale = 1;
+            if (bg.getWidth() < getWidth()) {
+                scale = getWidth() / bg.getWidth();
             }
+            if (bg.getHeight() < getHeight()) {
+                int scale2 = getHeight() / bg.getHeight();
+                if (scale2 > scale) {
+                    scale = scale2;
+                }
+            }
+            Bitmap scaled = createSubImage(bg, 0, 0, bg.getWidth() * scale, bg.getHeight() * scale);
+            int x_offset = 0;
+            int y_offset = 0;
+            if (scaled.getWidth() > getWidth()) {
+                x_offset = (scaled.getWidth() - getWidth()) / 2;
+            }
+            if (scaled.getHeight() > getHeight()) {
+                y_offset = (scaled.getHeight() - getHeight()) / 2;
+            }
+            background = createSubImage(scaled, x_offset, y_offset, getWidth(), getHeight());
+
+            Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.guy);
+            character = new Character(this, chibiBitmap1, (int) ((double) getWidth() / 5.2), gameFloorHeight, (int) (getHeight() * 0.14));
+
+            Bitmap platformIm = BitmapFactory.decodeResource(getResources(), R.drawable.platform_tr);
+            platforms = new Platform[4];
+            platforms[0] = new Platform(this, platformIm, (int) ((double) getWidth() / 2.6), (int) ((double) getHeight() / 1.4), (int) ((double) getHeight() / 24));
+            platforms[1] = new Platform(this, platformIm, (int) ((double) getWidth() / 3.2), (int) ((double) getHeight() / 1.8), (int) ((double) getHeight() / 24));
+            platforms[2] = new Platform(this, platformIm, (int) ((double) getWidth() / 2.3), (int) ((double) getHeight() / 2.2), (int) ((double) getHeight() / 24));
+            platforms[3] = new Platform(this, platformIm, (int) ((double) getWidth() / 3.6), (int) ((double) getHeight() / 3.0), (int) ((double) getHeight() / 24));
+
+            joystick_size = (int) (getHeight() / 2.75);
+            Bitmap js_bg = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp));
+            joystick_bg = Bitmap.createScaledBitmap(js_bg, (int) (joystick_size), (int) (joystick_size), false);
+            Bitmap js = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp_stick));
+            joystick = Bitmap.createScaledBitmap(js, (int) ((double) (joystick_size) / 3), (int) ((double) (joystick_size) / 3), false);
+
+
+            myBullets = new ArrayList<>();
         }
-        Bitmap scaled = createSubImage(bg,0,0, bg.getWidth()*scale, bg.getHeight()*scale);
-        int x_offset = 0;
-        int y_offset = 0;
-        if (scaled.getWidth() > getWidth()) {
-            x_offset = (scaled.getWidth() - getWidth()) / 2;
-        }
-        if (scaled.getHeight() > getHeight()) {
-            y_offset = (scaled.getHeight() - getHeight()) / 2;
-        }
-        background = createSubImage(scaled,x_offset,y_offset, getWidth(), getHeight());
-
-        Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.guy);
-        character = new Character(this,chibiBitmap1,(int)((double)getWidth()/5.2), gameFloorHeight, (int) (getHeight()*0.14));
-
-        Bitmap platformIm = BitmapFactory.decodeResource(getResources(), R.drawable.platform_tr);
-        platforms = new Platform[4];
-        platforms[0] = new Platform(this, platformIm, (int)((double)getWidth()/2.6), (int)((double)getHeight()/1.4), (int)((double)getHeight()/24));
-        platforms[1] = new Platform(this, platformIm, (int)((double)getWidth()/3.2), (int)((double)getHeight()/1.8), (int)((double)getHeight()/24));
-        platforms[2] = new Platform(this, platformIm, (int)((double)getWidth()/2.3), (int)((double)getHeight()/2.2), (int)((double)getHeight()/24));
-        platforms[3] = new Platform(this, platformIm, (int)((double)getWidth()/3.6), (int)((double)getHeight()/3.0), (int)((double)getHeight()/24));
-
-        joystick_size = (int)(getHeight()/2.75);
-        Bitmap js_bg = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp));
-        joystick_bg = Bitmap.createScaledBitmap(js_bg, (int)(joystick_size), (int)(joystick_size), false);
-        Bitmap js = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp_stick));
-        joystick = Bitmap.createScaledBitmap(js, (int)((double)(joystick_size)/3), (int)((double)(joystick_size)/3), false);
-
-
-        myBullets = new ArrayList<>();
 
         gameThread = new GameThread(this,holder);
         gameThread.setRunning(true);
