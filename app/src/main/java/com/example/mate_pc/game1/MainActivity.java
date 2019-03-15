@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.content.Intent;
 import android.media.MediaPlayer;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     GameSurface gameSurface;
@@ -118,18 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void InitBackgroundAudio(Context c, int id){
         this.mediaPlayer = MediaPlayer.create(c, id);
-    }
-
-    private void StopBackgroundAudio() {
-        this.mediaPlayer.stop();
-    }
-
-    private void RestartBackgroundAudio() {
-        if (!this.mediaPlayer.isPlaying())
-        {
-            this.mediaPlayer.start();
-            this.mediaPlayer.setLooping(true);
-        }
+        this.mediaPlayer.seekTo(0);
     }
 
 
@@ -156,13 +147,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    View.OnTouchListener myTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-
-            return true;
-        }
-    };
 
     private void handleTouch(View view, MotionEvent event) {
         int action = event.getAction();
@@ -281,26 +265,43 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("MissingSuperCall")
     protected void onStop () {
         super.onStop();
-        StopBackgroundAudio();
+        //StopBackgroundAudio();
     }
 
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        StopBackgroundAudio();
+        //StopBackgroundAudio();
+        this.mediaPlayer.stop();
         this.mediaPlayer.release();
     }
 
-    protected void onRestart (){
-        super.onRestart();
-        RestartBackgroundAudio();
-    }
 
-
+    @Override
     protected void onResume() {
         super.onResume();
-        RestartBackgroundAudio();
+        //RestartBackgroundAudio();
     }
 
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.mediaPlayer.pause();
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.mediaPlayer.start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!this.mediaPlayer.isPlaying())
+        {
+            this.mediaPlayer.setLooping(true);
+            this.mediaPlayer.start();
+        }
+    }
+}
