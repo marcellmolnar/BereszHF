@@ -70,7 +70,7 @@ class Chat implements MessageComponentInterface {
         //$this->clients->detach($conn);
         if ($conn == $this->client1) {
 			$this->client1 = $this->client2;
-			$this->connectedClients = 1;
+			$this->connectedClients = 0;
 			echo "client 1 disconnected! ({$conn->resourceId})\n";			
 		}
         if ($conn == $this->client2) {
