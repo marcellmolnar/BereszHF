@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal">
+
+        <RelativeLayout
+            android:id="@+id/myframe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp">
+
+            <Switch
+                android:id="@+id/switchControl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:checked="false"
+                android:thumb="@drawable/ricardo2"
+                android:track="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textControl1"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/switchControl"
+                android:text="@string/buttons"
+                android:textColor="@color/black"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/textControl2"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/switchControl"
+                android:text="@string/joystick"
+                android:textColor="@color/black"
+                android:textSize="32sp" />
+
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonDone"
+            android:layout_width="450dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myframe"
+            android:layout_centerHorizontal="true"
+            android:text="@string/done" />
+
+    </RelativeLayout>
+
+</LinearLayout>

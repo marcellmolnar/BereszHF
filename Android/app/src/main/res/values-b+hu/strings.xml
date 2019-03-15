@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ricardo game</string>
+    <string name="write_ip_here">Írd be a szerver IP címét!</string>
+    <string name="connect">Csatlakozás!</string>
+    <string name="buttons">Gombok</string>
+    <string name="joystick">Joystick</string>
+    <string name="done">Kész</string>
+</resources>
