@@ -5,4 +5,5 @@
     <string name="buttons">Gombok</string>
     <string name="joystick">Joystick</string>
     <string name="done">Kész</string>
+    <string name="connecting2player">Várakozás ellenfélre..</string>
 </resources>

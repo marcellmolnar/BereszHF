@@ -1,6 +1,5 @@
 package com.example.mate_pc.game1.network_stuff;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -25,11 +24,16 @@ public class WebSocketClass implements Parcelable {
 
     private String ipAddress;
 
-    private boolean connected;
+    private boolean connected2server;
+    private boolean connected2player;
 
-    public WebSocketClass(GameSurface gameSurface) {
+    private OnConnectionChangedListener onConnectionChangedListener;
+
+    public WebSocketClass(GameSurface gameSurface, OnConnectionChangedListener onConnectionChangedListener) {
         this.gameSurface = gameSurface;
-        this.connected = false;
+        this.onConnectionChangedListener = onConnectionChangedListener;
+        this.connected2server = false;
+        this.connected2player = false;
     }
 
     private WebSocketClass(Parcel in) {
@@ -59,6 +63,9 @@ public class WebSocketClass implements Parcelable {
     };
 
 
+    public boolean isConnected(){
+        return this.connected2player;
+    }
 
 
     public void destroySocket() {
@@ -69,7 +76,7 @@ public class WebSocketClass implements Parcelable {
     }
 
     public void send(String s) {
-        if (connected){
+        if (connected2server){
             mWebSocketClient.send(s);
         }
     }
@@ -101,7 +108,7 @@ public class WebSocketClass implements Parcelable {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
                     Log.i("WebSocket", "Opened");
-                    WebSocketClass.this.connected = true;
+                    WebSocketClass.this.connected2server = true;
                 }
 
                 @Override
@@ -115,7 +122,14 @@ public class WebSocketClass implements Parcelable {
                         x = main.getDouble("x");
                         y = main.getDouble("y");
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        if (s.compareTo("join") == 0) {
+                            if (!WebSocketClass.this.isConnected()) {
+                                mWebSocketClient.send("join");
+                            }
+                            WebSocketClass.this.connected2player = true;
+                            onConnectionChangedListener.onConnectionChanged();
+                        }
                     }
                     gameSurface.setOpponentXY(x, y);
                 }

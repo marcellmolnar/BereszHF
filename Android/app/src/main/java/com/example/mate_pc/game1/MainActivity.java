@@ -1,22 +1,30 @@
 package com.example.mate_pc.game1;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.widget.TextView;
 
 import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import com.example.mate_pc.game1.network_stuff.ConnectorClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
@@ -52,9 +60,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gameSurface = new GameSurface(this);
+        gameSurface = new GameSurface(this, this);
 
-        webSocket = new WebSocketClass(gameSurface);
+        // Passing gameSurface as GameSurface and as OnConnectionChangedListener.
+        webSocket = new WebSocketClass(gameSurface, gameSurface);
         gameSurface.setWebSocket(webSocket);
 
         LinearLayout surface = findViewById(R.id.gameSurface);
@@ -140,8 +149,12 @@ public class MainActivity extends AppCompatActivity {
         else {
             Log.i("MyTAG", "EMPTY intent data");
         }
+        new CountDown(MainActivity.this, webSocket).execute();
 
     }
+
+
+
 
     private void setControl(){
         SharedPreferences prefs = getSharedPreferences(controlSettings, MODE_PRIVATE);
@@ -324,4 +337,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         Log.i("MyTAG", "start");
     }
+
+
 }

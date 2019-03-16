@@ -1,6 +1,7 @@
 package com.example.mate_pc.game1;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,12 +23,13 @@ import com.example.mate_pc.game1.graphical_stuff.Bullet;
 import com.example.mate_pc.game1.graphical_stuff.Character;
 import com.example.mate_pc.game1.graphical_stuff.OpponentCharacter;
 import com.example.mate_pc.game1.graphical_stuff.Platform;
+import com.example.mate_pc.game1.network_stuff.OnConnectionChangedListener;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
+public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, OnConnectionChangedListener {
 
     boolean isJoystick = false;
     private GameThread gameThread;
@@ -58,9 +60,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private WebSocketClass webSocket;
 
+    private Context context;
+    private Activity activity;
 
-    public GameSurface(Context context)  {
+    public GameSurface(Activity activity, Context context)  {
         super(context);
+
+        this.activity = activity;
+        this.context = context;
 
         // Make Game Surface focusable so it can handle events.
         setFocusable(true);
@@ -222,20 +229,24 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
         opponent.update();
 
-        // ToDo: bullets also should be synchronized!
-        JSONObject json = new JSONObject();
-        JSONObject characterJson = new JSONObject();
-        try {
-            characterJson.put("x", (double)(getWidth() - character.getWidth() - character.getX()) / getWidth() );
-            characterJson.put("y", (double)(character.getY()) / getHeight() );
-            json.put("character", characterJson);
-        }
-        catch (JSONException je){
-            je.printStackTrace();
-        }
+        if (webSocket.isConnected()) {
+            // ToDo: bullets also should be synchronized!
+            JSONObject json = new JSONObject();
+            JSONObject characterJson = new JSONObject();
+            try {
+                // ToDo: character's health also should be synchronized!
+                characterJson.put("x", (double) (getWidth() - character.getWidth() - character.getX()) / getWidth());
+                characterJson.put("y", (double) (character.getY()) / getHeight());
+                json.put("character", characterJson);
+            } catch (JSONException je) {
+                je.printStackTrace();
+            }
 
-        webSocket.send(json.toString());
-
+            webSocket.send(json.toString());
+        }
+        else {
+            webSocket.send("join");
+        }
     }
 
 
@@ -288,7 +299,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
                     scaledWidth = scale2 * bg.getWidth();
                 }
             }
-            Log.i("MYTAG",String.valueOf(scale));
             Bitmap scaled = Bitmap.createScaledBitmap(bg, (int)(scaledWidth), (int)(scaledHeight), false);
             int x_offset = 0;
             int y_offset = 0;
@@ -298,10 +308,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             if (scaled.getHeight() > getHeight()) {
                 y_offset = (scaled.getHeight() - getHeight()) / 2;
             }
-            Log.i("MYTAG",String.valueOf(x_offset) + " " + String.valueOf(y_offset));
-            Log.i("MYTAG",String.valueOf(getWidth()) + " " + String.valueOf(getHeight()));
-            Log.i("MYTAG",String.valueOf(scaled.getWidth()) + " " + String.valueOf(scaled.getHeight()));
-            background = createSubImage(scaled, 0, 0, getWidth(), getHeight());
+            background = createSubImage(scaled, x_offset, y_offset, getWidth(), getHeight());
 
             Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.guy);
             character = new Character(this, chibiBitmap1, (int) ((double) getWidth() / 5.2), gameFloorHeight, (int) (getHeight() * 0.14));
@@ -457,5 +464,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
+
+    private boolean alreadyStartedCountDown = false;
+
+    @Override
+    public void onConnectionChanged() {
+        if (!alreadyStartedCountDown) {
+        }
+    }
+
 
 }

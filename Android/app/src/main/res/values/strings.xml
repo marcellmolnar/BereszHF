@@ -5,4 +5,5 @@
     <string name="buttons">Buttons</string>
     <string name="joystick">Joystick</string>
     <string name="done">Done</string>
+    <string name="connecting2player">Waiting for opponent..</string>
 </resources>
