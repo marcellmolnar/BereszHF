@@ -11,6 +11,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -272,17 +273,23 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             // Background image
             Bitmap bg = BitmapFactory.decodeResource(getResources(), R.drawable.game_background);
             // Scaling up and cropping image to size of the screen
-            int scale = 1;
+            double scaledWidth = bg.getWidth();
+            double scaledHeight = bg.getHeight();
+            double scale = 0;
             if (bg.getWidth() < getWidth()) {
-                scale = getWidth() / bg.getWidth();
+                scale = (double)(getWidth()) / bg.getWidth();
+                scaledWidth = getWidth();
+                scaledHeight = scale* bg.getHeight();
             }
             if (bg.getHeight() < getHeight()) {
-                int scale2 = getHeight() / bg.getHeight();
+                double scale2 = (double)(getHeight()) / bg.getHeight();
                 if (scale2 > scale) {
-                    scale = scale2;
+                    scaledHeight = getHeight();
+                    scaledWidth = scale2 * bg.getWidth();
                 }
             }
-            Bitmap scaled = createSubImage(bg, 0, 0, bg.getWidth() * scale, bg.getHeight() * scale);
+            Log.i("MYTAG",String.valueOf(scale));
+            Bitmap scaled = Bitmap.createScaledBitmap(bg, (int)(scaledWidth), (int)(scaledHeight), false);
             int x_offset = 0;
             int y_offset = 0;
             if (scaled.getWidth() > getWidth()) {
@@ -291,7 +298,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             if (scaled.getHeight() > getHeight()) {
                 y_offset = (scaled.getHeight() - getHeight()) / 2;
             }
-            background = createSubImage(scaled, x_offset, y_offset, getWidth(), getHeight());
+            Log.i("MYTAG",String.valueOf(x_offset) + " " + String.valueOf(y_offset));
+            Log.i("MYTAG",String.valueOf(getWidth()) + " " + String.valueOf(getHeight()));
+            Log.i("MYTAG",String.valueOf(scaled.getWidth()) + " " + String.valueOf(scaled.getHeight()));
+            background = createSubImage(scaled, 0, 0, getWidth(), getHeight());
 
             Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.guy);
             character = new Character(this, chibiBitmap1, (int) ((double) getWidth() / 5.2), gameFloorHeight, (int) (getHeight() * 0.14));
