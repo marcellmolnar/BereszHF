@@ -3,7 +3,7 @@
     <string name="write_ip_here">Give the server\'s IP address!</string>
     <string name="connect">Connect!</string>
     <string name="buttons">Buttons</string>
-    <string name="joystick">Joystick</string>
+    <string name="joystick">Érintés</string>
     <string name="done">Done</string>
     <string name="connecting2player">Waiting for opponent..</string>
 </resources>

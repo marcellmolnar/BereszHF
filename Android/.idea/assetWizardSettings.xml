@@ -3,11 +3,6 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
-        <entry key="imageWizard">
-          <value>
-            <PersistentState />
-          </value>
-        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -23,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/G:/Programok/Android_Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_code_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/G:/Programok/Android_Studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_volume_up_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,9 +28,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="777777" />
-                            <entry key="outputName" value="ic_code" />
-                            <entry key="sourceFile" value="C:\Users\Marci" />
+                            <entry key="color" value="313131" />
+                            <entry key="outputName" value="ic_volume_on" />
+                            <entry key="sourceFile" value="C:\Users\Ákos" />
                           </map>
                         </option>
                       </PersistentState>

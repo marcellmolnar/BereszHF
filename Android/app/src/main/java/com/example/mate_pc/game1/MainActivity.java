@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,8 @@ import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANG
 import static com.example.mate_pc.game1.Constants.START_CONNECTOR_CODE;
 import static com.example.mate_pc.game1.Constants.controlSettings;
 import static com.example.mate_pc.game1.Constants.controlSettingsKey;
+import static com.example.mate_pc.game1.Constants.soundSettings;
+import static com.example.mate_pc.game1.Constants.soundSettingsKey;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     Handler mHandler = new Handler();
 
     boolean isJoystick = false;
+    boolean isSound = false;
 
     @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Delete line to see affect.
     @Override
@@ -125,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setControl();
+        setSound();
 
         InitBackgroundAudio(this);
     }
@@ -140,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CODE_SETTINGS_MAY_CHANGED) {
             setControl();
+            setSound();
         }
 
         if (data != null) {
@@ -170,6 +176,30 @@ public class MainActivity extends AppCompatActivity {
             left.setVisibility(View.VISIBLE);
             right.setVisibility(View.VISIBLE);
             gameSurface.isJoystick = false;
+        }
+    }
+
+    private void setSound(){
+        SharedPreferences prefs2 = getSharedPreferences(soundSettings, MODE_PRIVATE);
+        isSound = prefs2.getBoolean(soundSettingsKey, false);
+        AudioManager amanager;
+        amanager = (AudioManager)getSystemService(AUDIO_SERVICE);
+
+        if (isSound) {
+
+            //turn off sound, disable notifications
+            amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
+
+            //media
+            amanager.setStreamMute(AudioManager.STREAM_MUSIC, false); 
+
+
+        } else {
+            // turn on sound, enable notifications
+            amanager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
+
+            //media
+            amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
         }
     }
 
