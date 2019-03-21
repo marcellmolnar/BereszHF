@@ -92,7 +92,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="3"
+                android:weightSum="4"
                 android:layout_marginTop="170sp">
 
                 <ImageView
@@ -101,7 +101,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    app:srcCompat="@drawable/omaowa" />
+                    app:srcCompat="@drawable/game_background_15" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -112,12 +112,20 @@
                     app:srcCompat="@drawable/game_background" />
 
                 <ImageView
-                    android:id="@+id/imageVie3"
+                    android:id="@+id/imageView3"
                     android:layout_width="0dp"
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    app:srcCompat="@drawable/bullet_left" />
+                    app:srcCompat="@drawable/game_background_16" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="0dp"
+                    android:layout_height="60sp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/game_background_14" />
 
             </LinearLayout>
 

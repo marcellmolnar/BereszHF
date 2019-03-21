@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 
 import static com.example.mate_pc.game1.Constants.controlSettings;
@@ -25,7 +26,6 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_layout);
         getWindow().setBackgroundDrawableResource(R.color.transparent);
-        //getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         doneBtn = findViewById(R.id.buttonDone);
         controlSwitch = findViewById(R.id.switchControl);

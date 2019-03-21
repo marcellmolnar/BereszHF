@@ -127,11 +127,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        InitBackgroundAudio(this);
         setControl();
         setSound();
-
-        InitBackgroundAudio(this);
     }
 
     private void InitBackgroundAudio(Context c){
@@ -186,20 +184,9 @@ public class MainActivity extends AppCompatActivity {
         amanager = (AudioManager)getSystemService(AUDIO_SERVICE);
 
         if (isSound) {
-
-            //turn off sound, disable notifications
-            amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
-
-            //media
-            amanager.setStreamMute(AudioManager.STREAM_MUSIC, false); 
-
-
-        } else {
-            // turn on sound, enable notifications
-            amanager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
-
-            //media
             amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        } else {
+            amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
         }
     }
 
@@ -341,11 +328,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("MyTAG", "resume");
-        if (!this.mediaPlayer.isPlaying())
-        {
             this.mediaPlayer.setLooping(true);
             this.mediaPlayer.start();
-        }
+        setSound();
     }
 
     @Override
@@ -360,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         Log.i("MyTAG", "restart");
         this.mediaPlayer.start();
+        setSound();
     }
 
     @Override
