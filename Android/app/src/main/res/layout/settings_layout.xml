@@ -101,7 +101,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    app:srcCompat="@drawable/game_background_15" />
+                    android:src="@drawable/game_background_15" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -109,7 +109,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    app:srcCompat="@drawable/game_background" />
+                    android:src="@drawable/game_background" />
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -117,7 +117,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    app:srcCompat="@drawable/game_background_16" />
+                    android:src="@drawable/game_background_16" />
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -125,7 +125,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    app:srcCompat="@drawable/game_background_14" />
+                    android:src="@drawable/game_background_14" />
 
             </LinearLayout>
 
