@@ -67,24 +67,29 @@ public class SettingsActivity extends Activity {
                 background2.setColorFilter(Color.argb(75, 0, 0, 0));
                 background3.setColorFilter(Color.argb(75, 0, 0, 0));
                 background4.setColorFilter(Color.argb(75, 0, 0, 0));
-            case 2:
-                background2.setColorFilter(Color.argb(0, 0, 0, 0));
-                background1.setColorFilter(Color.argb(75, 0, 0, 0));
-                background3.setColorFilter(Color.argb(75, 0, 0, 0));
-                background4.setColorFilter(Color.argb(75, 0, 0, 0));
+                break;
             case 3:
                 background3.setColorFilter(Color.argb(0, 0, 0, 0));
                 background2.setColorFilter(Color.argb(75, 0, 0, 0));
                 background1.setColorFilter(Color.argb(75, 0, 0, 0));
                 background4.setColorFilter(Color.argb(75, 0, 0, 0));
+                break;
             case 4:
                 background4.setColorFilter(Color.argb(0, 0, 0, 0));
                 background2.setColorFilter(Color.argb(75, 0, 0, 0));
                 background3.setColorFilter(Color.argb(75, 0, 0, 0));
                 background1.setColorFilter(Color.argb(75, 0, 0, 0));
+                break;
+            case 2:
+            default:
+                background2.setColorFilter(Color.argb(0, 0, 0, 0));
+                background1.setColorFilter(Color.argb(75, 0, 0, 0));
+                background3.setColorFilter(Color.argb(75, 0, 0, 0));
+                background4.setColorFilter(Color.argb(75, 0, 0, 0));
+                break;
         }
 
-        Log.e("ADebugTag", "Value: " + Integer.toString(chosenBackgroundNumber));
+        Log.i("MyTAG", "Value: " + Integer.toString(chosenBackgroundNumber));
 
         // Done button:
         doneBtn.setOnClickListener(new View.OnClickListener() {
