@@ -26,6 +26,7 @@ import com.example.mate_pc.game1.graphical_stuff.Platform;
 import com.example.mate_pc.game1.network_stuff.OnConnectionChangedListener;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,6 +48,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private double joystick_size;
 
     ArrayList<Bullet> myBullets;
+    ArrayList<Bullet> opponentBullets;
 
     private static final int MAX_STREAMS=100;   //maximum size if parallel music streams
     private int soundIdOnHitCharacter;          //ids for specific sound effects
@@ -229,9 +231,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
         opponent.update();
 
+        JSONObject json = new JSONObject();
         if (webSocket.isConnected()) {
-            // ToDo: bullets also should be synchronized!
-            JSONObject json = new JSONObject();
             JSONObject characterJson = new JSONObject();
             try {
                 // ToDo: character's health also should be synchronized!
@@ -241,12 +242,34 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             } catch (JSONException je) {
                 je.printStackTrace();
             }
+        }
 
+        if (webSocket.isConnected()) {
+            JSONArray jsonArray = new JSONArray();
+            for (Bullet bullet : myBullets) {
+                JSONObject jbullet = new JSONObject();
+                try {
+                    // ToDo: character's health also should be synchronized!
+                    jbullet.put("x", (double) (getWidth() - bullet.getWidth() - bullet.getX()) / getWidth());
+                    jbullet.put("y", (double) (bullet.getY()) / getHeight());
+                    jsonArray.put(jbullet);
+                } catch (JSONException je) {
+                    je.printStackTrace();
+                }
+            }
+            try {
+                json.put("bullets", jsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if (webSocket.isConnected()) {
             webSocket.send(json.toString());
         }
         else {
             webSocket.send("join");
         }
+
     }
 
 
@@ -266,9 +289,13 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             myBullets.get(i).draw(canvas);
         }
 
+        for(int i = 0;i < opponentBullets.size(); i++){
+            opponentBullets.get(i).draw(canvas);
+        }
+
         if (isJoystickOn && isJoystick) {
-            canvas.drawBitmap(joystick_bg, (int)(startPosX-joystick_size/2.0), (int)(startPosY-joystick_size/2.0), null);
-            canvas.drawBitmap(joystick, (int)(currPosX-joystick_size/6.0), (int)(currPosY-joystick_size/6.0), null);
+            //canvas.drawBitmap(joystick_bg, (int)(startPosX-joystick_size/2.0), (int)(startPosY-joystick_size/2.0), null);
+            //canvas.drawBitmap(joystick, (int)(currPosX-joystick_size/6.0), (int)(currPosY-joystick_size/6.0), null);
         }
 
     }
@@ -339,6 +366,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
 
             myBullets = new ArrayList<>();
+            opponentBullets = new ArrayList<>();
         }
 
         gameThread = new GameThread(this,holder);
@@ -415,6 +443,21 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         playEffectOnShoot();
     }
 
+    public void createNewOpponentBullet(double relX, double relY, boolean bulletSeeingRight) {
+        opponentBullets.clear();
+        Bitmap bullet;
+        int velocity = (int) (Character.MAX_SPEED*1.5);
+        int bulletHeight = (int)((double)getHeight()/30);
+        if(bulletSeeingRight){
+            bullet = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_right);
+        }else{
+            bullet = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_left);
+            velocity = -velocity;
+        }
+        int bulletX = (int) (relX * this.getWidth());
+        int bulletY = (int) (relY * this.getHeight());
+        opponentBullets.add(new Bullet(bullet, bulletX, bulletY, bulletHeight, velocity));
+    }
 
     private boolean isJoystickOn = false;
     private float startPosX;

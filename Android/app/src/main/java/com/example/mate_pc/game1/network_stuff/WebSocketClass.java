@@ -9,6 +9,7 @@ import com.example.mate_pc.game1.GameSurface;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -113,14 +114,25 @@ public class WebSocketClass implements Parcelable {
 
                 @Override
                 public void onMessage(String s) {
-                    double x = 600;
-                    double y = 700;
+                    double x;
+                    double y;
                     try {
                         JSONObject reader = new JSONObject(s);
 
                         JSONObject main  = reader.getJSONObject("character");
                         x = main.getDouble("x");
                         y = main.getDouble("y");
+                        gameSurface.setOpponentXY(x, y);
+
+
+                        JSONArray bullets = reader.getJSONArray("bullets");
+                        for(int i=0; i<bullets.length(); i++){
+                            JSONObject json_data = bullets.getJSONObject(i);
+                            double bulletX = main.getDouble("x");
+                            double bulletY = main.getDouble("y");
+
+                        }
+
                     } catch (JSONException e) {
                         //e.printStackTrace();
                         if (s.compareTo("join") == 0) {
@@ -131,7 +143,6 @@ public class WebSocketClass implements Parcelable {
                             onConnectionChangedListener.onConnectionChanged();
                         }
                     }
-                    gameSurface.setOpponentXY(x, y);
                 }
 
                 @Override
