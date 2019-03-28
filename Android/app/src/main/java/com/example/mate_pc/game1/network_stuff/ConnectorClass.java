@@ -3,11 +3,13 @@ package com.example.mate_pc.game1.network_stuff;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.mate_pc.game1.GameSurface;
 import com.example.mate_pc.game1.SettingsActivity;
 import com.example.mate_pc.game1.R;
 
@@ -23,8 +25,6 @@ public class ConnectorClass extends Activity {
     private Button connect;
     private EditText ipAddress;
 
-
-
     private int activityResultCode;
 
     @Override
@@ -32,6 +32,7 @@ public class ConnectorClass extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connector_layout);
         getWindow().setBackgroundDrawableResource(R.color.transparent2);
+
 
         ipAddress = findViewById(R.id.others_ip);
 

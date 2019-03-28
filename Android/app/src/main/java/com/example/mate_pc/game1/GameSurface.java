@@ -2,7 +2,11 @@ package com.example.mate_pc.game1;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -30,7 +34,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
+import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA;
+import static com.example.mate_pc.game1.Constants.backgroundSettingsKey;
+
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, OnConnectionChangedListener {
+
 
     boolean isJoystick = false;
     private GameThread gameThread;
@@ -62,6 +72,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
     private WebSocketClass webSocket;
 
+    private MyBroadcastReceiver receiver;
+
     private Context context;
     private Activity activity;
 
@@ -79,6 +91,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         initSoundPool();
 
         this.gameThread = null;
+
+        receiver = new MyBroadcastReceiver();
+        activity.registerReceiver(receiver, new IntentFilter(MyBroadcastReceiver.ACTION));
 
     }
 
@@ -309,33 +324,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             gameFloorHeight = (int) (getHeight() * 0.9);
 
             // Background image
-            Bitmap bg = BitmapFactory.decodeResource(getResources(), R.drawable.game_background);
-            // Scaling up and cropping image to size of the screen
-            double scaledWidth = bg.getWidth();
-            double scaledHeight = bg.getHeight();
-            double scale = 0;
-            if (bg.getWidth() < getWidth()) {
-                scale = (double)(getWidth()) / bg.getWidth();
-                scaledWidth = getWidth();
-                scaledHeight = scale* bg.getHeight();
-            }
-            if (bg.getHeight() < getHeight()) {
-                double scale2 = (double)(getHeight()) / bg.getHeight();
-                if (scale2 > scale) {
-                    scaledHeight = getHeight();
-                    scaledWidth = scale2 * bg.getWidth();
-                }
-            }
-            Bitmap scaled = Bitmap.createScaledBitmap(bg, (int)(scaledWidth), (int)(scaledHeight), false);
-            int x_offset = 0;
-            int y_offset = 0;
-            if (scaled.getWidth() > getWidth()) {
-                x_offset = (scaled.getWidth() - getWidth()) / 2;
-            }
-            if (scaled.getHeight() > getHeight()) {
-                y_offset = (scaled.getHeight() - getHeight()) / 2;
-            }
-            background = createSubImage(scaled, x_offset, y_offset, getWidth(), getHeight());
+            SharedPreferences prefs = context.getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
+            int backgroundNum = prefs.getInt(backgroundSettingsKey, 2);
+            onSettingsChanged(backgroundNum);
 
             Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.guy);
             character = new Character(this, chibiBitmap1, (int) ((double) getWidth() / 5.2), gameFloorHeight, (int) (getHeight() * 0.14));
@@ -517,4 +508,80 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     }
 
 
+    public void onSettingsChanged(int chosenBackgroundNumber) {
+
+        int backgroundRes = 1;
+        switch (chosenBackgroundNumber){
+            case 1:
+                    backgroundRes = R.drawable.game_background_15;
+                break;
+            case 3:
+                backgroundRes = R.drawable.game_background_16;
+                break;
+            case 4:
+                backgroundRes = R.drawable.game_background_14;
+                break;
+            case 2:
+            default:
+                backgroundRes = R.drawable.game_background;
+
+                break;
+        }
+        // Background image
+        Bitmap bg = BitmapFactory.decodeResource(getResources(), backgroundRes);
+        // Scaling up and cropping image to size of the screen
+        double scaledWidth = bg.getWidth();
+        double scaledHeight = bg.getHeight();
+        double widthScale = (double)(getWidth()) / bg.getWidth();
+        double heightScale = (double)(getHeight()) / bg.getHeight();
+        // Screen is bigger than image in one size
+        if (widthScale > 1 || heightScale > 1) {
+            if (widthScale > heightScale) {
+                scaledWidth = getWidth();
+                scaledHeight = widthScale*bg.getHeight();
+            }
+            else {
+                scaledHeight = getHeight();
+                scaledWidth = heightScale*bg.getWidth();
+            }
+        }
+        else { // Image is bigger than screen in every size
+            if (widthScale > heightScale) {
+                scaledWidth = getWidth();
+                scaledHeight = widthScale*bg.getHeight();
+            }
+            else {
+                scaledHeight = getHeight();
+                scaledWidth = heightScale*bg.getWidth();
+            }
+        }
+
+        Bitmap scaled = Bitmap.createScaledBitmap(bg, (int)(scaledWidth), (int)(scaledHeight), false);
+        int x_offset = 0;
+        int y_offset = 0;
+        if (scaled.getWidth() > getWidth()) {
+            x_offset = (scaled.getWidth() - getWidth()) / 2;
+        }
+        if (scaled.getHeight() > getHeight()) {
+            y_offset = (scaled.getHeight() - getHeight()) / 2;
+        }
+        // Make sure x_offset+getWidth() is not greater than scaled.getWidth()
+        while(x_offset > 0 && x_offset+getWidth() > scaled.getWidth()){
+            x_offset--;
+        }
+        while(y_offset > 0 && y_offset+getHeight() > scaled.getHeight()){
+            y_offset--;
+        }
+
+        background = createSubImage(scaled, x_offset, y_offset, getWidth(), getHeight());
+    }
+
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+        public static final String ACTION = "com.example.mate_pc.BACKGROUND_CHANGED";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int selectedBackground = intent.getIntExtra(SELECTED_BACKGROUND_INTENT_EXTRA, 2);
+            onSettingsChanged(selectedBackground);
+        }
+    }
 }

@@ -2,9 +2,9 @@ package com.example.mate_pc.game1;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,15 +14,15 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 
-import static com.example.mate_pc.game1.Constants.backgroundSettings;
+import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
+import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA;
 import static com.example.mate_pc.game1.Constants.backgroundSettingsKey;
-import static com.example.mate_pc.game1.Constants.controlSettings;
 import static com.example.mate_pc.game1.Constants.controlSettingsKey;
-import static com.example.mate_pc.game1.Constants.soundSettings;
 import static com.example.mate_pc.game1.Constants.soundSettingsKey;
 
 
 public class SettingsActivity extends Activity {
+
     Button doneBtn;
     Switch controlSwitch;
     Switch soundSwitch;
@@ -40,6 +40,7 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.settings_layout);
         getWindow().setBackgroundDrawableResource(R.color.transparent);
 
+
         //Local UI variables:
         doneBtn = findViewById(R.id.buttonDone);
         controlSwitch = findViewById(R.id.switchControl);
@@ -50,14 +51,10 @@ public class SettingsActivity extends Activity {
         background4 = (ImageView)findViewById(R.id.imageView4);
 
         //Get shared prefs:
-        final SharedPreferences prefs = getSharedPreferences(controlSettings, MODE_PRIVATE);
+        final SharedPreferences prefs = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
         controlSwitch.setChecked(prefs.getBoolean(controlSettingsKey, false)); //false default
-
-        final SharedPreferences prefs2 = getSharedPreferences(soundSettings, MODE_PRIVATE);
-        soundSwitch.setChecked(prefs2.getBoolean(soundSettingsKey, false)); //false default
-
-        final SharedPreferences prefs3 = getSharedPreferences(backgroundSettings, MODE_PRIVATE);
-        chosenBackgroundNumber = prefs3.getInt(backgroundSettingsKey, 2);   //second background on default
+        soundSwitch.setChecked(prefs.getBoolean(soundSettingsKey, false)); //false default
+        chosenBackgroundNumber = prefs.getInt(backgroundSettingsKey, 2);   //second background on default
 
 
         //Set starting state of images:
@@ -89,7 +86,6 @@ public class SettingsActivity extends Activity {
                 break;
         }
 
-        Log.i("MyTAG", "Value: " + Integer.toString(chosenBackgroundNumber));
 
         // Done button:
         doneBtn.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +120,7 @@ public class SettingsActivity extends Activity {
                     background3.setColorFilter(Color.argb(75, 0, 0, 0));
                     background4.setColorFilter(Color.argb(75, 0, 0, 0));
                     chosenBackgroundNumber = 1;
+                    alertGameSurface(chosenBackgroundNumber);
                 }
                 return false;
             }
@@ -138,6 +135,7 @@ public class SettingsActivity extends Activity {
                     background3.setColorFilter(Color.argb(75, 0, 0, 0));
                     background4.setColorFilter(Color.argb(75, 0, 0, 0));
                     chosenBackgroundNumber = 2;
+                    alertGameSurface(chosenBackgroundNumber);
                 }
                 return false;
             }
@@ -152,6 +150,7 @@ public class SettingsActivity extends Activity {
                     background1.setColorFilter(Color.argb(75, 0, 0, 0));
                     background4.setColorFilter(Color.argb(75, 0, 0, 0));
                     chosenBackgroundNumber = 3;
+                    alertGameSurface(chosenBackgroundNumber);
                 }
                 return false;
             }
@@ -166,6 +165,7 @@ public class SettingsActivity extends Activity {
                     background3.setColorFilter(Color.argb(75, 0, 0, 0));
                     background1.setColorFilter(Color.argb(75, 0, 0, 0));
                     chosenBackgroundNumber = 4;
+                    alertGameSurface(chosenBackgroundNumber);
                 }
                 return false;
             }
@@ -178,13 +178,18 @@ public class SettingsActivity extends Activity {
         super.onDestroy();
 
         //Saving the shared preferences upon exit:
-        final SharedPreferences prefs = getSharedPreferences(controlSettings, MODE_PRIVATE);
+        final SharedPreferences prefs = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
         prefs.edit().putBoolean(controlSettingsKey, controlSwitch.isChecked()).apply();
+        prefs.edit().putBoolean(soundSettingsKey, soundSwitch.isChecked()).apply();
+        prefs.edit().putInt(backgroundSettingsKey, chosenBackgroundNumber).apply();
+    }
 
-        final SharedPreferences prefs2 = getSharedPreferences(soundSettings, MODE_PRIVATE);
-        prefs2.edit().putBoolean(soundSettingsKey, soundSwitch.isChecked()).apply();
 
-        final SharedPreferences prefs3 = getSharedPreferences(backgroundSettings, MODE_PRIVATE);
-        prefs3.edit().putInt(backgroundSettingsKey, chosenBackgroundNumber).apply();
+
+    private void alertGameSurface(int selectedBackground){
+        Intent intent = new Intent();
+        intent.setAction(GameSurface.MyBroadcastReceiver.ACTION);
+        intent.putExtra(SELECTED_BACKGROUND_INTENT_EXTRA, selectedBackground);
+        getApplicationContext().sendBroadcast(intent);
     }
 }

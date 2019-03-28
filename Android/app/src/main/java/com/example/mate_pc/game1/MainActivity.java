@@ -1,38 +1,29 @@
 package com.example.mate_pc.game1;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.widget.TextView;
 
 import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import com.example.mate_pc.game1.network_stuff.ConnectorClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
+import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
 import static com.example.mate_pc.game1.Constants.START_CONNECTOR_CODE;
-import static com.example.mate_pc.game1.Constants.controlSettings;
 import static com.example.mate_pc.game1.Constants.controlSettingsKey;
-import static com.example.mate_pc.game1.Constants.soundSettings;
 import static com.example.mate_pc.game1.Constants.soundSettingsKey;
 
 public class MainActivity extends AppCompatActivity {
@@ -161,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setControl(){
-        SharedPreferences prefs = getSharedPreferences(controlSettings, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
         isJoystick = prefs.getBoolean(controlSettingsKey, false);
         if(isJoystick){
             up.setVisibility(View.INVISIBLE);
@@ -178,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setSound(){
-        SharedPreferences prefs2 = getSharedPreferences(soundSettings, MODE_PRIVATE);
+        SharedPreferences prefs2 = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
         isSound = prefs2.getBoolean(soundSettingsKey, false);
         AudioManager amanager;
         amanager = (AudioManager)getSystemService(AUDIO_SERVICE);
