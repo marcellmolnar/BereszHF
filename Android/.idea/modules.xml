@@ -3,11 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android.iml" filepath="$PROJECT_DIR$/Android.iml" />
-      <module fileurl="file://$USER_HOME$/mate_pc/AndroidStudioProjects/javaHF/BereszHF.iml" filepath="$USER_HOME$/mate_pc/AndroidStudioProjects/javaHF/BereszHF.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$USER_HOME$/mate_pc/AndroidStudioProjects/javaHF/app/app.iml" filepath="$USER_HOME$/mate_pc/AndroidStudioProjects/javaHF/app/app.iml" />
-      <module fileurl="file://$USER_HOME$/mate_pc/AndroidStudioProjects/javaHF/game1.iml" filepath="$USER_HOME$/mate_pc/AndroidStudioProjects/javaHF/game1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/javaHF.iml" filepath="$PROJECT_DIR$/javaHF.iml" />
     </modules>
   </component>
 </project>

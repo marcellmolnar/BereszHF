@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#80FFFFFF"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -23,13 +26,18 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:checked="false"
+                android:textOff=" "
+                android:textOn=" "
                 android:thumb="@drawable/ricardo2"
-                android:track="@color/colorAccent" />
+                android:track="@color/colorAccent"
+                tools:textOff=" "
+                tools:textOn=" " />
 
             <TextView
                 android:id="@+id/textControl1"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:layout_toStartOf="@+id/switchControl"
                 android:text="@string/buttons"
                 android:textColor="@color/black"
@@ -39,11 +47,87 @@
                 android:id="@+id/textControl2"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:layout_toEndOf="@+id/switchControl"
-                android:text="@string/joystick"
+                android:text="Érintés"
                 android:textColor="@color/black"
                 android:textSize="32sp" />
 
+            <Switch
+                android:id="@+id/switchSound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80sp"
+                android:checked="false"
+                android:textOff=" "
+                android:textOn=" "
+                android:thumb="@drawable/ricardo3"
+                android:track="@color/colorAccent"
+                tools:textOff="  "
+                tools:textOn=" " />
+
+            <TextView
+                android:id="@+id/textControl3"
+                android:layout_marginTop="80sp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_toStartOf="@+id/switchSound"
+                android:text="Hang be"
+                android:textColor="@color/black"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/textControl4"
+                android:layout_marginTop="80sp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_toEndOf="@+id/switchSound"
+                android:text="Hang ki"
+                android:textColor="@color/black"
+                android:textSize="32sp" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                android:layout_marginTop="170sp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="0dp"
+                    android:layout_height="60sp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:src="@drawable/game_background_15" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="0dp"
+                    android:layout_height="60sp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:src="@drawable/game_background" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="0dp"
+                    android:layout_height="60sp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:src="@drawable/game_background_16" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="0dp"
+                    android:layout_height="60sp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:src="@drawable/game_background_14" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -53,7 +137,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/myframe"
             android:layout_centerHorizontal="true"
-            android:text="@string/done" />
+            android:text="Kész" />
+
+
 
     </RelativeLayout>
 
