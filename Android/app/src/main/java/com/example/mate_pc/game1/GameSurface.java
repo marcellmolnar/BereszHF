@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -66,6 +68,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private int soundIdOnShoot;
     private int soundIdOnKill;
     private int soundIdOnWin;
+    private int soundIdOnHitOpponent;
+    int OwnHealth = 3;
+    int OpponentHealth = 3;
 
     private boolean soundPoolLoaded;
     private SoundPool soundPool;
@@ -129,8 +134,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         //load tha sound of shoot into pool
         this.soundIdOnShoot= this.soundPool.load(this.getContext(), R.raw.shoot,1);
 
-        //load tha sound of character hit into pool
+        //load tha sound of character hit into pool TODO:Choose another effect for own character:
         this.soundIdOnHitCharacter = this.soundPool.load(this.getContext(), R.raw.character_hit,1);
+
+        //load tha sound of character hit into pool
+        this.soundIdOnHitOpponent = this.soundPool.load(this.getContext(), R.raw.character_hit,1);
+
 
         //load tha sound of platform hit into pool
         this.soundIdOnHitPlatform = this.soundPool.load(this.getContext(),R.raw.platform_hit,1);
@@ -150,6 +159,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             int streamId = this.soundPool.play(this.soundIdOnHitCharacter,leftVolumn, rightVolumn, 1, 0, 1f);
         }
     }
+    public void playEffectOnOpponentHit() {
+        if(this.soundPoolLoaded) {
+            float leftVolumn = 0.8f;
+            float rightVolumn =  0.8f;
+            int streamId = this.soundPool.play(this.soundIdOnHitOpponent,leftVolumn, rightVolumn, 1, 0, 1f);
+        }
+    }
+
 
     public void playEffectOnPlatformHit() {
         if(this.soundPoolLoaded) {
@@ -191,6 +208,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         opponent.setX((int) (relX * getWidth()));
         opponent.setY((int) (relY * getHeight()));
     }
+    public void setOwnHealth(int hp){
+        if (OwnHealth > hp){
+            playEffectOnCharacterHit();
+            OwnHealth = hp;
+        }
+    }
 
     public void update()  {
 
@@ -211,13 +234,15 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         for(int i = 0; i < myBullets.size(); i++){
             if (myBullets.get(i).isHit(opponent)){
                 indexesToDel.add(i);
-                playEffectOnCharacterHit();
+                playEffectOnOpponentHit();
+                OpponentHealth--;
             }
 
         }
         for(int ind : indexesToDel){
             myBullets.remove(ind);
         }
+
 
         for(int i = 0; i < myBullets.size(); i++)
         {
@@ -250,9 +275,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         if (webSocket.isConnected()) {
             JSONObject characterJson = new JSONObject();
             try {
-                // ToDo: character's health also should be synchronized!
+                // ToDo: character's health also should be synchronized! By sending the opponent's health (not own) for handling the time-delay proplem
                 characterJson.put("x", (double) (getWidth() - character.getWidth() - character.getX()) / getWidth());
                 characterJson.put("y", (double) (character.getY()) / getHeight());
+                characterJson.put("opponentHealth", OpponentHealth);
                 json.put("character", characterJson);
             } catch (JSONException je) {
                 je.printStackTrace();
@@ -284,6 +310,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         else {
             webSocket.send("join");
         }
+        //TODO: Set playbutton visibility upon winning :O
+        /*if(OpponentHealth <= 0){
+            MainActivity.playButton.setVisibility(View.VISIBLE);
+        }
+        else{
+            playButton.setVisibility(View.INVISIBLE);
+        }*/
+
 
     }
 
@@ -513,7 +547,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         int backgroundRes = 1;
         switch (chosenBackgroundNumber){
             case 1:
-                    backgroundRes = R.drawable.game_background_15;
+                backgroundRes = R.drawable.game_background_15;
                 break;
             case 3:
                 backgroundRes = R.drawable.game_background_16;
