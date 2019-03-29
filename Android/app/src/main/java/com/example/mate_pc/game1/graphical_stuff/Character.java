@@ -199,6 +199,7 @@ public class Character extends GameObject {
         }*/
     }
 
+
     int getBottomHeight() {
         return y+getHeight();
     }

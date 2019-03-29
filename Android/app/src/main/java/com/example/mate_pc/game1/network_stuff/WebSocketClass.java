@@ -116,13 +116,16 @@ public class WebSocketClass implements Parcelable {
                 public void onMessage(String s) {
                     double x;
                     double y;
+                    int OwnHealth;
                     try {
                         JSONObject reader = new JSONObject(s);
 
                         JSONObject main  = reader.getJSONObject("character");
                         x = main.getDouble("x");
                         y = main.getDouble("y");
+                        OwnHealth = main.getInt("opponentHealth");
                         gameSurface.setOpponentXY(x, y);
+                        gameSurface.setOwnHealth (OwnHealth);
 
 
                         JSONArray bullets = reader.getJSONArray("bullets");
