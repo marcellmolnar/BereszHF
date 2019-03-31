@@ -1,9 +1,12 @@
 package com.example.mate_pc.game1.graphical_stuff;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.mate_pc.game1.GameSurface;
+import com.example.mate_pc.game1.R;
 
 public class Character extends GameObject {
 
@@ -30,6 +33,9 @@ public class Character extends GameObject {
     private Bitmap[] bottomToTops;
 
 
+    Bitmap[] healthBars;
+
+
     private double movingVectorX = 0;
     private double movingVectorY = 0;
 
@@ -44,7 +50,11 @@ public class Character extends GameObject {
     long lastDrawNanoTime = -1;
     double pixelsWalked = 0;
 
-    private GameSurface gameSurface;
+    private int ownHealth;
+    int healthBarHeight;
+    int healthBarWidth;
+
+    GameSurface gameSurface;
 
     public Character(GameSurface gameSurface, Bitmap image, int x, int y, int height) {
         super(image, 4, 3, x, y, height);
@@ -69,6 +79,34 @@ public class Character extends GameObject {
             leftToRights[col] = createSubImageAt(ROW_LEFT_TO_RIGHT, col);
             bottomToTops[col] = createSubImageAt(ROW_BOTTOM_TO_TOP, col);
         }
+
+        this.ownHealth = 3;
+
+        // ToDo: read empty bar
+        healthBars = new Bitmap[4];
+        Bitmap health00 = BitmapFactory.decodeResource(this.gameSurface.getContext().getResources(),
+                R.drawable.health3);
+
+        this.healthBarHeight = (int) (this.gameSurface.getHeight() * 0.1);
+        this.healthBarWidth = (int)((double)(this.healthBarHeight * health00.getWidth()) / health00.getHeight());
+
+        Bitmap health0 = Bitmap.createScaledBitmap(health00, healthBarWidth, healthBarHeight, false);
+        healthBars[0] = Bitmap.createBitmap(health0, 0, 0 , healthBarWidth, healthBarHeight);
+
+        Bitmap health10 = BitmapFactory.decodeResource(this.gameSurface.getContext().getResources(),
+                R.drawable.health3);
+        Bitmap health1 = Bitmap.createScaledBitmap(health10, healthBarWidth, healthBarHeight, false);
+        healthBars[1] = Bitmap.createBitmap(health1, 0, 0 , healthBarWidth, healthBarHeight);
+
+        Bitmap health20 = BitmapFactory.decodeResource(this.gameSurface.getContext().getResources(),
+                R.drawable.health2);
+        Bitmap health2 = Bitmap.createScaledBitmap(health20, healthBarWidth, healthBarHeight, false);
+        healthBars[2] = Bitmap.createBitmap(health2, 0, 0 , healthBarWidth, healthBarHeight);
+
+        Bitmap health30 = BitmapFactory.decodeResource(this.gameSurface.getContext().getResources(),
+                R.drawable.health1);
+        Bitmap health3 = Bitmap.createScaledBitmap(health30, healthBarWidth, healthBarHeight, false);
+        healthBars[3] = Bitmap.createBitmap(health3, 0, 0 , healthBarWidth, healthBarHeight);
     }
 
     private Bitmap[] getMoveBitmaps() {
@@ -91,7 +129,7 @@ public class Character extends GameObject {
         }
     }
 
-    private Bitmap getCurrentMoveBitmap() {
+    public Bitmap getCurrentMoveBitmap() {
         Bitmap[] bitmaps = getMoveBitmaps();
         assert bitmaps != null;
         return bitmaps[colUsing];
@@ -210,6 +248,14 @@ public class Character extends GameObject {
         canvas.drawBitmap(bitmap,x, y, null);
         // Last draw time.
         lastDrawNanoTime = System.nanoTime();
+
+        Log.i("MyTag", "my health is:     "+String.valueOf(this.getHealth()));
+        Log.i("MyTag", "wtf is happening");
+        if (this.ownHealth > 0) {
+            canvas.drawBitmap(this.healthBars[this.getHealth()], (float) (0.1 * this.healthBarWidth),
+                    (float) (0.1 * this.healthBarHeight), null);
+        }
+
     }
 
     public boolean isSeeingToRight() {
@@ -236,5 +282,13 @@ public class Character extends GameObject {
 
     public void setFloorHeight(int height) {
         floorHeight = height;
+    }
+
+    public int getHealth(){
+        return this.ownHealth;
+    }
+
+    public void setHealth(int hp){
+        this.ownHealth = hp;
     }
 }

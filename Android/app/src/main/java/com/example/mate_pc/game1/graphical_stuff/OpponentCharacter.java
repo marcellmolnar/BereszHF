@@ -1,6 +1,8 @@
 package com.example.mate_pc.game1.graphical_stuff;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.util.Log;
 
 import com.example.mate_pc.game1.GameSurface;
 
@@ -12,6 +14,22 @@ public class OpponentCharacter extends Character {
     public OpponentCharacter(GameSurface gameSurface, Bitmap image, int x, int y, int height) {
         super(gameSurface, image, x, y, height);
         rowUsing = ROW_RIGHT_TO_LEFT;
+    }
+
+
+    @Override
+    public void draw(Canvas canvas) {
+        //super.draw(canvas);
+        Bitmap bitmap = getCurrentMoveBitmap();
+        canvas.drawBitmap(bitmap,x, y, null);
+        // Last draw time.
+        lastDrawNanoTime = System.nanoTime();
+
+        if (this.getHealth() > 0) {
+            canvas.drawBitmap(this.healthBars[this.getHealth()], (float) (this.gameSurface.getWidth()
+                    - 1.1 * this.healthBarWidth), (float) (0.1 * this.healthBarHeight), null);
+        }
+
     }
 
     @Override

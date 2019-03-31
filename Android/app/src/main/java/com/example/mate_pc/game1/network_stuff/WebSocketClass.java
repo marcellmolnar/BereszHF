@@ -125,7 +125,7 @@ public class WebSocketClass implements Parcelable {
                         y = main.getDouble("y");
                         OwnHealth = main.getInt("opponentHealth");
                         gameSurface.setOpponentXY(x, y);
-                        gameSurface.setOwnHealth (OwnHealth);
+                        gameSurface.setOwnHealth(OwnHealth);
 
 
                         JSONArray bullets = reader.getJSONArray("bullets");

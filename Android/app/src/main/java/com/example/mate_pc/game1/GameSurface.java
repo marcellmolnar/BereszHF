@@ -72,9 +72,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private boolean soundPoolLoaded;
     private SoundPool soundPool;
 
-    int OwnHealth = 3;
-    int OpponentHealth = 3;
-
     private WebSocketClass webSocket;
 
     private MyBroadcastReceiver receiver;
@@ -101,6 +98,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         activity.registerReceiver(receiver, new IntentFilter(MyBroadcastReceiver.ACTION));
 
     }
+
+    // ToDo (for Mate ;) ): create class for sound handling
 
     //initialization of soundpool
     private void initSoundPool()  {
@@ -208,10 +207,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         opponent.setX((int) (relX * getWidth()));
         opponent.setY((int) (relY * getHeight()));
     }
+
     public void setOwnHealth(int hp){
-        if (OwnHealth > hp){
+        if (character.getHealth() > hp){
             playEffectOnCharacterHit();
-            OwnHealth = hp;
+            character.setHealth(hp);
         }
         //else?
     }
@@ -234,12 +234,12 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         ArrayList<Integer> indexesToDel = new ArrayList<>();
         for(int i = 0; i < myBullets.size(); i++){
             if (myBullets.get(i).isHit(opponent)){      //check if opponent hit
-                if(OpponentHealth == 0) {
+                if(opponent.getHealth() == 0) {
                     playEffectOnKill();
                 }
                 else {
                     playEffectOnOpponentHit();
-                    OpponentHealth--;
+                    opponent.setHealth(opponent.getHealth()-1);
                 }
                 indexesToDel.add(i);
             }
@@ -284,7 +284,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
                 // ToDo: character's health also should be synchronized! By sending the opponent's health (not own) for handling the time-delay proplem
                 characterJson.put("x", (double) (getWidth() - character.getWidth() - character.getX()) / getWidth());
                 characterJson.put("y", (double) (character.getY()) / getHeight());
-                characterJson.put("opponentHealth", OpponentHealth);
+                characterJson.put("opponentHealth", opponent.getHealth());
                 json.put("character", characterJson);
             } catch (JSONException je) {
                 je.printStackTrace();
