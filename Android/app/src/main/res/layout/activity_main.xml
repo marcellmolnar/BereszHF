@@ -16,12 +16,6 @@
         android:layout_gravity="top|start" />
 
 
-    <ImageView
-        android:id="@+id/health"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_gravity="top|end"
-        android:src="@drawable/health1"/>
 
 
 
@@ -40,6 +34,13 @@
 
     </LinearLayout>
 
+
+    <ImageView
+        android:id="@+id/health"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        app:srcCompat="@drawable/health1" />
 
     <FrameLayout
         android:layout_width="140dp"
