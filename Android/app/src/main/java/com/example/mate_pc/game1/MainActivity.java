@@ -3,6 +3,7 @@ package com.example.mate_pc.game1;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.widget.RelativeLayout;
 
 import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import com.example.mate_pc.game1.network_stuff.ConnectorClass;
@@ -118,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+       // ImageView health_image = (ImageView)findViewById(R.id.health);    //image views for different images
+       // int res = getResources().getIdentifier("@drawable/health1",null,getPackageName());
+        //Drawable draw = getResources().getDrawable(res);
+       // health_image.setImageDrawable(draw);
 
         InitBackgroundAudio(this);
         setControl();

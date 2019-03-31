@@ -69,11 +69,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private int soundIdOnKill;
     private int soundIdOnWin;
     private int soundIdOnHitOpponent;
-    int OwnHealth = 3;
-    int OpponentHealth = 3;
-
     private boolean soundPoolLoaded;
     private SoundPool soundPool;
+
+    int OwnHealth = 3;
+    int OpponentHealth = 3;
 
     private WebSocketClass webSocket;
 
@@ -131,38 +131,38 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             }
         });
 
-        //load tha sound of shoot into pool
+        //load the sound of shoot into pool
         this.soundIdOnShoot= this.soundPool.load(this.getContext(), R.raw.shoot,1);
 
-        //load tha sound of character hit into pool TODO:Choose another effect for own character:
+        //load the sound of character hit into pool
         this.soundIdOnHitCharacter = this.soundPool.load(this.getContext(), R.raw.character_hit,1);
 
-        //load tha sound of character hit into pool
+        //load the sound of opponent hit into pool  //should we separate this?
         this.soundIdOnHitOpponent = this.soundPool.load(this.getContext(), R.raw.character_hit,1);
 
 
-        //load tha sound of platform hit into pool
+        //load the sound of platform hit into pool
         this.soundIdOnHitPlatform = this.soundPool.load(this.getContext(),R.raw.platform_hit,1);
 
-        //load tha sound of platform hit into pool
+        //load the sound of kill into pool
         this.soundIdOnKill = this.soundPool.load(this.getContext(),R.raw.fail,1);
 
-        //load tha sound of platform hit into pool
+        //load the sound of win into pool
         this.soundIdOnWin = this.soundPool.load(this.getContext(),R.raw.win,1);
     }
 
     //audio effect functions for specific sound ID
     public void playEffectOnCharacterHit() {
         if(this.soundPoolLoaded) {
-            float leftVolumn = 0.8f;
-            float rightVolumn =  0.8f;
+            float leftVolumn = 1.0f;
+            float rightVolumn =  1.0f;
             int streamId = this.soundPool.play(this.soundIdOnHitCharacter,leftVolumn, rightVolumn, 1, 0, 1f);
         }
     }
     public void playEffectOnOpponentHit() {
         if(this.soundPoolLoaded) {
-            float leftVolumn = 0.8f;
-            float rightVolumn =  0.8f;
+            float leftVolumn = 1.0f;
+            float rightVolumn =  1.0f;
             int streamId = this.soundPool.play(this.soundIdOnHitOpponent,leftVolumn, rightVolumn, 1, 0, 1f);
         }
     }
@@ -213,6 +213,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             playEffectOnCharacterHit();
             OwnHealth = hp;
         }
+        //else?
     }
 
     public void update()  {
@@ -232,19 +233,24 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
         ArrayList<Integer> indexesToDel = new ArrayList<>();
         for(int i = 0; i < myBullets.size(); i++){
-            if (myBullets.get(i).isHit(opponent)){
+            if (myBullets.get(i).isHit(opponent)){      //check if opponent hit
+                if(OpponentHealth == 0) {
+                    playEffectOnKill();
+                }
+                else {
+                    playEffectOnOpponentHit();
+                    OpponentHealth--;
+                }
                 indexesToDel.add(i);
-                playEffectOnOpponentHit();
-                OpponentHealth--;
             }
 
         }
-        for(int ind : indexesToDel){
+        for(int ind : indexesToDel){                    //delete bullets that hit character
             myBullets.remove(ind);
         }
 
 
-        for(int i = 0; i < myBullets.size(); i++)
+        for(int i = 0; i < myBullets.size(); i++)       //delete bullets that left screen
         {
             if(myBullets.get(i).getX() + myBullets.get(i).getWidth() < 0 || myBullets.get(i).getX() > this.getWidth())
             {
@@ -252,7 +258,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             }
         }
 
-        ArrayList<Integer> indexesToDelete = new ArrayList<>();
+        ArrayList<Integer> indexesToDelete = new ArrayList<>(); //check if bullets hit platform
         for(int i = 0; i < myBullets.size(); i++) {
             for (Platform platform : platforms) {
                 if (myBullets.get(i).isHit(platform)) {
@@ -261,7 +267,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
                 }
             }
         }
-        for(int ind : indexesToDelete){
+        for(int ind : indexesToDelete){                         //delete bullets that hit platform
             myBullets.remove(ind);
         }
 
@@ -271,7 +277,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
         opponent.update();
 
-        JSONObject json = new JSONObject();
+        JSONObject json = new JSONObject();                     //send position and opponent health
         if (webSocket.isConnected()) {
             JSONObject characterJson = new JSONObject();
             try {
@@ -285,7 +291,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             }
         }
 
-        if (webSocket.isConnected()) {
+        if (webSocket.isConnected()) {                          //send own bullets
             JSONArray jsonArray = new JSONArray();
             for (Bullet bullet : myBullets) {
                 JSONObject jbullet = new JSONObject();
