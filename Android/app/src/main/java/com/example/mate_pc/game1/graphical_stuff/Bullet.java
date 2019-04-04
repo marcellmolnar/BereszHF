@@ -50,5 +50,8 @@ public class Bullet extends GameObject {
         this.x = this.x + (int)this.movingVectorX;
     }
 
+    public boolean isSeeingToRight() {
+        return (this.movingVectorX < 0);
+    }
 
 }

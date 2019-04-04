@@ -299,6 +299,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
                     // ToDo: character's health also should be synchronized!
                     jbullet.put("x", (double) (getWidth() - bullet.getWidth() - bullet.getX()) / getWidth());
                     jbullet.put("y", (double) (bullet.getY()) / getHeight());
+                    jbullet.put("isSeeingRight", bullet.isSeeingToRight());
                     jsonArray.put(jbullet);
                 } catch (JSONException je) {
                     je.printStackTrace();
@@ -474,20 +475,26 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         playEffectOnShoot();
     }
 
-    public void createNewOpponentBullet(double relX, double relY, boolean bulletSeeingRight) {
+    private Bitmap bulletRight = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_right);
+    private Bitmap bulletLeft = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_left);
+
+    public void createNewOpponentBullet(double[][] bullets, boolean[] isBulletSeeingRight, int bulletsSize) {
         opponentBullets.clear();
-        Bitmap bullet;
         int velocity = (int) (Character.MAX_SPEED*1.5);
         int bulletHeight = (int)((double)getHeight()/30);
-        if(bulletSeeingRight){
-            bullet = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_right);
-        }else{
-            bullet = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_left);
-            velocity = -velocity;
+        for (int i = 0; i < bulletsSize; i++) {
+            double[] coordinates = bullets[i];
+            Bitmap bullet;
+            if (isBulletSeeingRight[i]) {
+                bullet = bulletRight;
+            } else {
+                bullet = bulletLeft;
+                velocity = -velocity;
+            }
+            int bulletX = (int) (coordinates[0] * this.getWidth());
+            int bulletY = (int) (coordinates[1] * this.getHeight());
+            opponentBullets.add(new Bullet(bullet, bulletX, bulletY, bulletHeight, velocity));
         }
-        int bulletX = (int) (relX * this.getWidth());
-        int bulletY = (int) (relY * this.getHeight());
-        opponentBullets.add(new Bullet(bullet, bulletX, bulletY, bulletHeight, velocity));
     }
 
     private boolean isJoystickOn = false;
@@ -547,6 +554,17 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
+
+
+
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+        public static final String ACTION = "com.example.mate_pc.BACKGROUND_CHANGED";
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int selectedBackground = intent.getIntExtra(SELECTED_BACKGROUND_INTENT_EXTRA, 2);
+            onSettingsChanged(selectedBackground);
+        }
+    }
 
     public void onSettingsChanged(int chosenBackgroundNumber) {
 
@@ -614,14 +632,5 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
 
         background = createSubImage(scaled, x_offset, y_offset, getWidth(), getHeight());
-    }
-
-    public class MyBroadcastReceiver extends BroadcastReceiver {
-        public static final String ACTION = "com.example.mate_pc.BACKGROUND_CHANGED";
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int selectedBackground = intent.getIntExtra(SELECTED_BACKGROUND_INTENT_EXTRA, 2);
-            onSettingsChanged(selectedBackground);
-        }
     }
 }

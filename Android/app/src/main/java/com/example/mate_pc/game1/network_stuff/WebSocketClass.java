@@ -129,12 +129,22 @@ public class WebSocketClass implements Parcelable {
 
 
                         JSONArray bullets = reader.getJSONArray("bullets");
+                        double[][] bulletCoordinates = new double[bullets.length()][3];
+                        boolean[] isBulletSeeingRight = new boolean[bullets.length()];
                         for(int i=0; i<bullets.length(); i++){
+
                             JSONObject json_data = bullets.getJSONObject(i);
-                            double bulletX = main.getDouble("x");
-                            double bulletY = main.getDouble("y");
+                            double bulletX = json_data.getDouble("x");
+                            double bulletY = json_data.getDouble("y");
+                            boolean isSeeingRight = json_data.getBoolean("isSeeingRight");
+
+                            bulletCoordinates[i][0] = bulletX;
+                            bulletCoordinates[i][1] = bulletY;
+                            isBulletSeeingRight[i] = isSeeingRight;
 
                         }
+
+                        gameSurface.createNewOpponentBullet(bulletCoordinates, isBulletSeeingRight, bullets.length());
 
                     } catch (JSONException e) {
                         //e.printStackTrace();
