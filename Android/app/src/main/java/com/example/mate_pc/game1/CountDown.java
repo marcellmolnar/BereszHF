@@ -1,11 +1,9 @@
 package com.example.mate_pc.game1;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -78,7 +76,6 @@ public class CountDown extends AsyncTask<Void,Void, Void> {
                     if (dialog.isShowing()){
                         dialog.dismiss();
                     }
-                    Log.i("MyTag", "done");
                 }
             }
         };

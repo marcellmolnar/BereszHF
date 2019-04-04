@@ -249,8 +249,6 @@ public class Character extends GameObject {
         // Last draw time.
         lastDrawNanoTime = System.nanoTime();
 
-        Log.i("MyTag", "my health is:     "+String.valueOf(this.getHealth()));
-        Log.i("MyTag", "wtf is happening");
         if (this.ownHealth > 0) {
             canvas.drawBitmap(this.healthBars[this.getHealth()], (float) (0.1 * this.healthBarWidth),
                     (float) (0.1 * this.healthBarHeight), null);

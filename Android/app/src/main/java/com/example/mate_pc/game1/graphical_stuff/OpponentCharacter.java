@@ -2,7 +2,6 @@ package com.example.mate_pc.game1.graphical_stuff;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
 
 import com.example.mate_pc.game1.GameSurface;
 

@@ -3,7 +3,6 @@ package com.example.mate_pc.game1;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +11,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.widget.RelativeLayout;
 
 import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import com.example.mate_pc.game1.network_stuff.ConnectorClass;
@@ -25,9 +22,10 @@ import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
+import static com.example.mate_pc.game1.Constants.SHOW_JOYSTICK_SETTINGS_KEY;
 import static com.example.mate_pc.game1.Constants.START_CONNECTOR_CODE;
-import static com.example.mate_pc.game1.Constants.controlSettingsKey;
-import static com.example.mate_pc.game1.Constants.soundSettingsKey;
+import static com.example.mate_pc.game1.Constants.CONTROL_SETTINGS_KEY;
+import static com.example.mate_pc.game1.Constants.SOUND_SETTINGS_KEY;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
     private final static int INTERVAL = 200;
     Handler mHandler = new Handler();
-
-    boolean isJoystick = false;
-    boolean isSound = false;
 
     @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Delete line to see affect.
     @Override
@@ -141,10 +136,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CODE_SETTINGS_MAY_CHANGED) {
-            setControl();
-            setSound();
-        }
+
+        setControl();
+        setSound();
 
         if (data != null) {
             webSocket.setIP(data.getStringExtra(CONNECTOR_IP_CODE));
@@ -162,24 +156,24 @@ public class MainActivity extends AppCompatActivity {
 
     private void setControl(){
         SharedPreferences prefs = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-        isJoystick = prefs.getBoolean(controlSettingsKey, false);
+        boolean isJoystick = prefs.getBoolean(CONTROL_SETTINGS_KEY, false);
+        boolean showJoystick = prefs.getBoolean(SHOW_JOYSTICK_SETTINGS_KEY, true);
         if(isJoystick){
             up.setVisibility(View.INVISIBLE);
             left.setVisibility(View.INVISIBLE);
             right.setVisibility(View.INVISIBLE);
-            gameSurface.isJoystick = true;
         }
         else{
             up.setVisibility(View.VISIBLE);
             left.setVisibility(View.VISIBLE);
             right.setVisibility(View.VISIBLE);
-            gameSurface.isJoystick = false;
         }
+        gameSurface.setJoystickUsage(isJoystick, showJoystick);
     }
 
     private void setSound(){
         SharedPreferences prefs2 = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-        isSound = prefs2.getBoolean(soundSettingsKey, false);
+        boolean isSound = prefs2.getBoolean(SOUND_SETTINGS_KEY, false);
         AudioManager amanager;
         amanager = (AudioManager)getSystemService(AUDIO_SERVICE);
 

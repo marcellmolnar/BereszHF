@@ -1,99 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80FFFFFF"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_gravity="top|center_horizontal" >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal">
 
         <RelativeLayout
-            android:id="@+id/myframe"
+            android:id="@+id/myFrame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="30dp">
+            android:layout_margin="10dp" >
 
-            <Switch
-                android:id="@+id/switchControl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:checked="false"
-                android:textOff=" "
-                android:textOn=" "
-                android:thumb="@drawable/ricardo2"
-                android:track="@color/colorAccent"
-                tools:textOff=" "
-                tools:textOn=" " />
+            <RelativeLayout
+                android:id="@+id/controlLinLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" >
 
-            <TextView
-                android:id="@+id/textControl1"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_toStartOf="@+id/switchControl"
-                android:text="@string/buttons"
-                android:textColor="@color/black"
-                android:textSize="32sp" />
+                <Switch
+                    android:id="@+id/switchControl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:checked="false"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/control_setting_switch"
+                    android:track="@color/colorAccent"
+                    tools:textOff=" "
+                    tools:textOn=" " />
 
-            <TextView
-                android:id="@+id/textControl2"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_toEndOf="@+id/switchControl"
-                android:text="Érintés"
-                android:textColor="@color/black"
-                android:textSize="32sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/switchControl"
+                    android:text="@string/buttons"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-            <Switch
-                android:id="@+id/switchSound"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="80sp"
-                android:checked="false"
-                android:textOff=" "
-                android:textOn=" "
-                android:thumb="@drawable/ricardo3"
-                android:track="@color/colorAccent"
-                tools:textOff="  "
-                tools:textOn=" " />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/switchControl"
+                    android:text="@string/joystick"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/textControl3"
-                android:layout_marginTop="80sp"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_toStartOf="@+id/switchSound"
-                android:text="Hang be"
-                android:textColor="@color/black"
-                android:textSize="32sp" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textControl4"
-                android:layout_marginTop="80sp"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_toEndOf="@+id/switchSound"
-                android:text="Hang ki"
-                android:textColor="@color/black"
-                android:textSize="32sp" />
+            <RelativeLayout
+                android:id="@+id/joystickLinLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/controlLinLayout" >
+
+                <Switch
+                    android:id="@+id/showJoystick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:checked="false"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/show_joystick_setting_switch"
+                    android:track="@color/colorAccent"
+                    tools:textOff=""
+                    tools:textOn="" />
+
+                <TextView
+                    android:id="@+id/showJoystickText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/showJoystick"
+                    android:text="@string/not_show"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/showJoystickText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/showJoystick"
+                    android:text="@string/show"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/soundLinLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/joystickLinLayout" >
+
+                <Switch
+                    android:id="@+id/switchSound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:checked="false"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/sound_setting_switch"
+                    android:track="@color/colorAccent"
+                    tools:textOff=""
+                    tools:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_toStartOf="@+id/switchSound"
+                    android:text="@string/sound_on"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_toEndOf="@+id/switchSound"
+                    android:text="@string/sound_off"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="4"
-                android:layout_marginTop="170sp">
+                android:layout_below="@id/soundLinLayout" >
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -101,6 +147,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
+                    android:focusable="true"
                     android:src="@drawable/game_background_15" />
 
                 <ImageView
@@ -109,6 +156,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
+                    android:focusable="true"
                     android:src="@drawable/game_background" />
 
                 <ImageView
@@ -117,6 +165,7 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
+                    android:focusable="true"
                     android:src="@drawable/game_background_16" />
 
                 <ImageView
@@ -125,22 +174,20 @@
                     android:layout_height="60sp"
                     android:layout_weight="1"
                     android:clickable="true"
+                    android:focusable="true"
                     android:src="@drawable/game_background_14" />
 
             </LinearLayout>
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/buttonDone"
-            android:layout_width="450dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/myframe"
-            android:layout_centerHorizontal="true"
-            android:text="Kész" />
+            <Button
+                android:id="@+id/buttonDone"
+                android:layout_width="450dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/myFrame"
+                android:layout_centerHorizontal="true"
+                android:text="@string/done" />
 
 
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

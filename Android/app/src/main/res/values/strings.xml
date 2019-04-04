@@ -3,7 +3,11 @@
     <string name="write_ip_here">Give the server\'s IP address!</string>
     <string name="connect">Connect!</string>
     <string name="buttons">Buttons</string>
-    <string name="joystick">Érintés</string>
+    <string name="joystick">Joystick</string>
     <string name="done">Done</string>
     <string name="connecting2player">Waiting for opponent..</string>
+    <string name="show">Show joystick</string>
+    <string name="not_show">Hide joystick</string>
+    <string name="sound_on">Sound on</string>
+    <string name="sound_off">Sound off</string>
 </resources>

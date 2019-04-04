@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.mate_pc.game1.GameSurface;
 import com.example.mate_pc.game1.SettingsActivity;
 import com.example.mate_pc.game1.R;
 
@@ -80,5 +79,14 @@ public class ConnectorClass extends Activity {
         activityResultCode = RESULT_CODE_SETTINGS_MAY_CHANGED;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // ToDo: delete these lines to not allow to start game, without connection
+        Intent data = new Intent();
+        data.putExtra(CONNECTOR_IP_CODE, ipAddress.getText().toString());
+        setResult(activityResultCode, data);
+        finish();
+    }
 }
 

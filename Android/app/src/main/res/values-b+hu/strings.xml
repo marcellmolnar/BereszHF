@@ -3,7 +3,11 @@
     <string name="write_ip_here">Írd be a szerver IP címét!</string>
     <string name="connect">Csatlakozás!</string>
     <string name="buttons">Gombok</string>
-    <string name="joystick">Joystick</string>
+    <string name="joystick">Érintés</string>
     <string name="done">Kész</string>
     <string name="connecting2player">Várakozás ellenfélre..</string>
+    <string name="show">Joystick mutatása</string>
+    <string name="not_show">Joystick elrejtése</string>
+    <string name="sound_on">Hang be</string>
+    <string name="sound_off">Hang ki</string>
 </resources>

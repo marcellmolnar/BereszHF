@@ -16,12 +16,9 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -39,13 +36,13 @@ import org.json.JSONObject;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
 import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA;
-import static com.example.mate_pc.game1.Constants.backgroundSettingsKey;
+import static com.example.mate_pc.game1.Constants.BACKGROUND_SETTINGS_KEY;
 
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, OnConnectionChangedListener {
 
 
-    boolean isJoystick = false;
     private GameThread gameThread;
+    private SenderClass senderClass;
 
     private Character character;
     private OpponentCharacter opponent;
@@ -53,6 +50,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private Platform[] platforms;
 
     private int gameFloorHeight = 0;
+
+    private boolean usingJoystick = false;
+    private boolean showJoystick = true;
 
     private Bitmap background;
     private Bitmap joystick_bg;
@@ -277,46 +277,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
         opponent.update();
 
-        JSONObject json = new JSONObject();                     //send position and opponent health
-        if (webSocket.isConnected()) {
-            JSONObject characterJson = new JSONObject();
-            try {
-                // ToDo: character's health also should be synchronized! By sending the opponent's health (not own) for handling the time-delay proplem
-                characterJson.put("x", (double) (getWidth() - character.getWidth() - character.getX()) / getWidth());
-                characterJson.put("y", (double) (character.getY()) / getHeight());
-                characterJson.put("opponentHealth", opponent.getHealth());
-                json.put("character", characterJson);
-            } catch (JSONException je) {
-                je.printStackTrace();
-            }
-        }
-
-        if (webSocket.isConnected()) {                          //send own bullets
-            JSONArray jsonArray = new JSONArray();
-            for (Bullet bullet : myBullets) {
-                JSONObject jbullet = new JSONObject();
-                try {
-                    // ToDo: character's health also should be synchronized!
-                    jbullet.put("x", (double) (getWidth() - bullet.getWidth() - bullet.getX()) / getWidth());
-                    jbullet.put("y", (double) (bullet.getY()) / getHeight());
-                    jbullet.put("isSeeingRight", bullet.isSeeingToRight());
-                    jsonArray.put(jbullet);
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                }
-            }
-            try {
-                json.put("bullets", jsonArray);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        if (webSocket.isConnected()) {
-            webSocket.send(json.toString());
-        }
-        else {
-            webSocket.send("join");
-        }
         //TODO: Set playbutton visibility upon winning :O
         /*if(OpponentHealth <= 0){
             MainActivity.playButton.setVisibility(View.VISIBLE);
@@ -327,6 +287,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
 
     }
+
 
 
     @Override
@@ -349,9 +310,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             opponentBullets.get(i).draw(canvas);
         }
 
-        if (isJoystickOn && isJoystick) {
-            //canvas.drawBitmap(joystick_bg, (int)(startPosX-joystick_size/2.0), (int)(startPosY-joystick_size/2.0), null);
-            //canvas.drawBitmap(joystick, (int)(currPosX-joystick_size/6.0), (int)(currPosY-joystick_size/6.0), null);
+        if (isJoystickOn && usingJoystick && showJoystick) {
+            canvas.drawBitmap(joystick_bg, (int)(startPosX-joystick_size/2.0), (int)(startPosY-joystick_size/2.0), null);
+            canvas.drawBitmap(joystick, (int)(currPosX-joystick_size/6.0), (int)(currPosY-joystick_size/6.0), null);
         }
 
     }
@@ -366,7 +327,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
             // Background image
             SharedPreferences prefs = context.getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-            int backgroundNum = prefs.getInt(backgroundSettingsKey, 2);
+            int backgroundNum = prefs.getInt(BACKGROUND_SETTINGS_KEY, 2);
             onSettingsChanged(backgroundNum);
 
             Bitmap chibiBitmap1 = BitmapFactory.decodeResource(getResources(), R.drawable.guy);
@@ -391,7 +352,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             platforms[7] = new Platform(platformIm, (int) (getWidth() - platforms[0].getWidth() - w4), (int) ((double) getHeight() / 3.0), (int) ((double) getHeight() / 24));
 
             joystick_size = (int) (getHeight() / 2.75);
-            Bitmap js_bg = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp));
+            Bitmap js_bg = drawableToBitmap(getResources().getDrawable(R.drawable.joystick));
             joystick_bg = Bitmap.createScaledBitmap(js_bg, (int) (joystick_size), (int) (joystick_size), false);
             Bitmap js = drawableToBitmap(getResources().getDrawable(R.drawable.ic_fiber_manual_record_black_24dp_stick));
             joystick = Bitmap.createScaledBitmap(js, (int) (joystick_size / 3), (int) (joystick_size / 3), false);
@@ -405,6 +366,80 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         gameThread.setRunning(true);
         gameThread.start();
 
+        senderClass = new SenderClass();
+        senderClass.setRunning(true);
+        senderClass.start();
+
+
+    }
+
+
+    private class SenderClass extends Thread {
+
+        private boolean running;
+
+        @Override
+        public void run() {
+
+
+            while(running)  {
+                long waitTime = 10;
+
+                try {
+                    // Sleep.
+                    sleep(waitTime);
+                } catch(InterruptedException ignored)  {
+                }
+
+
+                JSONObject json = new JSONObject();  //send position and opponent health
+                if (webSocket.isConnected()) {
+                    JSONObject characterJson = new JSONObject();
+                    try {
+                        characterJson.put("x", (double) (getWidth() - character.getWidth() -
+                                character.getX()) / getWidth());
+                        characterJson.put("y", (double) (character.getY()) / getHeight());
+                        characterJson.put("opponentHealth", opponent.getHealth());
+                        json.put("character", characterJson);
+                    } catch (JSONException je) {
+                        je.printStackTrace();
+                    }
+                }
+
+                if (webSocket.isConnected()) {                          //send own bullets
+                    JSONArray jsonArray = new JSONArray();
+                    for (Bullet bullet : myBullets) {
+                        JSONObject jbullet = new JSONObject();
+                        try {
+                            jbullet.put("x", (double) (getWidth() - bullet.getWidth() -
+                                    bullet.getX()) / getWidth());
+                            jbullet.put("y", (double) (bullet.getY()) / getHeight());
+                            jbullet.put("isSeeingRight", bullet.isSeeingToRight());
+                            jsonArray.put(jbullet);
+                        } catch (JSONException je) {
+                            je.printStackTrace();
+                        }
+                    }
+                    try {
+                        json.put("bullets", jsonArray);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (webSocket.isConnected()) {
+                    webSocket.send(json.toString());
+                }
+                else {
+                    webSocket.send("join");
+                }
+
+            }
+
+        }
+
+        void setRunning(boolean running)  {
+            this.running = running;
+        }
     }
 
     public static Bitmap drawableToBitmap (Drawable drawable) {
@@ -497,6 +532,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
+    public void setJoystickUsage(boolean useJoystick, boolean showTheJoystick){
+        this.usingJoystick = useJoystick;
+        this.showJoystick = showTheJoystick;
+    }
+
     private boolean isJoystickOn = false;
     private float startPosX;
     private float startPosY;
@@ -508,7 +548,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
 
     public void onJoystickTouchListener(MotionEvent motionEvent) {
-        if(isJoystick) {
+        if(usingJoystick) {
             int action = motionEvent.getAction();
             if (System.nanoTime() >= now + 500000000) {
                 jumpFlag = true;
@@ -523,22 +563,33 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             } else if (action == MotionEvent.ACTION_MOVE) {
                 float cx = motionEvent.getX();
                 float cy = motionEvent.getY();
-                if (cx > startPosX + joystick_size / 8) {
-                    currPosX = (float) (startPosX + joystick_size / 2.0 - joystick_size / 3.0);
+                if (cx > startPosX + joystick_size / 8) {                    // Going right
+                    currPosX = (float) (startPosX + joystick_size / 2.0);
                     setCharacterHorizontalAcceleration(1, false);
-                } else if (cx < startPosX - joystick_size / 8) {
-                    currPosX = (float) (startPosX - joystick_size / 2.0 + joystick_size / 3.0);
+                } else if (cx < startPosX - joystick_size / 8) {             // Going left
+                    currPosX = (float) (startPosX - joystick_size / 2.0);
                     setCharacterHorizontalAcceleration(-1, false);
-                } else {
+                } else {                           // if movement too small, do nothing
                     currPosX = startPosX;
                     setCharacterHorizontalAcceleration(0, true);
                 }
-                if ((cy < startPosY - joystick_size / 8) && jumpFlag ) {
-                    currPosX = startPosX;
-                    currPosY = (float) (startPosY - joystick_size / 2.0 + joystick_size / 3.0);
-                    setCharacterVerticalAcceleration(-1);
-                    now = System.nanoTime();
-                    jumpFlag = false;
+                if ((cy < startPosY - joystick_size / 8)  ) {     // Jump
+                    if (currPosX < startPosX) {
+                        currPosX = (float) (startPosX - joystick_size / (2*1.41421356));
+                        currPosY = (float) (startPosY - joystick_size / (2*1.41421356));
+                    }
+                    else if (currPosX > startPosX) {
+                        currPosX = (float) (startPosX + joystick_size / (2*1.41421356));
+                        currPosY = (float) (startPosY - joystick_size / (2*1.41421356));
+                    }
+                    else {
+                        currPosY = (float) (startPosY - joystick_size / 2.0);
+                    }
+                    if (jumpFlag) {
+                        setCharacterVerticalAcceleration(-1);
+                        now = System.nanoTime();
+                        jumpFlag = false;
+                    }
                 } else {
                     currPosY = startPosY;
                 }
@@ -568,7 +619,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
     public void onSettingsChanged(int chosenBackgroundNumber) {
 
-        int backgroundRes = 1;
+        int backgroundRes;
         switch (chosenBackgroundNumber){
             case 1:
                 backgroundRes = R.drawable.game_background_15;
@@ -582,7 +633,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             case 2:
             default:
                 backgroundRes = R.drawable.game_background;
-
                 break;
         }
         // Background image
