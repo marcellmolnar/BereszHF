@@ -1,0 +1,5 @@
+\select@language {magyar} \contentsline {chapter}{\numberline {1}Ultra-wideband (UWB) \'attekint\'es}{2}{chapter.1}% 
+\select@language {magyar} \contentsline {section}{\numberline {1.1}Heisenberg-f\'ele hat\'arozatlans\'agi elv - a s\'avsz\'eless\'eg megv\'alaszt\'asa}{2}{section.1.1}% 
+\select@language {magyar} \contentsline {chapter}{Irodalomjegyz\'ek}{3}{chapter*.1}% 
+\select@language {magyar} \contentsline {chapter}{F\"uggel\'ek}{4}{appendix*.2}% 
+\select@language {magyar} \contentsline {section}{\numberline {F.1}Els\H o}{4}{section.F.1}% 

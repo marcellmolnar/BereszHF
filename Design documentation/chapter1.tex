@@ -1,0 +1,135 @@
+%----------------------------------------------------------------------------
+\section{A feladat rövid összefoglalása}
+%----------------------------------------------------------------------------
+A megvalósítandó feladat egy kétdimenziós, oldalnézetes lövöldözõs játék létrehozása Android operációs rendszer alatt, mely a következõképpen mûködik.
+
+Egyszerre két játékos játszik egymás ellen, összesen fejenként három életponttal, websocket alapú kapcsolaton keresztül. A játék célja az ellenfél életpontjainak lenullázása. A játék elindításakor a felhasználó egy felugró menüpontban adhatja meg a csatlakozni kívánt szerver IP címét, illetve lehetõsége van ezen kívül az alapvetõ beállításokat változtatni a játék megkezdése elõtt. Tehát a vezérlési módok és az egyéni ízlésnek megfelelõ háttér kiválasztására, valamint a háttérzene ki-be kapcsolására.  A beállítások elvégzésével és a csatlakozás gomb megnyomásával a felhasználó csatlakozik a megadott szerverhez. A beállításokat az alkalmazás két indítása között is megõrzi. Amennyiben mindkét játékos sikeresen csatlakozott, a játék egy visszaszámlálást követõen elkezdõdik.
+
+A beállítások alkalmával megadott vezérlõ módok alapján vagy gombokkal vagy joystick segítségével van lehetõség a karakter mozgatására, az ellenfél megsebzésére pedig egy dedikált nyomógomb szolgál. A nyomógomb lenyomásakor egy számláló indul el, mely néhány másodpercig blokkolja az újratüzelést, ezzel megakadályozva sorozatos támadást. A játék dinamikájának kiszélesítésének érdekében a blokkoláson kívül akadályok is elhelyezésre kerülnek a pályán, amelyekre akár fel is lehet ugorni a karakterrel.
+
+%----------------------------------------------------------------------------
+\section{A program szerkezeti egységei}
+%----------------------------------------------------------------------------
+Az egyes class-ok többféleképpen csoportosíthatók. Funkciók tekintetében négy nagy csoportot különböztethetünk meg:
+\begin{itemize}
+  \item \textbf{a játék grafikus elemeit kezelõ osztályok,}
+  \item \textbf{a hálózat kezelésére szolgáló osztályok,}
+  \item \textbf{a program állapotgépét kezelõ osztályok,}
+  \item \textbf{a GUI kezeléséért felelõs osztályok.}
+\end{itemize}
+
+Az Android környezet által megkülönböztetett csoportok:
+\begin{itemize}
+  \item \textbf{hagyományos osztályok,}
+  \item \textbf{activity osztályok.}
+\end{itemize}
+
+Funkcionalitás alapján tehát négy alapvetõ osztálytípust különböztetünk meg. A továbbiakban az egyes csoportok tagjai kerülnek bemutatásra funkcionalitás és más osztályokkal való kapcsolat alapján.
+
+
+%----------------------------------------------------------------------------
+\section{Grafikus elemeket vezérlõ osztályok}
+%----------------------------------------------------------------------------
+\textbf{GameObject osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item Az osztály feladata a pályán elhelyezkedõ alapvetõ objektumok kezelése (karakterek, akadályok, lövedékek, stb.).
+  \item Minden játék objektum ebbõl az õsosztályból származik le.
+  \item Funkciói pl.: x, y pozíció megadása, szélesség és magasság megadása az adott objektumokra vonatkozóan.
+\end{itemize}
+
+\textbf{Character osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item A játékosok avatárjait megtestesítõ osztály, mely a GameObject-bõl származik le.
+  \item Alapvetõ feladata a karakterek dinamikájának kezelése, a pozíció frissítése, az élet kezelése, illetve a karakterek kirajzolása.
+\end{itemize}
+
+\textbf{Opponent osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item Funkcióját tekintve a Character osztállyal megegyezõ osztály.
+  \item A Character osztályból származik.
+  \item A pozíció frissítése a websocket felõl érkezõ adatok alapján történik.
+\end{itemize}
+
+\textbf{Bullet osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item Feladata a tüzeléskor kilõtt golyók kezelése pl.: találat vizsgálat, kirajzolás.
+  \item A GameObject-bõl származik.
+\end{itemize}
+
+\textbf{Platform osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item Feladata a pályán elhelyezett akadályok kirajzolása és annak vizsgálata, hogy az egyes karakterek rajta állnak-e vagy sem.
+  \item Szintén a GameObject-bõl származik.
+\end{itemize}
+
+%----------------------------------------------------------------------------
+\section{Kommunikációért felelõs osztályok}
+%----------------------------------------------------------------------------
+
+\textbf{Connector osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item Feladata a kapcsolat kiépítése két Android eszköz között, illetve az IP cím bevitelére szolgáló GUI kirajzolását is elvégzi.
+  \item Kommunikál a MainActivity és a SettingsActivity osztályokkal.
+\end{itemize}
+
+\textbf{Websocket osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item A hálózaton való adatküldésre és adatfogadásra szolgáló osztály.
+\end{itemize}
+
+%----------------------------------------------------------------------------
+\section{GUI kezelõ osztályok}
+%----------------------------------------------------------------------------
+
+\textbf{MainActivity osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item Az AppCompatActivity Android õsosztályból származik le.
+  \item A játék vezérléséhez szükséges nyomógombokat, joystick-ot, és a hozzájuk tartozó események kezeléséért felelõs.
+  \item GUI kezelésen kívül ebben az osztályban kerül implementálásra a háttérzene kezelése.
+\end{itemize}
+
+\textbf{SettingsActivity osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item A játék indulásakor megadható beállítások kezeléséért felelõs.
+  \item GUI funkciókat is ellát pl.: beállítások beviteléért felelõs gombok, switchek kezelése.
+  \item A MainActivity osztály számára szolgáltatja a konfigurációs információkat.
+\end{itemize}
+	
+%----------------------------------------------------------------------------
+\section{Egyéb segédosztályok}
+%----------------------------------------------------------------------------
+
+\textbf{CountDown osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item Az IP cím megadásakor, ha az ellenfél játékos is rácsatlakozott a szerverre egy számláló indul el, mely a játék kezdetét jelenti.
+  \item A beépített AsyncTask osztályból származik.
+  \item Blokkolja a játékost a mozgás és lövés lehetõségétõl egy ,,Dialog" ablakkal, amíg el nem indul a játék.
+\end{itemize}
+
+\textbf{Constants osztály}
+\begin{itemize}
+  \setlength\itemsep{0mm}
+  \item A beállítások nyilvántartására szolgáló absztrakt osztály.
+\end{itemize}
+\pagebreak
+
+%----------------------------------------------------------------------------
+\section{A rendszert leíró UML diagram}
+%----------------------------------------------------------------------------
+
+\begin{figure}[!h]
+\hspace*{-2.5cm}
+\includegraphics[width=190mm,keepaspectratio]{figures/uml.png}
+\caption{A programhoz tartozó UML diagram}
+\label{fig:control}
+\end{figure}
