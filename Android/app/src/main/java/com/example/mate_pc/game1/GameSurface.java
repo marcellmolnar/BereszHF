@@ -48,10 +48,13 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
     private Platform[] platforms;
 
-    private int gameFloorHeight = 0;
+    private int gameFloorHeight;
 
-    private boolean usingJoystick = false;
-    private boolean showJoystick = true;
+    private boolean showJoystick;
+    private float startPosX;
+    private float startPosY;
+    private float currPosX;
+    private float currPosY;
 
     private Bitmap background;
     private Bitmap joystick_bg;
@@ -95,6 +98,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         senderClass.setRunning(true);
         senderClass.start();
 
+        showJoystick = false;
+        gameFloorHeight = 0;
     }
 
     public void destroy() {
@@ -121,6 +126,16 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
+    public void setJoystickVisibility(boolean showJoystick, float startPosX, float startPosY) {
+        this.showJoystick = showJoystick;
+        this.startPosX = startPosX;
+        this.startPosY = startPosY;
+    }
+
+    public void setJoystickPoint(float currPosX, float currPosY) {
+        this.currPosX = currPosX;
+        this.currPosY = currPosY;
+    }
 
     public void setWebSocket(WebSocketClass webSocket) {
         senderClass.setWebSocket(webSocket);
@@ -233,7 +248,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             opponentBullets.get(i).draw(canvas);
         }
 
-        if (isJoystickOn && usingJoystick && showJoystick) {
+        if (showJoystick) {
             canvas.drawBitmap(joystick_bg, (int)(startPosX-joystick_size/2.0), (int)(startPosY-joystick_size/2.0), null);
             canvas.drawBitmap(joystick, (int)(currPosX-joystick_size/6.0), (int)(currPosY-joystick_size/6.0), null);
         }
@@ -297,7 +312,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
 
 
-    public static Bitmap drawableToBitmap (Drawable drawable) {
+    public static Bitmap drawableToBitmap(Drawable drawable) {
 
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable)drawable).getBitmap();
@@ -387,70 +402,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
-    public void setJoystickUsage(boolean useJoystick, boolean showTheJoystick){
-        this.usingJoystick = useJoystick;
-        this.showJoystick = showTheJoystick;
-    }
-
-    private boolean isJoystickOn = false;
-    private float startPosX;
-    private float startPosY;
-    private float currPosX;
-    private float currPosY;
-
-    private boolean jumpFlag = true;
-    long now;
-
-
-    public void onJoystickTouchListener(MotionEvent motionEvent) {
-        if(usingJoystick) {
-            int action = motionEvent.getAction();
-            if (System.nanoTime() >= now + 500000000) {
-                jumpFlag = true;
-            }
-            if (action == MotionEvent.ACTION_DOWN) {
-                isJoystickOn = true;
-                startPosX = motionEvent.getX();
-                startPosY = motionEvent.getY();
-            } else if (action == MotionEvent.ACTION_UP) {
-                isJoystickOn = false;
-                setCharacterHorizontalAcceleration(0, true);
-            } else if (action == MotionEvent.ACTION_MOVE) {
-                float cx = motionEvent.getX();
-                float cy = motionEvent.getY();
-                if (cx > startPosX + joystick_size / 8) {                    // Going right
-                    currPosX = (float) (startPosX + joystick_size / 2.0);
-                    setCharacterHorizontalAcceleration(1, false);
-                } else if (cx < startPosX - joystick_size / 8) {             // Going left
-                    currPosX = (float) (startPosX - joystick_size / 2.0);
-                    setCharacterHorizontalAcceleration(-1, false);
-                } else {                           // if movement too small, do nothing
-                    currPosX = startPosX;
-                    setCharacterHorizontalAcceleration(0, true);
-                }
-                if ((cy < startPosY - joystick_size / 8)  ) {     // Jump
-                    if (currPosX < startPosX) {
-                        currPosX = (float) (startPosX - joystick_size / (2*1.41421356));
-                        currPosY = (float) (startPosY - joystick_size / (2*1.41421356));
-                    }
-                    else if (currPosX > startPosX) {
-                        currPosX = (float) (startPosX + joystick_size / (2*1.41421356));
-                        currPosY = (float) (startPosY - joystick_size / (2*1.41421356));
-                    }
-                    else {
-                        currPosY = (float) (startPosY - joystick_size / 2.0);
-                    }
-                    if (jumpFlag) {
-                        setCharacterVerticalAcceleration(-1);
-                        now = System.nanoTime();
-                        jumpFlag = false;
-                    }
-                } else {
-                    currPosY = startPosY;
-                }
-            }
-        }
-    }
 
     private boolean alreadyStartedCountDown = false;
 
@@ -470,6 +421,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
     public ArrayList<Bullet> getMyBullets() {
         return this.myBullets;
+    }
+
+    public double getJoystickSize() {
+        return this.joystick_size;
     }
 
     public class MyBroadcastReceiver extends BroadcastReceiver {
