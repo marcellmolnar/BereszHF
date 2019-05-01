@@ -18,6 +18,7 @@ import android.media.MediaPlayer;
 import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import com.example.mate_pc.game1.network_stuff.ConnectorClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
+import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
 
 import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
@@ -32,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
     GameSurface gameSurface;
 
     WebSocketClass webSocket;
-
-    private MediaPlayer mediaPlayer;    //mediaPlayer for background music
 
     Button shootButton;
     Button left;
@@ -117,20 +116,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       // ImageView health_image = (ImageView)findViewById(R.id.health);    //image views for different images
-       // int res = getResources().getIdentifier("@drawable/health1",null,getPackageName());
-        //Drawable draw = getResources().getDrawable(res);
-       // health_image.setImageDrawable(draw);
-
-        InitBackgroundAudio(this);
+        new BackgroundSoundHandler(this);
         setControl();
-        setSound();
+        //setSound();
     }
 
-    private void InitBackgroundAudio(Context c){
-        this.mediaPlayer = MediaPlayer.create(c,R.raw.background_music);
-        this.mediaPlayer.seekTo(0);
-    }
 
 
     @Override
@@ -138,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         setControl();
-        setSound();
+        //setSound();
 
         if (data != null) {
             webSocket.setIP(data.getStringExtra(CONNECTOR_IP_CODE));
@@ -169,19 +159,6 @@ public class MainActivity extends AppCompatActivity {
             right.setVisibility(View.VISIBLE);
         }
         gameSurface.setJoystickUsage(isJoystick, showJoystick);
-    }
-
-    private void setSound(){
-        SharedPreferences prefs2 = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-        boolean isSound = prefs2.getBoolean(SOUND_SETTINGS_KEY, false);
-        AudioManager amanager;
-        amanager = (AudioManager)getSystemService(AUDIO_SERVICE);
-
-        if (isSound) {
-            amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-        } else {
-            amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-        }
     }
 
 
@@ -311,8 +288,9 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.i("MyTAG", "destroy");
         //StopBackgroundAudio();
-        this.mediaPlayer.stop();
-        this.mediaPlayer.release();
+        //this.mediaPlayer.stop();
+        //this.mediaPlayer.release();
+        gameSurface.destroy();
 
         webSocket.destroySocket();
     }
@@ -322,24 +300,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("MyTAG", "resume");
-            this.mediaPlayer.setLooping(true);
-            this.mediaPlayer.start();
-        setSound();
+
+        gameSurface.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.i("MyTAG", "pause");
-        this.mediaPlayer.pause();
+
+        gameSurface.pause();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.i("MyTAG", "restart");
-        this.mediaPlayer.start();
-        setSound();
+
+        gameSurface.restart();
     }
 
     @Override
@@ -347,6 +325,5 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         Log.i("MyTAG", "start");
     }
-
 
 }

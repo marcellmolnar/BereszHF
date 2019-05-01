@@ -28,6 +28,8 @@ import com.example.mate_pc.game1.graphical_stuff.OpponentCharacter;
 import com.example.mate_pc.game1.graphical_stuff.Platform;
 import com.example.mate_pc.game1.network_stuff.OnConnectionChangedListener;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
+import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
+import com.example.mate_pc.game1.sound_stuff.SoundEffectsPlayer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,35 +64,30 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     ArrayList<Bullet> myBullets;
     ArrayList<Bullet> opponentBullets;
 
-    private static final int MAX_STREAMS=100;   //maximum size if parallel music streams
-    private int soundIdOnHitCharacter;          //ids for specific sound effects
-    private int soundIdOnHitPlatform;
-    private int soundIdOnShoot;
-    private int soundIdOnKill;
-    private int soundIdOnWin;
-    private int soundIdOnHitOpponent;
-    private boolean soundPoolLoaded;
-    private SoundPool soundPool;
+
+    private SoundEffectsPlayer soundEffectsPlayer;
 
     private WebSocketClass webSocket;
 
     private MyBroadcastReceiver receiver;
 
-    private Context context;
-    private Activity activity;
+    private Context mainActivityContext;
+    private Activity mainActivity;
+
+    private BackgroundSoundHandler backgroundSoundHandler;
 
     public GameSurface(Activity activity, Context context)  {
         super(context);
 
-        this.activity = activity;
-        this.context = context;
+        this.mainActivity = activity;
+        this.mainActivityContext = context;
 
         // Make Game Surface focusable so it can handle events.
         setFocusable(true);
 
         // Set callback.
         getHolder().addCallback(this);
-        initSoundPool();
+        soundEffectsPlayer = new SoundEffectsPlayer(mainActivityContext);
 
         this.gameThread = null;
 
@@ -99,105 +96,35 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
     }
 
+    public void destroy() {
+        if (backgroundSoundHandler != null) {
+            backgroundSoundHandler.destroy();
+        }
+    }
+
+    public void resume() {
+        if (backgroundSoundHandler != null) {
+            backgroundSoundHandler.resume();
+        }
+    }
+
+    public void pause() {
+        if (backgroundSoundHandler != null) {
+            backgroundSoundHandler.pause();
+        }
+    }
+
+    public void restart() {
+        if (backgroundSoundHandler != null) {
+            backgroundSoundHandler.restart();
+        }
+    }
+
     // ToDo (for Mate ;) ): create class for sound handling
 
-    //initialization of soundpool
-    private void initSoundPool()  {
-        // With Android API >= 21.
-        if (Build.VERSION.SDK_INT >= 21 ) {
-
-            AudioAttributes audioAttrib = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_GAME)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build();
-
-            SoundPool.Builder builder= new SoundPool.Builder();
-            builder.setAudioAttributes(audioAttrib).setMaxStreams(MAX_STREAMS);
-
-            this.soundPool = builder.build();
-        }
-        // With Android API < 21
-        else {
-            // SoundPool(int maxStreams, int streamType, int srcQuality)
-            this.soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
-        }
-
-        // When SoundPool load complete.
-        this.soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                soundPoolLoaded = true;
-            }
-        });
-
-        //load the sound of shoot into pool
-        this.soundIdOnShoot= this.soundPool.load(this.getContext(), R.raw.shoot,1);
-
-        //load the sound of character hit into pool
-        this.soundIdOnHitCharacter = this.soundPool.load(this.getContext(), R.raw.character_hit,1);
-
-        //load the sound of opponent hit into pool  //should we separate this?
-        this.soundIdOnHitOpponent = this.soundPool.load(this.getContext(), R.raw.character_hit,1);
 
 
-        //load the sound of platform hit into pool
-        this.soundIdOnHitPlatform = this.soundPool.load(this.getContext(),R.raw.platform_hit,1);
 
-        //load the sound of kill into pool
-        this.soundIdOnKill = this.soundPool.load(this.getContext(),R.raw.fail,1);
-
-        //load the sound of win into pool
-        this.soundIdOnWin = this.soundPool.load(this.getContext(),R.raw.win,1);
-    }
-
-    //audio effect functions for specific sound ID
-    public void playEffectOnCharacterHit() {
-        if(this.soundPoolLoaded) {
-            float leftVolumn = 1.0f;
-            float rightVolumn =  1.0f;
-            int streamId = this.soundPool.play(this.soundIdOnHitCharacter,leftVolumn, rightVolumn, 1, 0, 1f);
-        }
-    }
-    public void playEffectOnOpponentHit() {
-        if(this.soundPoolLoaded) {
-            float leftVolumn = 1.0f;
-            float rightVolumn =  1.0f;
-            int streamId = this.soundPool.play(this.soundIdOnHitOpponent,leftVolumn, rightVolumn, 1, 0, 1f);
-        }
-    }
-
-
-    public void playEffectOnPlatformHit() {
-        if(this.soundPoolLoaded) {
-            float leftVolumn = 0.8f;
-            float rightVolumn =  0.8f;
-            int streamId = this.soundPool.play(this.soundIdOnHitPlatform,leftVolumn, rightVolumn, 1, 0, 1f);
-        }
-    }
-
-    public void playEffectOnShoot() {
-        if(this.soundPoolLoaded) {
-            float leftVolumn = 0.8f;
-            float rightVolumn =  0.8f;
-            int streamId = this.soundPool.play(this.soundIdOnShoot,leftVolumn, rightVolumn, 1, 0, 1f);
-        }
-    }
-
-    public void playEffectOnWin() {
-        if(this.soundPoolLoaded) {
-            float leftVolumn = 0.8f;
-            float rightVolumn =  0.8f;
-            int streamId = this.soundPool.play(this.soundIdOnWin,leftVolumn, rightVolumn, 1, 0, 1f);
-        }
-    }
-
-    public void playEffectOnKill() {
-        if(this.soundPoolLoaded) {
-            float leftVolumn = 0.8f;
-            float rightVolumn =  0.8f;
-            int streamId = this.soundPool.play(this.soundIdOnKill,leftVolumn, rightVolumn, 1, 0, 1f);
-        }
-    }
 
     public void setWebSocket(WebSocketClass webSocket) {
         this.webSocket = webSocket;
@@ -210,7 +137,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
     public void setOwnHealth(int hp){
         if (character.getHealth() > hp){
-            playEffectOnCharacterHit();
+            soundEffectsPlayer.playEffectOnCharacterHit();
             character.setHealth(hp);
         }
         //else?
@@ -235,10 +162,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         for(int i = 0; i < myBullets.size(); i++){
             if (myBullets.get(i).isHit(opponent)){      //check if opponent hit
                 if(opponent.getHealth() == 0) {
-                    playEffectOnKill();
+                    soundEffectsPlayer.playEffectOnKill();
                 }
                 else {
-                    playEffectOnOpponentHit();
+                    soundEffectsPlayer.playEffectOnOpponentHit();
                     opponent.setHealth(opponent.getHealth()-1);
                 }
                 indexesToDel.add(i);
@@ -263,7 +190,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             for (Platform platform : platforms) {
                 if (myBullets.get(i).isHit(platform)) {
                     indexesToDelete.add(i);
-                    playEffectOnPlatformHit();
+                    soundEffectsPlayer.playEffectOnPlatformHit();
                 }
             }
         }
@@ -326,7 +253,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             gameFloorHeight = (int) (getHeight() * 0.9);
 
             // Background image
-            SharedPreferences prefs = context.getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
+            SharedPreferences prefs = mainActivityContext.getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
             int backgroundNum = prefs.getInt(BACKGROUND_SETTINGS_KEY, 2);
             onSettingsChanged(backgroundNum);
 
@@ -370,7 +297,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         senderClass.setRunning(true);
         senderClass.start();
 
-
+        backgroundSoundHandler = new BackgroundSoundHandler(mainActivityContext);
+        backgroundSoundHandler.setSound();
     }
 
 
@@ -507,7 +435,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             velocity = -velocity;
         }
         myBullets.add(new Bullet(bullet, (int) (character.getX() + extraX),(character.getY() + character.getHeight()/2), bulletHeight, velocity));
-        playEffectOnShoot();
+        soundEffectsPlayer.playEffectOnShoot();
     }
 
     private Bitmap bulletRight = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_right);
