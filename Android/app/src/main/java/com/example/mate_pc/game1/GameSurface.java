@@ -27,13 +27,10 @@ import com.example.mate_pc.game1.graphical_stuff.Character;
 import com.example.mate_pc.game1.graphical_stuff.OpponentCharacter;
 import com.example.mate_pc.game1.graphical_stuff.Platform;
 import com.example.mate_pc.game1.network_stuff.OnConnectionChangedListener;
+import com.example.mate_pc.game1.network_stuff.SenderClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
 import com.example.mate_pc.game1.sound_stuff.SoundEffectsPlayer;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
@@ -67,7 +64,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
     private SoundEffectsPlayer soundEffectsPlayer;
 
-    private WebSocketClass webSocket;
 
     private MyBroadcastReceiver receiver;
 
@@ -93,6 +89,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
         receiver = new MyBroadcastReceiver();
         activity.registerReceiver(receiver, new IntentFilter(MyBroadcastReceiver.ACTION));
+
+
+        senderClass = new SenderClass(this);
+        senderClass.setRunning(true);
+        senderClass.start();
 
     }
 
@@ -120,14 +121,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
-    // ToDo (for Mate ;) ): create class for sound handling
-
-
-
-
 
     public void setWebSocket(WebSocketClass webSocket) {
-        this.webSocket = webSocket;
+        senderClass.setWebSocket(webSocket);
     }
 
     public void setOpponentXY(double relX, double relY) {
@@ -293,82 +289,13 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         gameThread.setRunning(true);
         gameThread.start();
 
-        senderClass = new SenderClass();
-        senderClass.setRunning(true);
-        senderClass.start();
 
         backgroundSoundHandler = new BackgroundSoundHandler(mainActivityContext);
         backgroundSoundHandler.setSound();
     }
 
 
-    private class SenderClass extends Thread {
 
-        private boolean running;
-
-        @Override
-        public void run() {
-
-
-            while(running)  {
-                long waitTime = 10;
-
-                try {
-                    // Sleep.
-                    sleep(waitTime);
-                } catch(InterruptedException ignored)  {
-                }
-
-
-                JSONObject json = new JSONObject();  //send position and opponent health
-                if (webSocket.isConnected()) {
-                    JSONObject characterJson = new JSONObject();
-                    try {
-                        characterJson.put("x", (double) (getWidth() - character.getWidth() -
-                                character.getX()) / getWidth());
-                        characterJson.put("y", (double) (character.getY()) / getHeight());
-                        characterJson.put("opponentHealth", opponent.getHealth());
-                        json.put("character", characterJson);
-                    } catch (JSONException je) {
-                        je.printStackTrace();
-                    }
-                }
-
-                if (webSocket.isConnected()) {                          //send own bullets
-                    JSONArray jsonArray = new JSONArray();
-                    for (Bullet bullet : myBullets) {
-                        JSONObject jbullet = new JSONObject();
-                        try {
-                            jbullet.put("x", (double) (getWidth() - bullet.getWidth() -
-                                    bullet.getX()) / getWidth());
-                            jbullet.put("y", (double) (bullet.getY()) / getHeight());
-                            jbullet.put("isSeeingRight", bullet.isSeeingToRight());
-                            jsonArray.put(jbullet);
-                        } catch (JSONException je) {
-                            je.printStackTrace();
-                        }
-                    }
-                    try {
-                        json.put("bullets", jsonArray);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (webSocket.isConnected()) {
-                    webSocket.send(json.toString());
-                }
-                else {
-                    webSocket.send("join");
-                }
-
-            }
-
-        }
-
-        void setRunning(boolean running)  {
-            this.running = running;
-        }
-    }
 
     public static Bitmap drawableToBitmap (Drawable drawable) {
 
@@ -533,8 +460,17 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
+    public Character getCharacter() {
+        return this.character;
+    }
 
+    public Character getOpponent() {
+        return this.opponent;
+    }
 
+    public ArrayList<Bullet> getMyBullets() {
+        return this.myBullets;
+    }
 
     public class MyBroadcastReceiver extends BroadcastReceiver {
         public static final String ACTION = "com.example.mate_pc.BACKGROUND_CHANGED";
