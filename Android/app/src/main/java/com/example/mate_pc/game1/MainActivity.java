@@ -1,10 +1,6 @@
 package com.example.mate_pc.game1;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.content.Intent;
-import android.media.MediaPlayer;
 
 import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import com.example.mate_pc.game1.network_stuff.ConnectorClass;
@@ -21,12 +16,7 @@ import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
 
 import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
-import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
-import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
-import static com.example.mate_pc.game1.Constants.SHOW_JOYSTICK_SETTINGS_KEY;
 import static com.example.mate_pc.game1.Constants.START_CONNECTOR_CODE;
-import static com.example.mate_pc.game1.Constants.CONTROL_SETTINGS_KEY;
-import static com.example.mate_pc.game1.Constants.SOUND_SETTINGS_KEY;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout joystickSurface;
 
-    @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Delete line to see affect.
+    @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Comment out this line to see affect.
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
 

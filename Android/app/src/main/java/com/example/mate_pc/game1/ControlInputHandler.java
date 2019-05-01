@@ -6,14 +6,13 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.mate_pc.game1.Constants.CONTROL_SETTINGS_KEY;
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
 import static com.example.mate_pc.game1.Constants.SHOW_JOYSTICK_SETTINGS_KEY;
 
-public class ControlInputHandler {
+class ControlInputHandler {
 
     private Button shootButton;
     private boolean alreadyShooting;
@@ -28,7 +27,7 @@ public class ControlInputHandler {
 
     // for shot button animation
     private final static int INTERVAL = 200;
-    Handler mHandler = new Handler();
+    private Handler mHandler = new Handler();
 
     ControlInputHandler(Activity mainActivity, GameSurface gameSurface) {
         this.mainActivity = mainActivity;
@@ -38,13 +37,13 @@ public class ControlInputHandler {
         up = mainActivity.findViewById(R.id.buttonUp);
         left = mainActivity.findViewById(R.id.buttonLeft);
         right = mainActivity.findViewById(R.id.buttonRight);
-
+        shootButton = mainActivity.findViewById(R.id.shoot);
         alreadyShooting = false;
     }
 
 
 
-    public void setControl(){
+    void setControl(){
         SharedPreferences prefs = mainActivity.getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
         boolean isJoystick = prefs.getBoolean(CONTROL_SETTINGS_KEY, false);
         boolean showJoystick = prefs.getBoolean(SHOW_JOYSTICK_SETTINGS_KEY, true);
@@ -62,15 +61,15 @@ public class ControlInputHandler {
     }
 
 
-    public void handleTouch(View view, MotionEvent event) {
+    void handleTouch(View view, MotionEvent event) {
         int action = event.getAction();
         if (view.getId() == R.id.buttonUp){
             if (action == MotionEvent.ACTION_DOWN){
                 jump();
-                //up.setBackground(getDrawable(R.drawable.ic_arrow_upward_black_24dp_pressed));
+                up.setBackground(mainActivity.getDrawable(R.drawable.ic_arrow_upward_black_24dp_pressed));
             }
             else if (action == MotionEvent.ACTION_UP) {
-                //up.setBackground(getDrawable(R.drawable.ic_arrow_upward_black_24dp));
+                up.setBackground(mainActivity.getDrawable(R.drawable.ic_arrow_upward_black_24dp));
             }
         }
         if (view.getId() == R.id.buttonLeft){
@@ -119,8 +118,8 @@ public class ControlInputHandler {
 
 
 
-    int counter = 0;
-    Runnable mHandlerTask = new Runnable()
+    private int counter = 0;
+    private Runnable mHandlerTask = new Runnable()
     {
         @Override
         public void run() {
@@ -136,7 +135,7 @@ public class ControlInputHandler {
         }
     };
 
-    public void updateShootButtonState() {
+    private void updateShootButtonState() {
         switch (counter) {
             case 0: {
                 shootButton.setBackground(mainActivity.getDrawable(R.drawable.pistol0));
@@ -165,39 +164,33 @@ public class ControlInputHandler {
         }
     }
 
-    void startRepeatingTask()
+    private void startRepeatingTask()
     {
         mHandlerTask.run();
     }
 
-    void stopRepeatingTask()
+    private void stopRepeatingTask()
     {
         mHandler.removeCallbacks(mHandlerTask);
     }
 
 
-
-
-
-
-    public void setJoystickUsage(boolean useJoystick, boolean showTheJoystick){
+    private void setJoystickUsage(boolean useJoystick, boolean showTheJoystick){
         this.usingJoystick = useJoystick;
-        this.showJoystick = showTheJoystick;
+        this.showTheJoystick = showTheJoystick;
     }
 
     private boolean usingJoystick = false;
-    private boolean showJoystick = true;
+    private boolean showTheJoystick = true;
 
     private float startPosX;
     private float startPosY;
-    private float currPosX;
-    private float currPosY;
 
     private boolean jumpFlag = true;
-    long now;
+    private long now;
 
 
-    public void onJoystickTouchListener(MotionEvent motionEvent) {
+    void onJoystickTouchListener(MotionEvent motionEvent) {
         if(usingJoystick) {
             int action = motionEvent.getAction();
             if (System.nanoTime() >= now + 500000000) {
@@ -206,38 +199,43 @@ public class ControlInputHandler {
             if (action == MotionEvent.ACTION_DOWN) {
                 startPosX = motionEvent.getX();
                 startPosY = motionEvent.getY();
-                gameSurface.setJoystickVisibility(true, startPosX, startPosY);
+                // only show joystick when it's enabled in the settings
+                gameSurface.setJoystickVisibility(showTheJoystick, startPosX, startPosY);
             }
             else if (action == MotionEvent.ACTION_UP) {
                 gameSurface.setCharacterHorizontalAcceleration(0, true);
+                gameSurface.setJoystickVisibility(false, 0,0);
             }
             else if (action == MotionEvent.ACTION_MOVE) {
                 float cx = motionEvent.getX();
                 float cy = motionEvent.getY();
+                float currJoystickPosX;
+                float currJoystickPosY;
+
                 if (cx > startPosX + gameSurface.getJoystickSize() / 8) {                    // Going right
-                    currPosX = (float) (startPosX + gameSurface.getJoystickSize() / 2.0);
+                    currJoystickPosX = (float) (startPosX + gameSurface.getJoystickSize() / 2.0);
                     gameSurface.setCharacterHorizontalAcceleration(1, false);
                 }
                 else if (cx < startPosX - gameSurface.getJoystickSize() / 8) {             // Going left
-                    currPosX = (float) (startPosX - gameSurface.getJoystickSize() / 2.0);
+                    currJoystickPosX = (float) (startPosX - gameSurface.getJoystickSize() / 2.0);
                     gameSurface.setCharacterHorizontalAcceleration(-1, false);
                 }
                 else {                           // if movement too small, do nothing
-                    currPosX = startPosX;
+                    currJoystickPosX = startPosX;
                     gameSurface.setCharacterHorizontalAcceleration(0, true);
                 }
 
                 if ((cy < startPosY - gameSurface.getJoystickSize() / 8)  ) {     // Jump
-                    if (currPosX < startPosX) {
-                        currPosX = (float) (startPosX - gameSurface.getJoystickSize() / (2*1.41421356));
-                        currPosY = (float) (startPosY - gameSurface.getJoystickSize() / (2*1.41421356));
+                    if (currJoystickPosX < startPosX) {
+                        currJoystickPosX = (float) (startPosX - gameSurface.getJoystickSize() / (2*1.41421356));
+                        currJoystickPosY = (float) (startPosY - gameSurface.getJoystickSize() / (2*1.41421356));
                     }
-                    else if (currPosX > startPosX) {
-                        currPosX = (float) (startPosX + gameSurface.getJoystickSize() / (2*1.41421356));
-                        currPosY = (float) (startPosY - gameSurface.getJoystickSize() / (2*1.41421356));
+                    else if (currJoystickPosX > startPosX) {
+                        currJoystickPosX = (float) (startPosX + gameSurface.getJoystickSize() / (2*1.41421356));
+                        currJoystickPosY = (float) (startPosY - gameSurface.getJoystickSize() / (2*1.41421356));
                     }
                     else {
-                        currPosY = (float) (startPosY - gameSurface.getJoystickSize() / 2.0);
+                        currJoystickPosY = (float) (startPosY - gameSurface.getJoystickSize() / 2.0);
                     }
                     if (jumpFlag) {
                         gameSurface.setCharacterVerticalAcceleration(-1);
@@ -246,9 +244,9 @@ public class ControlInputHandler {
                     }
                 }
                 else {
-                    currPosY = startPosY;
+                    currJoystickPosY = startPosY;
                 }
-                gameSurface.setJoystickPoint(currPosX, currPosY);
+                gameSurface.setJoystickPoint(currJoystickPosX, currJoystickPosY);
             }
         }
     }

@@ -12,11 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Build;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -68,8 +63,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
     private SoundEffectsPlayer soundEffectsPlayer;
 
 
-    private MyBroadcastReceiver receiver;
-
     private Context mainActivityContext;
     private Activity mainActivity;
 
@@ -90,8 +83,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
         this.gameThread = null;
 
-        receiver = new MyBroadcastReceiver();
-        activity.registerReceiver(receiver, new IntentFilter(MyBroadcastReceiver.ACTION));
+        MyBroadcastReceiver updateEventReceiver = new MyBroadcastReceiver();
+        activity.registerReceiver(updateEventReceiver, new IntentFilter(MyBroadcastReceiver.ACTION));
 
 
         senderClass = new SenderClass(this);
@@ -100,6 +93,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
         showJoystick = false;
         gameFloorHeight = 0;
+    }
+
+    public void setWebSocket(WebSocketClass webSocket) {
+        senderClass.setWebSocket(webSocket);
     }
 
     public void destroy() {
@@ -124,34 +121,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         if (backgroundSoundHandler != null) {
             backgroundSoundHandler.restart();
         }
-    }
-
-    public void setJoystickVisibility(boolean showJoystick, float startPosX, float startPosY) {
-        this.showJoystick = showJoystick;
-        this.startPosX = startPosX;
-        this.startPosY = startPosY;
-    }
-
-    public void setJoystickPoint(float currPosX, float currPosY) {
-        this.currPosX = currPosX;
-        this.currPosY = currPosY;
-    }
-
-    public void setWebSocket(WebSocketClass webSocket) {
-        senderClass.setWebSocket(webSocket);
-    }
-
-    public void setOpponentXY(double relX, double relY) {
-        opponent.setX((int) (relX * getWidth()));
-        opponent.setY((int) (relY * getHeight()));
-    }
-
-    public void setOwnHealth(int hp){
-        if (character.getHealth() > hp){
-            soundEffectsPlayer.playEffectOnCharacterHit();
-            character.setHealth(hp);
-        }
-        //else?
     }
 
     public void update()  {
@@ -309,28 +278,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         backgroundSoundHandler.setSound();
     }
 
-
-
-
-    public static Bitmap drawableToBitmap(Drawable drawable) {
-
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable)drawable).getBitmap();
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
-
-    // Implements method of SurfaceHolder.Callback
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-    }
-
     // Implements method of SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -349,6 +296,34 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
+    // Implements method of SurfaceHolder.Callback
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    }
+
+
+
+
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable)drawable).getBitmap();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+    private Bitmap createSubImage(Bitmap bm, int xStart, int yStart, int width, int height) {
+        // createBitmap(bitmap, x, y, width, height).
+        return Bitmap.createBitmap(bm, xStart, yStart , width, height);
+    }
+
     public void setCharacterHorizontalAcceleration(int x, boolean stopMovement) {
         character.setHorizontalAcceleration(x, stopMovement);
     }
@@ -357,9 +332,28 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         character.setVerticalAcceleration(y);
     }
 
-    private Bitmap createSubImage(Bitmap bm, int xStart, int yStart, int width, int height) {
-        // createBitmap(bitmap, x, y, width, height).
-        return Bitmap.createBitmap(bm, xStart, yStart , width, height);
+    public void setJoystickVisibility(boolean showJoystick, float startPosX, float startPosY) {
+        this.showJoystick = showJoystick;
+        this.startPosX = startPosX;
+        this.startPosY = startPosY;
+    }
+
+    public void setJoystickPoint(float currPosX, float currPosY) {
+        this.currPosX = currPosX;
+        this.currPosY = currPosY;
+    }
+
+    public void setOpponentXY(double relX, double relY) {
+        opponent.setX((int) (relX * getWidth()));
+        opponent.setY((int) (relY * getHeight()));
+    }
+
+    public void setOwnHealth(int hp){
+        if (character.getHealth() > hp){
+            soundEffectsPlayer.playEffectOnCharacterHit();
+            character.setHealth(hp);
+        }
+        //else?
     }
 
     public void createBullet() {
