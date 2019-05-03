@@ -36,9 +36,9 @@ public class SenderClass extends Thread {
             } catch(InterruptedException ignored)  {
             }
 
+            JSONObject json = new JSONObject();  //send position, opponent's health and bullets
 
-            JSONObject json = new JSONObject();  //send position and opponent health
-            if (webSocket.isConnected()) {
+            if (webSocket.isConnected2Player()) {
                 JSONObject characterJson = new JSONObject();
                 try {
                     characterJson.put("x", (double) (gameSurface.getWidth() - gameSurface.getCharacter().getWidth() -
@@ -49,9 +49,8 @@ public class SenderClass extends Thread {
                 } catch (JSONException je) {
                     je.printStackTrace();
                 }
-            }
 
-            if (webSocket.isConnected()) {                          //send own bullets
+                //send own bullets
                 JSONArray jsonArray = new JSONArray();
                 for (Bullet bullet : gameSurface.getMyBullets()) {
                     JSONObject jbullet = new JSONObject();
@@ -70,11 +69,11 @@ public class SenderClass extends Thread {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-            if (webSocket.isConnected()) {
+
                 webSocket.send(json.toString());
             }
-            else {
+            if(webSocket.shouldTry2ConnectPlayer()) {
+                // ToDo: sending "join" maybe good here. Not sure.
                 webSocket.send("join");
             }
 

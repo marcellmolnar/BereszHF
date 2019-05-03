@@ -64,11 +64,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
 
 
     private Context mainActivityContext;
-    private Activity mainActivity;
+    private MainActivity mainActivity;
 
     private BackgroundSoundHandler backgroundSoundHandler;
 
-    public GameSurface(Activity activity, Context context)  {
+    public GameSurface(MainActivity activity, Context context)  {
         super(context);
 
         this.mainActivity = activity;
@@ -185,13 +185,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         opponent.update();
 
         //TODO: Set playbutton visibility upon winning :O
-        /*if(OpponentHealth <= 0){
-            MainActivity.playButton.setVisibility(View.VISIBLE);
+        if(opponent.getHealth() <= 0){
+            mainActivity.showGameMenu(true);
+            opponent.setHealth(3);
+            character.setHealth(3);
         }
-        else{
-            playButton.setVisibility(View.INVISIBLE);
-        }*/
-
 
     }
 
@@ -353,7 +351,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
             soundEffectsPlayer.playEffectOnCharacterHit();
             character.setHealth(hp);
         }
-        //else?
+        if(hp == 0){
+            mainActivity.showGameMenu(false);
+            opponent.setHealth(3);
+            character.setHealth(3);
+        }
     }
 
     public void createBullet() {

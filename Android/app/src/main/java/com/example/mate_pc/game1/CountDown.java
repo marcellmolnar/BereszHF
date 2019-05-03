@@ -25,7 +25,7 @@ public class CountDown extends AsyncTask<Void,Void, Void> {
         this.activity = activity;
         this.webSocket = webSocket;
         dialog = new Dialog(activity, R.style.Theme_AppCompat);
-        view = LayoutInflater.from(activity).inflate(R.layout.connector2player_layout, null);
+        view = LayoutInflater.from(activity).inflate(R.layout.count_down_layout, null);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(R.color.transparent3);
         dialog.setContentView(view);
@@ -36,8 +36,7 @@ public class CountDown extends AsyncTask<Void,Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        while (!webSocket.isConnected()){
-            // ToDo: send "join" here!! (not in GameSurface)
+        while (!webSocket.isConnected2Player()){
         }
         return null;
     }

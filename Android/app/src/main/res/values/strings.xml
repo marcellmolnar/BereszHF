@@ -2,6 +2,7 @@
     <string name="app_name">Ricardo Game</string>
     <string name="write_ip_here">Give the server\'s IP address!</string>
     <string name="connect">Connect!</string>
+    <string name="play_again">Play again!</string>
     <string name="buttons">Buttons</string>
     <string name="joystick">Joystick</string>
     <string name="done">Done</string>

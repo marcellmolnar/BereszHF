@@ -17,6 +17,7 @@ import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
 
 import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
 import static com.example.mate_pc.game1.Constants.START_CONNECTOR_CODE;
+import static com.example.mate_pc.game1.Constants.START_GAME_MENU_CODE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,12 +31,16 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout joystickSurface;
 
+    boolean GameMenuVISIBLE;
+
     @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Comment out this line to see affect.
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        GameMenuVISIBLE = false;
 
         gameSurface = new GameSurface(this, this);
 
@@ -111,14 +116,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        GameMenuVISIBLE = false;
+
         controlInputHandler.setControl();
+
+        webSocket.restart();
+        Log.i("MyTAG", "it's ok");
 
         if (data != null) {
             webSocket.setIP(data.getStringExtra(CONNECTOR_IP_CODE));
             webSocket.connect();
         }
         else {
-            Log.i("MyTAG", "EMPTY intent data");
+            Log.i("MyTag", "EMPTY intent data");
         }
         new CountDown(MainActivity.this, webSocket).execute();
 
@@ -126,11 +136,19 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void showGameMenu(boolean wonTheMatch) {
+        if(!GameMenuVISIBLE) {
+            Intent intent = new Intent(MainActivity.this, GameMenuActivity.class);
+            startActivityForResult(intent, START_GAME_MENU_CODE);
+            GameMenuVISIBLE = true;
+        }
+    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("MyTAG", "destroy");
+        Log.i("MyTag", "destroy");
 
         gameSurface.destroy();
 

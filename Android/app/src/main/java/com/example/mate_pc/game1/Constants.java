@@ -10,6 +10,7 @@ public abstract class Constants {
 
     public final static int START_SETTINGS_CODE = 121;
     final static int START_CONNECTOR_CODE = 314;
+    final static int START_GAME_MENU_CODE = 318;
     public final static int RESULT_CODE_SETTINGS_MAY_CHANGED = 0x01;
     public final static int RESULT_CODE_CONNECTOR_RETURN = 0x01;
 

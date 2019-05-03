@@ -27,6 +27,7 @@ public class WebSocketClass implements Parcelable {
 
     private boolean connected2server;
     private boolean connected2player;
+    private boolean trying2connect2player;
 
     private OnConnectionChangedListener onConnectionChangedListener;
 
@@ -35,6 +36,7 @@ public class WebSocketClass implements Parcelable {
         this.onConnectionChangedListener = onConnectionChangedListener;
         this.connected2server = false;
         this.connected2player = false;
+        this.trying2connect2player = false;
     }
 
     private WebSocketClass(Parcel in) {
@@ -64,10 +66,13 @@ public class WebSocketClass implements Parcelable {
     };
 
 
-    public boolean isConnected(){
+    public boolean isConnected2Player(){
         return this.connected2player;
     }
 
+    public boolean shouldTry2ConnectPlayer(){
+        return this.trying2connect2player;
+    }
 
     public void destroySocket() {
         Log.i("MyTAG","Server killed..");
@@ -91,6 +96,11 @@ public class WebSocketClass implements Parcelable {
         socketServerThread.start();
     }
 
+    public void restart() {
+        this.connected2player = false;
+        this.trying2connect2player = true;
+    }
+
     private class SocketServerThread extends Thread {
 
         @Override
@@ -110,6 +120,7 @@ public class WebSocketClass implements Parcelable {
                 public void onOpen(ServerHandshake serverHandshake) {
                     Log.i("WebSocket", "Opened");
                     WebSocketClass.this.connected2server = true;
+                    WebSocketClass.this.trying2connect2player = true;
                 }
 
                 @Override
@@ -149,10 +160,11 @@ public class WebSocketClass implements Parcelable {
                     } catch (JSONException e) {
                         //e.printStackTrace();
                         if (s.compareTo("join") == 0) {
-                            if (!WebSocketClass.this.isConnected()) {
+                            if (!WebSocketClass.this.isConnected2Player()) {
                                 mWebSocketClient.send("join");
                             }
                             WebSocketClass.this.connected2player = true;
+                            WebSocketClass.this.trying2connect2player = false;
                             onConnectionChangedListener.onConnectionChanged();
                         }
                     }
@@ -161,6 +173,9 @@ public class WebSocketClass implements Parcelable {
                 @Override
                 public void onClose(int i, String s, boolean b) {
                     Log.i("WebSocket", "Closed " + s);
+                    WebSocketClass.this.connected2server = false;
+                    WebSocketClass.this.connected2player = false;
+                    WebSocketClass.this.trying2connect2player = false;
                 }
 
                 @Override

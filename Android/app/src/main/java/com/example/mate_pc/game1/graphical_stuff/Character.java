@@ -10,8 +10,6 @@ import com.example.mate_pc.game1.R;
 
 public class Character extends GameObject {
 
-    // ToDo: add health bar to character
-
     public static int MAX_SPEED = 0;
     private static int ACCELERATION = 0;
     private static double START_JUMP_SPEED = 0;
@@ -82,7 +80,8 @@ public class Character extends GameObject {
 
         this.ownHealth = 3;
 
-        // ToDo: read empty bar
+        // ToDo: create image with empty bar. Health points that are lost should be represented with ..
+        //       a non-filled hearth.
         healthBars = new Bitmap[4];
         Bitmap health00 = BitmapFactory.decodeResource(this.gameSurface.getContext().getResources(),
                 R.drawable.health3);
