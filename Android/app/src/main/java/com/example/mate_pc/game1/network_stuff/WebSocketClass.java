@@ -29,11 +29,8 @@ public class WebSocketClass implements Parcelable {
     private boolean connected2player;
     private boolean trying2connect2player;
 
-    private OnConnectionChangedListener onConnectionChangedListener;
-
-    public WebSocketClass(GameSurface gameSurface, OnConnectionChangedListener onConnectionChangedListener) {
+    public WebSocketClass(GameSurface gameSurface) {
         this.gameSurface = gameSurface;
-        this.onConnectionChangedListener = onConnectionChangedListener;
         this.connected2server = false;
         this.connected2player = false;
         this.trying2connect2player = false;
@@ -165,7 +162,6 @@ public class WebSocketClass implements Parcelable {
                             }
                             WebSocketClass.this.connected2player = true;
                             WebSocketClass.this.trying2connect2player = false;
-                            onConnectionChangedListener.onConnectionChanged();
                         }
                     }
                 }

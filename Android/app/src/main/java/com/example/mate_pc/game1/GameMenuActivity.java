@@ -3,13 +3,10 @@ package com.example.mate_pc.game1;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_CONNECTOR_RETURN;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
 import static com.example.mate_pc.game1.Constants.START_SETTINGS_CODE;

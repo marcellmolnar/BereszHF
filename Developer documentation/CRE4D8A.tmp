@@ -1,0 +1,27 @@
+%----------------------------------------------------------------------------
+\section{Az elkészítendõ alkalmazás}
+%----------------------------------------------------------------------------
+A házi feladatot beágyazott környezetben szükséges megvalósítani, ezért az Android platformra esett a választásunk. Egy kétjátékos, oldalnézetes, lövöldözõs játék megvalósítása a cél, ahol egyszerre kettõ játékos tud egymás ellen játszani, egy közös lokális hálózaton (LAN-on).
+
+%----------------------------------------------------------------------------
+\section{A játék felülete}
+%----------------------------------------------------------------------------
+Oldalnézetes, fix kameraállású, statikus háttérrel rendelkezõ felület adja az alkalmazás kinézetét. A saját karakterünkkel való interakciót a felület jobb és bal alsó sarkában elhelyezett gombok biztosítják. Ezek közül egy a lövésért, valamint további három a két oldalirányú mozgásért és az ugrásért felelõs. Az irányítást átállíthatjuk joystickkal történõ vezérlésre is.\\
+A pályán megtalálható még a kettõ játékos karaktere, melyek egyértelmûen megkülönböztethetõk. A karakterek ún. platformokra is felugorhatnak, így megnehezítve a másik karakter dolgát a pontszerzésben. A mozgást azonban különbözõ akadályok is nehezítik, amelyek túl magasak ahhoz, hogy a karakter átugorja. Ezeket egy platformra való ráugrással, majd az akadályra vagy akadályon való átugrással lehet kikerülni.
+
+%----------------------------------------------------------------------------
+\section{A játék célja}
+%----------------------------------------------------------------------------
+A játékosoknak bizonyos mennyiségû élete van. A másik játékos lövésekkel csökkenteni tudja. A lövések csak bizonyos idõközönként engedélyezettek, melyet a lövés gomb letiltása valósít meg. A lövéseket egy lövedék reprezentálja a kijelzõn, melynek sebessége konstans, és nagyobb, mint a karakterek maximális sebessége.\\
+Mindegyik játékos célja, hogy minél többször kinullázza a másik karakter életpontját. Egy kinullázás számít egy pont megszerzésének. A pontszerzéseket számoljuk és aki elõbb ér el egy bizonyos számot az gyõz. A játék elején és minden pontszerzés után a két karakter egy kiindulási helyre kerül vissza.\\
+Ha a két játékos egyszerre nullázza ki a másik életét, abban az esetben mindegyik egy-egy pontot kap.
+
+%----------------------------------------------------------------------------
+\section{A játékosok összerendelése}
+%----------------------------------------------------------------------------
+Az alkalmazás a belépést követõen egy szerverhez fog kapcsolódni, amely random módon, két egymás után bejelentkezett felhasználót párosít össze. Egy menet addig tart, amíg valaki nem gyõz, vagy ki nem lép a játékból. Minden menet végén új ellenfelet sorsolunk.
+
+%----------------------------------------------------------------------------
+\section{Kezelõfelület és egyéb játék beállítások}
+%----------------------------------------------------------------------------
+A már korábban említett karakter irányítás történhet joystickkal vagy gombokkal. E két opció között a játékosok egy beállítások menüben tudnak választani. A választást az alkalmazás megjegyzi, így a következõ belépéskor a korábban beállított irányítás fog megmaradni. A beállítások menüben a hangerõ szabályozhatjuk és háttérképek között tud még válogathatunk még.

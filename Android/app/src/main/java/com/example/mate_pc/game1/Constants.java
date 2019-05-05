@@ -16,6 +16,7 @@ public abstract class Constants {
 
     final static String SELECTED_BACKGROUND_INTENT_EXTRA = "selectedBackground";
 
-    public final static String CONNECTOR_IP_CODE = "server_ip_address";
+    public final static String CONNECTOR_IP_KEY = "server_ip_address";
+    public final static String WON_THE_MATCH_KEY = "won_the_match";
 
 }

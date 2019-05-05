@@ -15,9 +15,10 @@ import com.example.mate_pc.game1.network_stuff.ConnectorClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
 
-import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_CODE;
+import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_KEY;
 import static com.example.mate_pc.game1.Constants.START_CONNECTOR_CODE;
 import static com.example.mate_pc.game1.Constants.START_GAME_MENU_CODE;
+import static com.example.mate_pc.game1.Constants.WON_THE_MATCH_KEY;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         gameSurface = new GameSurface(this, this);
 
-        // Passing gameSurface as GameSurface and as OnConnectionChangedListener.
-        webSocket = new WebSocketClass(gameSurface, gameSurface);
+        webSocket = new WebSocketClass(gameSurface);
         gameSurface.setWebSocket(webSocket);
 
         LinearLayout surface = findViewById(R.id.gameSurface);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MyTAG", "it's ok");
 
         if (data != null) {
-            webSocket.setIP(data.getStringExtra(CONNECTOR_IP_CODE));
+            webSocket.setIP(data.getStringExtra(CONNECTOR_IP_KEY));
             webSocket.connect();
         }
         else {
@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
     public void showGameMenu(boolean wonTheMatch) {
         if(!GameMenuVISIBLE) {
             Intent intent = new Intent(MainActivity.this, GameMenuActivity.class);
+            intent.putExtra(WON_THE_MATCH_KEY, wonTheMatch);
             startActivityForResult(intent, START_GAME_MENU_CODE);
             GameMenuVISIBLE = true;
         }

@@ -21,7 +21,6 @@ import com.example.mate_pc.game1.graphical_stuff.Bullet;
 import com.example.mate_pc.game1.graphical_stuff.Character;
 import com.example.mate_pc.game1.graphical_stuff.OpponentCharacter;
 import com.example.mate_pc.game1.graphical_stuff.Platform;
-import com.example.mate_pc.game1.network_stuff.OnConnectionChangedListener;
 import com.example.mate_pc.game1.network_stuff.SenderClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
@@ -32,7 +31,7 @@ import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
 import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA;
 import static com.example.mate_pc.game1.Constants.BACKGROUND_SETTINGS_KEY;
 
-public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, OnConnectionChangedListener {
+public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private GameThread gameThread;
@@ -398,14 +397,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback, 
         }
     }
 
-
-    private boolean alreadyStartedCountDown = false;
-
-    @Override
-    public void onConnectionChanged() {
-        if (!alreadyStartedCountDown) {
-        }
-    }
 
     public Character getCharacter() {
         return this.character;
