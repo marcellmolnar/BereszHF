@@ -1,7 +1,5 @@
 package com.example.mate_pc.game1;
 
-
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +29,13 @@ import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
 import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA;
 import static com.example.mate_pc.game1.Constants.BACKGROUND_SETTINGS_KEY;
 
+
+/**
+ * This class is responsible for:
+ *      storing the game objects (characters, platforms, etc.),
+ *      execute the update functions of the objects regarding to the game's logic,
+ *      and draw every visible object to the screen.
+ */
 public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
 
@@ -67,6 +72,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     private BackgroundSoundHandler backgroundSoundHandler;
 
+    /**
+     * Constructor
+     * @param activity  we use MainActivity's function to show the game menu
+     * @param context  we should able to use the app's context (sound handling and shared prefs)
+     */
     public GameSurface(MainActivity activity, Context context)  {
         super(context);
 
@@ -94,6 +104,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         gameFloorHeight = 0;
     }
 
+    /**
+     * Setting the websocket at start.
+     * @param webSocket  the web socket we want to use
+     */
     public void setWebSocket(WebSocketClass webSocket) {
         senderClass.setWebSocket(webSocket);
     }
@@ -122,6 +136,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     * This function is called periodically to update the object's state.
+     */
     public void update()  {
 
         int highestFloorBelow = gameFloorHeight; // searching for the one with the minimal y coordinate
@@ -193,7 +210,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-
+    /**
+     * This function is called periodically to draw every visible object to the screen.
+     */
     @Override
     public void draw(Canvas canvas)  {
         super.draw(canvas);
@@ -221,7 +240,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    // Implements method of SurfaceHolder.Callback
+    /**
+     * Implementing method of SurfaceHolder.Callback
+     */
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
@@ -275,7 +296,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         backgroundSoundHandler.setSound();
     }
 
-    // Implements method of SurfaceHolder.Callback
+    /**
+     * Implementing method of SurfaceHolder.Callback
+     */
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
@@ -293,16 +316,18 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-    // Implements method of SurfaceHolder.Callback
+    /**
+     * Implementing method of SurfaceHolder.Callback
+     */
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
     }
 
 
-
-
-
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+    /**
+     * Converts a Drawable resource to Bitmap.
+     */
+    public Bitmap drawableToBitmap(Drawable drawable) {
 
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable)drawable).getBitmap();
@@ -316,35 +341,60 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         return bitmap;
     }
 
+    /**
+     * Creates a bitmap from the specified subset of the source bitmap.
+     */
     private Bitmap createSubImage(Bitmap bm, int xStart, int yStart, int width, int height) {
         // createBitmap(bitmap, x, y, width, height).
         return Bitmap.createBitmap(bm, xStart, yStart , width, height);
     }
 
+    /**
+     * Sets the character's horizontal acceleration.
+     * This function is called once, when the user decides to start moving in a direction.
+     */
     public void setCharacterHorizontalAcceleration(int x, boolean stopMovement) {
         character.setHorizontalAcceleration(x, stopMovement);
     }
 
+    /**
+     * Sets the character's horizontal acceleration.
+     * This function is called once, when the user decides to jump.
+     */
     public void setCharacterVerticalAcceleration(int y) {
         character.setVerticalAcceleration(y);
     }
 
+    /**
+     * Sets the visibility of the joystick. If the buttons are used to move with the character, joystick should not be visible.
+     */
     public void setJoystickVisibility(boolean showJoystick, float startPosX, float startPosY) {
         this.showJoystick = showJoystick;
         this.startPosX = startPosX;
         this.startPosY = startPosY;
     }
 
+    /**
+     * Used to set the joystick stick's position.
+     */
     public void setJoystickPoint(float currPosX, float currPosY) {
         this.currPosX = currPosX;
         this.currPosY = currPosY;
     }
 
+    /**
+     * Used to set the opponent's position.
+     * It is called from the web socket.
+     */
     public void setOpponentXY(double relX, double relY) {
         opponent.setX((int) (relX * getWidth()));
         opponent.setY((int) (relY * getHeight()));
     }
 
+    /**
+     * Used to set our character's health.
+     * It is called from the web socket.
+     */
     public void setOwnHealth(int hp){
         if (character.getHealth() > hp){
             soundEffectsPlayer.playEffectOnCharacterHit();
@@ -357,6 +407,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     * Creates a new bullet.
+     * This function is called once, when the user decides to shoot a bullet.
+     */
     public void createBullet() {
         double extraX;
         Bitmap bullet;
@@ -378,6 +432,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private Bitmap bulletRight = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_right);
     private Bitmap bulletLeft = BitmapFactory.decodeResource(getResources(),R.drawable.bullet_left);
 
+    /**
+     * Creates a new bullet (shot by the opponent).
+     * It is called from the web socket.
+     */
     public void createNewOpponentBullet(double[][] bullets, boolean[] isBulletSeeingRight, int bulletsSize) {
         opponentBullets.clear();
         int velocity = (int) (Character.MAX_SPEED*1.5);
@@ -414,6 +472,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         return this.joystick_size;
     }
 
+    /**
+     * Used the receive event of background changes. Called from the SettingsActivity.
+     */
     public class MyBroadcastReceiver extends BroadcastReceiver {
         public static final String ACTION = "com.example.mate_pc.BACKGROUND_CHANGED";
         @Override
@@ -423,6 +484,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    /**
+     * Handling background change events.
+     */
     public void onSettingsChanged(int chosenBackgroundNumber) {
 
         int backgroundRes;
