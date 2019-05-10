@@ -65,17 +65,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        playButton = findViewById(R.id.play);
-        playButton.setVisibility(View.INVISIBLE);       //Should be set to visible upon winning the game
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent playIntent = new Intent(MainActivity.this, Ricardo.class);
-                startActivity(playIntent);
-            }
-        });
-
-
         new BackgroundSoundHandler(this);
 
         controlInputHandler = new ControlInputHandler(this, gameSurface);

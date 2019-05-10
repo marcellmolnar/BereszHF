@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <Button
+        android:id="@+id/play"
+        android:background="@drawable/ic_play_arrow_black_24dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/settings_Btn"
         android:background="@drawable/settings_icon"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_gravity="top|end" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/basic_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/play" />
 
 
     <Button
         android:id="@+id/playAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/basic_text"
         android:text="@string/play_again" />
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -7,18 +7,6 @@
     tools:context="com.example.mate_pc.game1.MainActivity">
 
 
-
-    <Button
-        android:id="@+id/play"
-        android:background="@drawable/ic_play_arrow_black_24dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="top|start" />
-
-
-
-
-
     <LinearLayout
         android:id="@+id/gameSurface"
         android:layout_width="match_parent"
