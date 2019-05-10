@@ -73,7 +73,6 @@ public class SenderClass extends Thread {
                 webSocket.send(json.toString());
             }
             if(webSocket.shouldTry2ConnectPlayer()) {
-                // ToDo: sending "join" maybe good here. Not sure.
                 webSocket.send("join");
             }
 

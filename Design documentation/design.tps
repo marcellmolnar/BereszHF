@@ -12,7 +12,7 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1047
-NormalPos.bottom=477
+NormalPos.bottom=322
 Class=LaTeXView
 Document=design.tex
 
@@ -30,13 +30,13 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1047
-NormalPos.bottom=477
+NormalPos.bottom=322
 Class=LaTeXView
 Document=chapter1.tex
 
 [Frame1_View0,0]
-TopLine=135
-Cursor=7066
+TopLine=143
+Cursor=7054
 
 [Frame2]
 Flags=0
@@ -48,7 +48,7 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1047
-NormalPos.bottom=477
+NormalPos.bottom=322
 Class=LaTeXView
 Document=fedlap.tex
 

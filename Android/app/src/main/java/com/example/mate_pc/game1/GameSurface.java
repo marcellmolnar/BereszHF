@@ -200,11 +200,10 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
         opponent.update();
 
-        //TODO: Set playbutton visibility upon winning :O
         if(opponent.getHealth() <= 0){
             mainActivity.showGameMenu(true);
-            opponent.setHealth(3);
-            character.setHealth(3);
+            //opponent.setHealth(3);
+            //character.setHealth(3);
         }
 
     }

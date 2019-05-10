@@ -1,73 +1,89 @@
 %----------------------------------------------------------------------------
-\section{A feladat rövid összefoglalása}
+\section{A játék rövid leírása, céljának ismertetése}
 %----------------------------------------------------------------------------
-A megvalósított feladat egy kétdimenziós, oldalnézetes lövöldözõs játék Android operációs rendszer alatt, mely a következõképpen mûködik.
-
-Egyszerre két játékos játszik egymás ellen, összesen fejenként három életponttal, websocket alapú kapcsolaton keresztül. A játék célja az ellenfél életpontjainak lenullázása. A játék elindításakor a felhasználó egy felugró menüpontban adhatja meg a csatlakozni kívánt szerver IP címét, illetve lehetõsége van ezen kívül az alapvetõ beállításokat változtatni a játék megkezdése elõtt. Tehát a vezérlési módok és az egyéni ízlésnek megfelelõ háttér kiválasztására, valamint a háttérzene ki-be kapcsolására.  A beállítások elvégzésével és a csatlakozás gomb megnyomásával a felhasználó csatlakozik a megadott szerverhez. A beállításokat az alkalmazás két indítása között is megõrzi. Amennyiben mindkét játékos sikeresen csatlakozott, a játék egy visszaszámlálást követõen elkezdõdik.
-
-A beállítások alkalmával megadott vezérlõ módok alapján vagy gombokkal vagy joystick segítségével van lehetõség a karakter mozgatására, az ellenfél megsebzésére pedig egy dedikált nyomógomb szolgál. A nyomógomb lenyomásakor egy számláló indul el, mely néhány másodpercig blokkolja az újratüzelést, ezzel megakadályozva sorozatos támadást. A játék dinamikájának kiszélesítésének érdekében a blokkoláson kívül akadályok is elhelyezésre kerülnek a pályán, amelyekre akár fel is lehet ugorni a karakterrel.
+A program egy oldalnézetes, lövöldözõs játék, amelyben a felhasználó egy másik játékos ellen játszik internetes kapcsolaton keresztül. Mindkét játékos célja, hogy az ellenfelét a lehetõ legtöbbször találja el lövedékkel, miközben õt magát a lehetõ legkevesebbszer találja el a másik játékos. Az nyer, aki hamarabb találja el a másikat háromszor.
 
 %----------------------------------------------------------------------------
-\section{A program felépítése}
+\section{Környezetleírás, rendszerkövetelmények}
 %----------------------------------------------------------------------------
-Az programot alkotó osztályok az alábbi képen látható struktúra szerint épülnek fel.
+\begin{itemize}
+  \setlength\itemsep{0mm}
+	\item A program alapvetõen okostelefonra készült, azonban bármilyen Android készüléken elfut hátrányok nélkül.
+	\item Az Android operációs rendszer verziója legalább 5.0 kell legyen.
+	\item A készülék legalább 100 MB háttértárral és 1 GB szabad RAM-mal kell rendelkezzen a biztos mûködés eléréséhez.
+\end{itemize}
+
+%----------------------------------------------------------------------------
+\section{A használat leírása}
+%----------------------------------------------------------------------------
+A játék elindításakor a felhasználó egy felugró menüpontban adhatja meg a csatlakozni kívánt szerver IP címét, illetve lehetõsége van ezen kívül az alapvetõ beállításokat változtatni a játék megkezdése elõtt. Ilyen a vezérlési módok és az egyéni ízlésnek megfelelõ háttér kiválasztása, valamint a háttérzene ki-be kapcsolása. A beállítások elvégzésével és a csatlakozás-gomb megnyomásával a felhasználó csatlakozik a megadott szerverhez. A beállításokat az alkalmazás két indítása között is megõrzi. 
+
+Amennyiben mindkét játékos sikeresen csatlakozott, a játék egy visszaszámlálást követõen elkezdõdik. A beállítások alkalmával megadott vezérlõ módok alapján vagy gombokkal, vagy joystick segítségével van lehetõség a karakter mozgatására, az ellenfél megsebzésére pedig egy pisztoly alakú gomb szolgál. Miután a játékos tüzelt, a következõ néhány másodperceben már nem tud lõni, nehogy a folyamatos lövöldözés is megfelelõ taktika legyen. A játékban továbbá akadályok is elhelyezésre kerültek, amelyekre akár fel is lehet ugrani, vagy akár fedezékként is lehet használni. Mindegyik játékos célja, hogy minél többször kinullázza a másik karakter életpontját. Egy kinullázás számít egy pont megszerzésének. A játék elején és minden pontszerzés után a két karakter egy kiindulási helyre kerül vissza. Az nyer, aki hamarabb találja el a másikat háromszor. Illetve a játék végén, a gyõzedelmeskedõ játékos ajándékban részesül, megtekinthet egy exkluzív videót, amely a játék fejlesztésének rejtelmeibe kalauzolja el õt. Majd mindkét felhasználó számára felajánlásra kerül a játék újra-kezdése opció, amelyiket kiválasztva a játék automatikusan megkezdi a visszaszámlálást, kihagyva ezzel az eszközök újbóli párosításának lépését.
+
+
+%----------------------------------------------------------------------------
+\section{Példa - az alkalmazás bemutatása}
+%----------------------------------------------------------------------------
+Elsõ lépésben a felhasználó a beállítások nyomógomb kiválasztásával belép a beállítások menübe.
 
 \begin{figure}[!ht]
 %\hspace*{-2.5cm}
 \centering
-\includegraphics[width=80mm,keepaspectratio]{figures/package_structure.png}
-\caption{Az osztályok struktúrája}
-\label{fig:package_structure}
+\includegraphics[width=120mm,keepaspectratio]{figures/settings.png}
+\caption{A beállítások menü}
+\label{fig:settings}
 \end{figure}
 
-A fõ package-en belül található:
-
-\begin{itemize}
-  \item a $MainActivity$,
-  \item a beállításokért felelõs $SettingsActivity$,
-  \item a fõmenüt megjelenítõ $GameMenuActivity$,
-  \item a felhasználói bemeneteket kezelõ $ControlInputHandler$,
-	\item a $GameThread$ osztály, amely egy szálban megfelelõ idõközönként kirajzoltatja az aktuális nézetet,
-	\item a $GameSurface$ osztály, amely a kirajzolást és a játék logikáját valósítja meg az egyes játék objektumok állapotának frissítésével,
-	\item a $CountDown$ osztály, amely egy lebegõ dialógus ($Dialog$) segítségével egy visszaszámlálót valósít meg mielõtt a játék elkezdõdne,
-	\item és az absztrakt $Constants$ osztály, amelyben az alkalmazáson belül több helyen használt konstansokat tárolja.
-\end{itemize}
-
-További három package-et találunk a források között, amelyek egyrészt a grafikus megjelenítés, a hálózati kommunikáció és az audió effektek szempontjából lényegesek:
-
-\begin{itemize}
-  \item a $graphical\_stuff$-ban találhatók a játékosok karaktereit, az akadályokat és a lövedékeket reprezentáló osztály leírások,
-  \item a $network\_stuff$-ban a hálózatkezelésért felelõs socket osztály, a program indulásakor használatosa a hálóati kapcsolat kiépítéséért felelõs osztály és egy külön szálat futtató osztály található. Ez utóbbi periódikusan küldi át a lényeges információkat a szerver felé.
-  \item a$sound\_stuff$-ban a háttérzenét kezelõ és a különbözõ hangeffekteket lejátszó osztályok vannak.
-\end{itemize}
-
-\section{A nézetek}
+Ott kiválasztja a gombokkal való irányítás lehetõségét, illetve a hangok némítását. Majd, ha ezzel készen van, a "Kész" gombra kattintva visszalép a menübe. Ezután beírja a csatlakozni kívánt szerver IP-címét, rányom a "Csatlakozás" gombra, majd várakozik az ellenfél csatlakozására.
 
 \begin{figure}[!ht]
+%\hspace*{-2.5cm}
 \centering
-\includegraphics[width=80mm,keepaspectratio]{figures/layouts.png}
-\caption{Az activity-kben használt layoutok}
-\label{fig:layouts}
+\includegraphics[width=120mm,keepaspectratio]{figures/mainmenu.png}
+\caption{Az IP-cím megadás}
+\label{fig:mainmenu}
 \end{figure}
 
-\section{MainActivity}
-A program indulásakor a MainActivity-bõl fog egy példány létrejönni. Ennek az osztálynak a nézetében ($activity\_main$ található 
-\begin{itemize}
-	\item egy $LinearLayout$, amelyre a játék elemeit rajzoljuk ki,
-	\item egy $LinearLayout$, amely a joystick alapú irányításnál fogja a $Touch Event$eket "elkapni",
-	\item valamint 4 gomb, amelyek a lövésért és a 3 irányú mozgásért felelõsek.
-\end{itemize}
+\pagebreak
+Ezt követõen a játék visszaszámlálása elindul.
 
-A bemenõ eseményeket egy külön osztályban kezeljük, ezért a gombokra és a joystick nézetére olyan $OnTouchListener$t hozunk létre, amely egy függvényhívással továbbadja az eseményeket a $ControlInputHandler$ osztálynak.
+\begin{figure}[!ht]
+%\hspace*{-2.5cm}
+\centering
+\includegraphics[width=120mm,keepaspectratio]{figures/countdown.png}
+\caption{Visszaszámlálás}
+\label{fig:countdown}
+\end{figure}
 
-Létrehozzuk a $GameSurface$ osztályt (,amely a $SurfaceView$ osztályból származik), és játék felületét megtestesítõ $LinearLayout$ nézetéhez hozzáadjuk.
+A felhasználó a játék során találatot szerez, a másik játékos élete csökken.
 
-Ezután elindítjuk a csatlakozásért felelõs nézetet egy $ConnectorClass$ formájában, majd várjuk a felhasználói interakciót.
+\begin{figure}[!ht]
+%\hspace*{-2.5cm}
+\centering
+\includegraphics[width=120mm,keepaspectratio]{figures/lifedown.png}
+\caption{Pontszerzés}
+\label{fig:lifedown}
+\end{figure}
+\pagebreak
+Most a felhasználó élete csökkent egy találat után.
 
+\begin{figure}[!ht]
+%\hspace*{-2.5cm}
+\centering
+\includegraphics[width=120mm,keepaspectratio]{figures/lifedown2.png}
+\caption{Életpont veszítése}
+\label{fig:lifedown2}
+\end{figure}
 
-\section{GameSurface}
+A játékos gyõzedelmeskedik, így lehetõsége van megtekinteni a jutalomvideót, illetve a játék újrakezdése gomb megnyomására.
 
-
+\begin{figure}[!ht]
+%\hspace*{-2.5cm}
+\centering
+\includegraphics[width=120mm,keepaspectratio]{figures/win.png}
+\caption{Életpont veszítése}
+\label{fig:win}
+\end{figure}
 
 
 
