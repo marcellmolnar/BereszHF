@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=design.tex
+MainFile=developer_docs.tex
 UseBibTeX=1
 UseMakeIndex=1
 ActiveProfile=LaTeX ⇨ PDF
