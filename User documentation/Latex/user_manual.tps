@@ -35,8 +35,8 @@ Class=LaTeXView
 Document=chapter1.tex
 
 [Frame1_View0,0]
-TopLine=56
-Cursor=4365
+TopLine=94
+Cursor=5438
 
 [Frame2]
 Flags=0
