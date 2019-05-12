@@ -7,4 +7,5 @@
     <color name="transparent2">#99AAAAAA</color>
     <color name="transparent3">#80FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="red">#CC0000</color>
 </resources>

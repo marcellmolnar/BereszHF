@@ -23,8 +23,6 @@ public class BackgroundSoundHandler {
 
         this.mediaPlayer = MediaPlayer.create(c, R.raw.background_music);
         this.mediaPlayer.seekTo(0);
-
-        Log.i("MyTag", "hell ye");
     }
 
     public void destroy() {
@@ -36,7 +34,6 @@ public class BackgroundSoundHandler {
         this.mediaPlayer.setLooping(true);
         this.mediaPlayer.start();
         setSound();
-        Log.i("MyTag", "good");
     }
 
     public void pause() {

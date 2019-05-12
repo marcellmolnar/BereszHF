@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -39,9 +38,7 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("MyTag", "still good");
         setContentView(R.layout.settings_layout);
-        Log.i("MyTag", "nincs itt baj");
         getWindow().setBackgroundDrawableResource(R.color.transparent);
 
 

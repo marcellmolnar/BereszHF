@@ -21,9 +21,8 @@ public class Character extends GameObject {
     static final int ROW_BOTTOM_TO_TOP = 3;
 
     // Row index of Image are being used.
-    int rowUsing = ROW_LEFT_TO_RIGHT;
-
-    int colUsing;
+    protected int rowUsing = ROW_LEFT_TO_RIGHT;
+    protected int colUsing;
 
     private Bitmap[] leftToRights;
     private Bitmap[] rightToLefts;
@@ -31,26 +30,26 @@ public class Character extends GameObject {
     private Bitmap[] bottomToTops;
 
 
-    Bitmap[] healthBars;
+    protected Bitmap[] healthBars;
 
 
-    private double movingVectorX = 0;
-    private double movingVectorY = 0;
+    protected double movingVectorX = 0;
+    protected double movingVectorY = 0;
 
     private boolean stopMovement = false;
     private boolean startedSlowing = false;
     private int accelerationX = 0;
 
-    boolean seeingToRight;
+    protected boolean seeingToRight;
 
     private int floorHeight = 0;
 
-    long lastDrawNanoTime = -1;
-    double pixelsWalked = 0;
+    protected long lastDrawNanoTime = -1;
+    protected double pixelsWalked = 0;
 
     private int ownHealth;
-    int healthBarHeight;
-    int healthBarWidth;
+    protected int healthBarHeight;
+    protected int healthBarWidth;
 
     GameSurface gameSurface;
 
@@ -128,7 +127,7 @@ public class Character extends GameObject {
         }
     }
 
-    public Bitmap getCurrentMoveBitmap() {
+    protected Bitmap getCurrentMoveBitmap() {
         Bitmap[] bitmaps = getMoveBitmaps();
         assert bitmaps != null;
         return bitmaps[colUsing];
@@ -271,6 +270,7 @@ public class Character extends GameObject {
             }
         }
     }
+
     public void setVerticalAcceleration(int accY) {
         if(accY != 0 && getBottomHeight() == floorHeight){
             movingVectorY = START_JUMP_SPEED;
@@ -288,4 +288,13 @@ public class Character extends GameObject {
     public void setHealth(int hp){
         this.ownHealth = hp;
     }
+
+    public void resetCharacter() {
+        this.setHealth(3);
+        seeingToRight = true;
+        rowUsing = ROW_LEFT_TO_RIGHT;
+        movingVectorX = 0;
+        movingVectorY = 0;
+    }
+
 }

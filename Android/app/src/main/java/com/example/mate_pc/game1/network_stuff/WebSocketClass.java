@@ -50,6 +50,7 @@ public class WebSocketClass implements Parcelable {
         parcel.writeString(message);
         parcel.writeString(ipAddress);
     }
+
     public static final Creator<WebSocketClass> CREATOR = new Creator<WebSocketClass>() {
         @Override
         public WebSocketClass createFromParcel(Parcel in) {
@@ -61,7 +62,6 @@ public class WebSocketClass implements Parcelable {
             return new WebSocketClass[size];
         }
     };
-
 
     public boolean isConnected2Player(){
         return this.connected2player;

@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.content.Intent;
 
-import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import com.example.mate_pc.game1.network_stuff.ConnectorClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
@@ -28,11 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     ControlInputHandler controlInputHandler;
 
-    Button playButton;
-
     LinearLayout joystickSurface;
 
-    boolean GameMenuVISIBLE;
+    boolean gameMenuVISIBLE;
 
     @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Comment out this line to see affect.
     @Override
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GameMenuVISIBLE = false;
+        gameMenuVISIBLE = false;
 
         gameSurface = new GameSurface(this, this);
 
@@ -105,12 +102,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        GameMenuVISIBLE = false;
+        gameMenuVISIBLE = false;
 
         controlInputHandler.setControl();
 
         webSocket.restart();
-        Log.i("MyTAG", "it's ok");
 
         if (data != null) {
             webSocket.setIP(data.getStringExtra(CONNECTOR_IP_KEY));
@@ -119,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             Log.i("MyTag", "EMPTY intent data");
         }
+        gameSurface.restartGame();
         new CountDown(MainActivity.this, webSocket).execute();
 
     }
@@ -126,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showGameMenu(boolean wonTheMatch) {
-        if(!GameMenuVISIBLE) {
+        if(!gameMenuVISIBLE) {
             Intent intent = new Intent(MainActivity.this, GameMenuActivity.class);
             intent.putExtra(WON_THE_MATCH_KEY, wonTheMatch);
             startActivityForResult(intent, START_GAME_MENU_CODE);
-            GameMenuVISIBLE = true;
+            gameMenuVISIBLE = true;
         }
     }
 

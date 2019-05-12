@@ -12,13 +12,16 @@ public class OpponentCharacter extends Character {
 
     public OpponentCharacter(GameSurface gameSurface, Bitmap image, int x, int y, int height) {
         super(gameSurface, image, x, y, height);
+        lastX = x;
+        lastY = y;
         rowUsing = ROW_RIGHT_TO_LEFT;
+        seeingToRight = false;
     }
 
 
     @Override
     public void draw(Canvas canvas) {
-        //super.draw(canvas);
+
         Bitmap bitmap = getCurrentMoveBitmap();
         canvas.drawBitmap(bitmap,x, y, null);
         // Last draw time.
@@ -72,12 +75,20 @@ public class OpponentCharacter extends Character {
         this.lastY = this.y;
     }
 
+
     public void setX(int x){
         this.x = x;
     }
 
     public void setY(int y){
         this.y = y;
+    }
+
+    @Override
+    public void resetCharacter() {
+        super.resetCharacter();
+        seeingToRight = false;
+        rowUsing = ROW_RIGHT_TO_LEFT;
     }
 
 }

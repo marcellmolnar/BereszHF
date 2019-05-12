@@ -105,7 +105,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
-     * Setting the websocket at start.
+     * Setting the web socket at start.
      * @param webSocket  the web socket we want to use
      */
     public void setWebSocket(WebSocketClass webSocket) {
@@ -202,8 +202,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
         if(opponent.getHealth() <= 0){
             mainActivity.showGameMenu(true);
-            //opponent.setHealth(3);
-            //character.setHealth(3);
         }
 
     }
@@ -323,6 +321,11 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
+    public void restartGame() {
+        character.resetCharacter();
+        opponent.resetCharacter();
+    }
+
     /**
      * Converts a Drawable resource to Bitmap.
      */
@@ -401,8 +404,6 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         }
         if(hp == 0){
             mainActivity.showGameMenu(false);
-            opponent.setHealth(3);
-            character.setHealth(3);
         }
     }
 
