@@ -16,7 +16,7 @@ class Chat implements MessageComponentInterface {
     public function __construct() {
         //$this->clients = new \SplObjectStorage;
 		$this->connectedClients = 0;
-		$this->send2All = true;
+		$this->send2All = false;
 		echo "Server started\n";
     }
     public function onOpen(ConnectionInterface $conn) {
@@ -42,10 +42,14 @@ class Chat implements MessageComponentInterface {
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');*/
         if($this->send2All == false){
 			if ($from == $this->client1) {
+			if ($this->connectedClients > 1) {
 				$this->client2->send($msg);
 			}
+			}
 			if ($from == $this->client2) {
+			if ($this->connectedClients > 0) {
 				$this->client1->send($msg);
+			}
 			}
 		}
 		else {
@@ -77,6 +81,7 @@ class Chat implements MessageComponentInterface {
 			$this->connectedClients = 1;
 			echo "client 2 disconnected! ({$conn->resourceId})\n";			
 		}
+		$this->client1->send("disconnected");
     }
 	
     public function onError(ConnectionInterface $conn, \Exception $e) {
