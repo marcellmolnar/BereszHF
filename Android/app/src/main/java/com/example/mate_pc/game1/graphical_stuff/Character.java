@@ -79,7 +79,7 @@ public class Character extends GameObject {
 
         this.ownHealth = 3;
 
-        // ToDo: create image with empty bar. Health points that are lost should be represented with ..
+        // ToDo (optional): create image with empty bar. Health points that are lost should be represented with ..
         //       a non-filled hearth.
         healthBars = new Bitmap[4];
         Bitmap health00 = BitmapFactory.decodeResource(this.gameSurface.getContext().getResources(),

@@ -320,6 +320,9 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
     }
 
+    public void wonByDisconnection() {
+        mainActivity.showGameMenu(true);
+    }
 
     public void restartGame() {
         character.resetCharacter();

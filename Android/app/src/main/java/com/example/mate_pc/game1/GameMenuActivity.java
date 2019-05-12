@@ -12,6 +12,7 @@ import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_CONNECTOR_RETURN;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
 import static com.example.mate_pc.game1.Constants.START_SETTINGS_CODE;
+import static com.example.mate_pc.game1.Constants.WON_THE_MATCH_KEY;
 
 public class GameMenuActivity extends Activity {
 
@@ -28,21 +29,29 @@ public class GameMenuActivity extends Activity {
         setContentView(R.layout.game_menu_layout);
         getWindow().setBackgroundDrawableResource(R.color.transparent2);
 
-        //Intent creatorIntent = getIntent();
+        Intent creatorIntent = getIntent();
+        boolean wonMatch = creatorIntent.getBooleanExtra(WON_THE_MATCH_KEY,false);
 
         basic_text = findViewById(R.id.basic_text);
 
         playAgain = findViewById(R.id.playAgain);
         playAgain.setOnClickListener(onConnectListener);
 
+
         playVideo = findViewById(R.id.play);
-        playVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent playIntent = new Intent(GameMenuActivity.this, Ricardo.class);
-                startActivity(playIntent);
-            }
-        });
+        if (wonMatch) {
+            playVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent playIntent = new Intent(GameMenuActivity.this, Ricardo.class);
+                    startActivity(playIntent);
+                }
+            });
+        }
+        else {
+            playVideo.setVisibility(View.INVISIBLE);
+        }
+
 
         settingsBtn = findViewById(R.id.settings_Btn);
         settingsBtn.setBackground(getDrawable(R.drawable.settings_icon));

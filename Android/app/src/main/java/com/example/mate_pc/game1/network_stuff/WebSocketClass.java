@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class WebSocketClass implements Parcelable {
+public class WebSocketClass {
 
     private WebSocketClient mWebSocketClient;
 
@@ -36,32 +36,6 @@ public class WebSocketClass implements Parcelable {
         this.trying2connect2player = false;
     }
 
-    private WebSocketClass(Parcel in) {
-        message = in.readString();
-        ipAddress = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(message);
-        parcel.writeString(ipAddress);
-    }
-
-    public static final Creator<WebSocketClass> CREATOR = new Creator<WebSocketClass>() {
-        @Override
-        public WebSocketClass createFromParcel(Parcel in) {
-            return new WebSocketClass(in);
-        }
-
-        @Override
-        public WebSocketClass[] newArray(int size) {
-            return new WebSocketClass[size];
-        }
-    };
 
     public boolean isConnected2Player(){
         return this.connected2player;
@@ -162,6 +136,11 @@ public class WebSocketClass implements Parcelable {
                             }
                             WebSocketClass.this.connected2player = true;
                             WebSocketClass.this.trying2connect2player = false;
+                        }
+                        if (s.compareTo("disconnected") == 0) {
+                            WebSocketClass.this.connected2player = false;
+                            WebSocketClass.this.trying2connect2player = false;
+                            gameSurface.wonByDisconnection();
                         }
                     }
                 }
