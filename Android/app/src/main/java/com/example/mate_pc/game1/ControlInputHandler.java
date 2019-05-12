@@ -12,6 +12,13 @@ import static com.example.mate_pc.game1.Constants.CONTROL_SETTINGS_KEY;
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
 import static com.example.mate_pc.game1.Constants.SHOW_JOYSTICK_SETTINGS_KEY;
 
+
+/**
+ * Handles all the user input which moves the character.
+ * One method is the button touches. These are handled in the handleTouch(..) function.
+ * The other method is the joystick. It is handled in the onJoystickTouchListener(..) function.
+ * The shooting event also handled here.
+ */
 class ControlInputHandler {
 
     private Button shootButton;

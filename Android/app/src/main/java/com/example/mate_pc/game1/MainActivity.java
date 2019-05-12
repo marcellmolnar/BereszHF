@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.content.Intent;
 
@@ -14,11 +13,14 @@ import com.example.mate_pc.game1.network_stuff.ConnectorClass;
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 import com.example.mate_pc.game1.sound_stuff.BackgroundSoundHandler;
 
-import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_KEY;
+import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_INTENT_EXTRA_KEY;
 import static com.example.mate_pc.game1.Constants.START_CONNECTOR_CODE;
 import static com.example.mate_pc.game1.Constants.START_GAME_MENU_CODE;
-import static com.example.mate_pc.game1.Constants.WON_THE_MATCH_KEY;
+import static com.example.mate_pc.game1.Constants.WON_THE_MATCH_INTENT_EXTRA_KEY;
 
+/**
+ * The main Activity of the app. It is the starting point of the app's lifecycle.
+ */
 public class MainActivity extends AppCompatActivity {
 
     GameSurface gameSurface;
@@ -29,8 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout joystickSurface;
 
+    /**
+     * Indicates if we already showing GameMenu. It prevents multiple starting of GameMenuActivity.
+     */
     boolean gameMenuVISIBLE;
 
+    /**
+     * Creates necessary objects: GameSurface, WebSocket, ControlInputHandler.
+     * When done, it starts the new view with a ConnectorClass.
+     */
     @SuppressLint("ClickableViewAccessibility") // Silencing "performClick" warning. Comment out this line to see affect.
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -97,7 +106,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Returning here from ConnectorClass and GameMenuActivity.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -109,25 +120,30 @@ public class MainActivity extends AppCompatActivity {
         webSocket.restart();
 
         if (data != null) {
-            webSocket.setIP(data.getStringExtra(CONNECTOR_IP_KEY));
+            webSocket.setIP(data.getStringExtra(CONNECTOR_IP_INTENT_EXTRA_KEY));
             webSocket.connect();
         }
         else {
             Log.i("MyTag", "EMPTY intent data");
         }
         gameSurface.restartGame();
+        Log.i("MyTag", "waat");
         new CountDown(MainActivity.this, webSocket).execute();
 
     }
 
 
-
+    /**
+     * Showing GameMenuActivity.
+     * Called from GameSurface.
+     * @param wonTheMatch  indicates whether we won the match or not
+     */
     public void showGameMenu(boolean wonTheMatch) {
         if(!gameMenuVISIBLE) {
-            Intent intent = new Intent(MainActivity.this, GameMenuActivity.class);
-            intent.putExtra(WON_THE_MATCH_KEY, wonTheMatch);
-            startActivityForResult(intent, START_GAME_MENU_CODE);
             gameMenuVISIBLE = true;
+            Intent intent = new Intent(MainActivity.this, GameMenuActivity.class);
+            intent.putExtra(WON_THE_MATCH_INTENT_EXTRA_KEY, wonTheMatch);
+            startActivityForResult(intent, START_GAME_MENU_CODE);
         }
     }
 

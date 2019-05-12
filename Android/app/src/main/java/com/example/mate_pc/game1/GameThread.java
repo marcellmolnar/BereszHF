@@ -3,8 +3,14 @@ package com.example.mate_pc.game1;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+/**
+ * Creates a Thread for updating game objects and drawing them onto the screen.
+ */
 public class GameThread extends Thread {
 
+    /**
+     * Indicates whether the thread is running or not.
+     */
     private boolean running;
     private GameSurface gameSurface;
     private SurfaceHolder surfaceHolder;

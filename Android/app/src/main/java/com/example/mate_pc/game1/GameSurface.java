@@ -26,7 +26,7 @@ import com.example.mate_pc.game1.sound_stuff.SoundEffectsPlayer;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
-import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA;
+import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA_KEY;
 import static com.example.mate_pc.game1.Constants.BACKGROUND_SETTINGS_KEY;
 
 
@@ -482,7 +482,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         public static final String ACTION = "com.example.mate_pc.BACKGROUND_CHANGED";
         @Override
         public void onReceive(Context context, Intent intent) {
-            int selectedBackground = intent.getIntExtra(SELECTED_BACKGROUND_INTENT_EXTRA, 2);
+            int selectedBackground = intent.getIntExtra(SELECTED_BACKGROUND_INTENT_EXTRA_KEY, 2);
             onSettingsChanged(selectedBackground);
         }
     }

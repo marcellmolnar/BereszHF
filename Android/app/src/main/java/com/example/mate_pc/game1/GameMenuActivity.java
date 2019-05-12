@@ -12,8 +12,11 @@ import com.example.mate_pc.game1.graphical_stuff.Ricardo;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_CONNECTOR_RETURN;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
 import static com.example.mate_pc.game1.Constants.START_SETTINGS_CODE;
-import static com.example.mate_pc.game1.Constants.WON_THE_MATCH_KEY;
+import static com.example.mate_pc.game1.Constants.WON_THE_MATCH_INTENT_EXTRA_KEY;
 
+/**
+ * Activity that shows up after every match. User can access the settings and request for new game from here.
+ */
 public class GameMenuActivity extends Activity {
 
     private Button settingsBtn;
@@ -21,6 +24,9 @@ public class GameMenuActivity extends Activity {
     private Button playAgain;
     private Button playVideo;
 
+    /**
+     * The activity's result code.
+     */
     private int activityResultCode;
 
     @Override
@@ -30,7 +36,7 @@ public class GameMenuActivity extends Activity {
         getWindow().setBackgroundDrawableResource(R.color.transparent2);
 
         Intent creatorIntent = getIntent();
-        boolean wonMatch = creatorIntent.getBooleanExtra(WON_THE_MATCH_KEY,false);
+        boolean wonMatch = creatorIntent.getBooleanExtra(WON_THE_MATCH_INTENT_EXTRA_KEY,false);
 
         basic_text = findViewById(R.id.basic_text);
 
@@ -71,15 +77,21 @@ public class GameMenuActivity extends Activity {
         activityResultCode = RESULT_CODE_CONNECTOR_RETURN;
     }
 
+    /**
+     * OnClickListener for the "play again" button.
+     */
     View.OnClickListener onConnectListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent data = new Intent();
             setResult(activityResultCode);
             finish();
         }
     };
 
+
+    /**
+     * SettingsActivity returns here.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -90,6 +102,9 @@ public class GameMenuActivity extends Activity {
         activityResultCode = RESULT_CODE_SETTINGS_MAY_CHANGED;
     }
 
+    /**
+     * When the "back" button is pressed, prevent from starting game without explicit request from user (a.k.a. "play again" button).
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

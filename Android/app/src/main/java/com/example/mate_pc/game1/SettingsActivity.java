@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 import static com.example.mate_pc.game1.Constants.MY_SETTINGS;
-import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA;
+import static com.example.mate_pc.game1.Constants.SELECTED_BACKGROUND_INTENT_EXTRA_KEY;
 import static com.example.mate_pc.game1.Constants.BACKGROUND_SETTINGS_KEY;
 import static com.example.mate_pc.game1.Constants.CONTROL_SETTINGS_KEY;
 import static com.example.mate_pc.game1.Constants.SHOW_JOYSTICK_SETTINGS_KEY;
@@ -31,7 +31,7 @@ public class SettingsActivity extends Activity {
     ImageView background2;
     ImageView background3;
     ImageView background4;
-    int chosenBackgroundNumber = 2;
+    int chosenBackgroundNumber;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -223,12 +223,14 @@ public class SettingsActivity extends Activity {
     }
 
 
-
-    // new broadcast event
+    /**
+     * Alerting GameSurface of the background change with a Broadcast Event.
+     * @param selectedBackground  the selected background's number
+     */
     private void alertGameSurface(int selectedBackground){
         Intent intent = new Intent();
         intent.setAction(GameSurface.MyBroadcastReceiver.ACTION);
-        intent.putExtra(SELECTED_BACKGROUND_INTENT_EXTRA, selectedBackground);
+        intent.putExtra(SELECTED_BACKGROUND_INTENT_EXTRA_KEY, selectedBackground);
         getApplicationContext().sendBroadcast(intent);
     }
 }

@@ -8,12 +8,20 @@ import android.os.Build;
 
 import com.example.mate_pc.game1.R;
 
+/**
+ * Class playing sound effects when a bullet has been shot, or a bullet hits something.
+ */
 public class SoundEffectsPlayer {
 
     private Context mainActivityContext;
 
-    private static final int MAX_STREAMS=100;   //maximum size if parallel music streams
-    private int soundIdOnHitCharacter;          //ids for specific sound effects
+    /**
+     * maximum size if parallel music streams
+     */
+    private static final int MAX_STREAMS=100;
+
+    //ids for specific sound effects
+    private int soundIdOnHitCharacter;
     private int soundIdOnHitPlatform;
     private int soundIdOnShoot;
     private int soundIdOnKill;
@@ -28,7 +36,9 @@ public class SoundEffectsPlayer {
     }
 
 
-    //initialization of soundpool
+    /**
+     * initialization of soundPool
+     */
     private void initSoundPool()  {
         // With Android API >= 21.
         if (Build.VERSION.SDK_INT >= 21 ) {
@@ -78,6 +88,7 @@ public class SoundEffectsPlayer {
     }
 
     //audio effect functions for specific sound ID
+
     public void playEffectOnCharacterHit() {
         if(this.soundPoolLoaded) {
             float leftVolumn = 1.0f;

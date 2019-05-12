@@ -4,30 +4,31 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
 import com.example.mate_pc.game1.network_stuff.WebSocketClass;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * Creates a Dialog onto the screen, prohibiting the user from movements before the game starts.
+ * It also show a counter like 3, 2, 1. When it reaches 0, this Dialog will be destroyed.
+ */
 public class CountDown extends AsyncTask<Void,Void, Void> {
 
-    private Activity activity;
     private Dialog dialog;
     private View view;
     private WebSocketClass webSocket;
 
     CountDown(Activity activity, WebSocketClass webSocket) {
-        this.activity = activity;
         this.webSocket = webSocket;
         dialog = new Dialog(activity, R.style.Theme_AppCompat);
-        view = LayoutInflater.from(activity).inflate(R.layout.count_down_layout, null);
+        view = View.inflate(activity.getApplicationContext(), R.layout.count_down_layout, null);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent3);
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.color.transparent3);
         dialog.setContentView(view);
 
         view.findViewById(R.id.countdown).setVisibility(View.INVISIBLE);
@@ -67,7 +68,7 @@ public class CountDown extends AsyncTask<Void,Void, Void> {
         final Runnable counter = new Runnable() {
             @Override
             public void run() {
-                textView.setText(Integer.toString(n.get()));
+                textView.setText(String.valueOf(n.get()));
                 if(n.getAndDecrement() >= 1 )
                     handler.postDelayed(this, 1000);
                 else {

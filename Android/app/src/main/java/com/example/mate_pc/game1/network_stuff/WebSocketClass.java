@@ -1,7 +1,5 @@
 package com.example.mate_pc.game1.network_stuff;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.example.mate_pc.game1.GameSurface;
@@ -21,7 +19,6 @@ public class WebSocketClass {
     private WebSocketClient mWebSocketClient;
 
     private GameSurface gameSurface;
-    private String message = "";
 
     private String ipAddress;
 

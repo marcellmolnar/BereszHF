@@ -15,7 +15,7 @@ import com.example.mate_pc.game1.R;
 
 import java.util.regex.Pattern;
 
-import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_KEY;
+import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_INTENT_EXTRA_KEY;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_CONNECTOR_RETURN;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
 import static com.example.mate_pc.game1.Constants.START_SETTINGS_CODE;
@@ -96,7 +96,7 @@ public class ConnectorClass extends Activity {
         public void onClick(View view) {
             if (isIpValid(ipAddress.getText().toString())){
                 Intent data = new Intent();
-                data.putExtra(CONNECTOR_IP_KEY, ipAddress.getText().toString());
+                data.putExtra(CONNECTOR_IP_INTENT_EXTRA_KEY, ipAddress.getText().toString());
                 setResult(activityResultCode, data);
                 finish();
             }
@@ -122,7 +122,7 @@ public class ConnectorClass extends Activity {
         super.onBackPressed();
         // ToDo: delete these lines to not allow to start game, without connection
         Intent data = new Intent();
-        data.putExtra(CONNECTOR_IP_KEY, ipAddress.getText().toString());
+        data.putExtra(CONNECTOR_IP_INTENT_EXTRA_KEY, ipAddress.getText().toString());
         setResult(activityResultCode, data);
         finish();
     }
