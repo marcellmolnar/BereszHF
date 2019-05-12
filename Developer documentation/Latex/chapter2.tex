@@ -1,0 +1,21 @@
+\setcounter{chapter}{2}
+\setcounter{section}{0}
+%----------------------------------------------------------------------------
+\chapter*{A szerver}
+%----------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------
+\section{Felépítés, mûködés}
+%----------------------------------------------------------------------------
+A szervert a "Ratchet" nevû, PHP alapú könyvtárral valósítottuk meg. Ezzel könnyen és gyorsan fel lehet állítani egy valós idõben mûködõ szervert, amelyre a kliensek tudnak csatlakozni. Ebben egy osztályt kell létrehoznunk, amely a "Ratchet"-ben található "MessageComponentInterface" osztályából származik le. Ennek - a java-s web sockethez hasonlóan - 4 alapfüggvénye van:
+
+\begin{itemize}
+	\item $public\text{ }function\text{ }onOpen(ConnectionInterface\text{ }\$conn)$
+	\item $public\text{ }function\text{ }onMessage(ConnectionInterface\text{ }\$from,\text{ }\$msg)$
+	\item $public\text{ }function\text{ }onClose(ConnectionInterface\text{ }\$conn)$
+	\item $public\text{ }function\text{ }onError(ConnectionInterface\text{ }\$conn,\text{ }\textbackslash Exception\text{ }\$e)$
+\end{itemize}
+
+Ezek közül az $onOpen(..)$ függvény hívódik meg amikor egy új kliens kapcsolódik. Ekkor ezt a klienst megjegyezzük és várunk a következõ eseményre. Amennyiben üzenetet kapunk, akkor az $onMessage(..)$ függvény hívódik meg, amelyben az üzenetet továbbküldjük a másik játékosnak (amennyiben csatlakozott már másik játékos). Ha egy játékos megszakítja a kapcsolatot, akkor az $onClose(..)$ függvény hívódik meg és ezért itt eltávolítjuk a megszakított kapcsolatot.
+
+Jelenleg az implementált szerver csupán 2 kapcsolatot tud kezelni. Ezt azonban bármikor ki lehet bõvíteni, hogy több kapcsolat kezelésére is képes legyen.

@@ -11,14 +11,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=1047
-NormalPos.bottom=322
+NormalPos.right=979
+NormalPos.bottom=337
 Class=LaTeXView
-Document=design.tex
+Document=developer_docs.tex
 
 [Frame0_View0,0]
-TopLine=87
-Cursor=3234
+TopLine=172
+Cursor=7195
 
 [Frame1]
 Flags=0
@@ -29,14 +29,14 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=1047
-NormalPos.bottom=322
+NormalPos.right=979
+NormalPos.bottom=337
 Class=LaTeXView
 Document=chapter1.tex
 
 [Frame1_View0,0]
-TopLine=19
-Cursor=2108
+TopLine=191
+Cursor=11157
 
 [Frame2]
 Flags=0
@@ -47,16 +47,16 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=1047
-NormalPos.bottom=322
+NormalPos.right=979
+NormalPos.bottom=337
 Class=LaTeXView
-Document=fedlap.tex
+Document=chapter2.tex
 
 [Frame2_View0,0]
 TopLine=0
-Cursor=229
+Cursor=47
 
 [SessionInfo]
 FrameCount=3
-ActiveFrame=1
+ActiveFrame=2
 

@@ -1,3 +1,7 @@
+\setcounter{chapter}{1}
+%----------------------------------------------------------------------------
+\chapter*{Az Android alkalmazás}
+%----------------------------------------------------------------------------
 %----------------------------------------------------------------------------
 \section{A feladat rövid összefoglalása}
 %----------------------------------------------------------------------------
@@ -33,14 +37,14 @@ A fõ package-en belül található:
 	\item és az absztrakt $Constants$ osztály, amelyben az alkalmazáson belül több helyen használt konstansokat tárolja.
 \end{itemize}
 
-További három package-et találunk a források között, amelyek egyrészt a grafikus megjelenítés, a hálózati kommunikáció és az audió effektek szempontjából lényegesek:
+További három package-et találunk a források között, amelyek a grafikus megjelenítés, a hálózati kommunikáció és az audió effektek szempontjából lényegesek:
 
 \begin{itemize}
   \item a $graphical\_stuff$-ban találhatók a játékosok karaktereit, az akadályokat és a lövedékeket reprezentáló osztály leírások,
   \item a $network\_stuff$-ban a hálózatkezelésért felelõs socket osztály, a program indulásakor használatosa a hálóati kapcsolat kiépítéséért felelõs osztály és egy külön szálat futtató osztály található. Ez utóbbi periódikusan küldi át a lényeges információkat a szerver felé.
   \item a$sound\_stuff$-ban a háttérzenét kezelõ és a különbözõ hangeffekteket lejátszó osztályok vannak.
 \end{itemize}
-
+\pagebreak
 \section{A nézetek}
 
 \begin{figure}[!ht]
@@ -50,8 +54,10 @@ További három package-et találunk a források között, amelyek egyrészt a grafikus
 \label{fig:layouts}
 \end{figure}
 
+Összesen 6 layout van definiálva az alkalmazáshoz. Ebbõl 5 tartozik valódi "AppCompatActivity" vagy "Activity" osztályhoz. Ezek az osztályok a "Manifest" állományban is megtalálhatóak. A "count\_down\_layout" a visszaszámláló "CountDown" osztályhoz tartozik, amely egy "Dialog" ablakot helyez a képernyõre. A "count\_down\_layout" ennek a dialógusnak a nézete.
+
 \section{MainActivity}
-A program indulásakor a MainActivity-bõl fog egy példány létrejönni. Ennek az osztálynak a nézetében ($activity\_main$ található 
+A program indulásakor a MainActivity-bõl fog egy példány létrejönni. Ennek az osztálynak a nézetében ($activity\_main$) található 
 \begin{itemize}
 	\item egy $LinearLayout$, amelyre a játék elemeit rajzoljuk ki,
 	\item egy $LinearLayout$, amely a joystick alapú irányításnál fogja a $Touch Event$eket "elkapni",
@@ -66,14 +72,64 @@ Ezután elindítjuk a csatlakozásért felelõs nézetet egy $ConnectorClass$ formájáb
 
 
 \section{GameSurface}
+A "GameSurface" osztály elnevezésével ellentétben a játék logikáját is megvalósítja. Ebben az osztályban tároljuk a karaktereket, az akadályokat és minden más játék objektumot. A két legfontosabb függvénye a $public\text{ }void\text{ }update()$ és a $public\text{ }void\text{ }draw(Canvas\text{ }canvas)$. Ezek felelõsek a játék objektumainak állapotfrissítésérõl és arról, hogy ezeket az objektumokat a képernyõre rajzolhassuk.
 
 
 
+\section{GameThread}
+Fontos, hogy a játék logikája és a kirajzoltatás egy külön szálon fut. Ezt a szálat valósítja meg a "GameThread" osztály, amely periodikusan meghívja a "GameSurface" osztály $update()$ és $draw(..)$ függvényeit.
 
 
 
+\section{Grafikai elemek}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=80mm,keepaspectratio]{figures/graphical.png}
+\caption{A grafikai elemek}
+\label{fig:graphical}
+\end{figure}
+
+\subsection{GameObject}
+A "GameObject" osztály egy absztrakt osztály, amibõl a "Bullet", a "Character", az "OpponentCharacter"\footnote{Az "OpponentCharacter" közvetlenül a "Character" osztályból származik le"} és a "Platform" osztály leszámrazik. Ez egy olyan osztály, amelyben olyan adatokat tárolunk, amelyek minden, a felsorolt osztályokban megtalálhatók. Ilyen például egy objektum pozíciója, mérete és az általa megjelenített kép.
+
+\subsection{Character}
+Ez az osztály reprezentálja a játékos karakterét. A két legfontosabb függvénye a $public\text{ }void\text{ }update()$ és a $public\text{ }void\text{ }draw(Canvas\text{ }canvas)$. Ezeket a "GameSurface" hívja meg a saját $update()$ és $draw(..)$ függvényeibõl. Fontos, hogy a karakter helyzete kizárólag az "update()" függvényben változik meg, mivel az osztály tárolja a karakter sebességét, ami alapján változik a pozíciója. Érdekesség, hogy az ugrás dinamikáját a gravitáció valós modellezésével oldottuk meg. Ezen kívül "getter", "setter" és egyéb segédfüggvények vannak benne.
+
+\subsection{OpponentCharacter}
+Az "OpponentCharacter" a sima "Character" osztályból származik le. A különbség ott van a két osztály között, hogy az ellenfél karakterének pozícióját a web socketen keresztül kapjuk meg, ezért ennek a karakternek rendelkeznie kell az $x$ és $y$ koordinátária vonatkozó "setter" függvénnyekkel.
+
+\subsection{Platform}
+A "Platform" osztály az akadályokat valósítja meg. Ennek egy speciális függvénye a $public\text{ }boolean\text{ }isBelow(Character\text{ }character)$, amely megmondja, hogy a paraméterként kapott karakter a platform felett van-e. A "GameSurface" ezt minden platformra meghívja és ez alapján dönti el, hogy a karakter meddig tud zuhanni.
+
+\subsection{Ricardo}
+Ez az osztály egy "Activity", amely gyõzelem esetén a jutalom videó lejátszásáért felelõs.
 
 
+\section{Hálózati elemek}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=80mm,keepaspectratio]{figures/network.png}
+\caption{A hálózati elemek}
+\label{fig:network}
+\end{figure}
 
+\subsection{ConnectorClass}
+Ez az osztály egy "Activity", amely a játék indulásakor az IP-cím megszerzéséért felelõs. A nézetében egy szövegdobozba ("EditText") kell megadni az IP-címet. A "MainActivity"-hez tér vissza az osztály, az IP-címet pedig egy "Intent" extrába csomagolva küldi el.
 
+\subsection{SenderClass}
+A "SenderClass" egy szálat futtat, amelyben periódikusan elküldi a saját játékosunk pozícióját, a másik játékos életét és a még be nem csapódott lövedékek helyzetét. Az ellenfél életének elküldése azért jobb megoldás a találat egyszeri jelzése helyett, mert ha egy hálózati csomag el is vesztõdik, a nem jelent gondot, mert a következõ csomagban ismét elküldjük ugyanazt az adatot. Ha viszont csak egy találatot küldenénk el, és pont ez a csomag veszne el, akkor a két játékos más és más életpontot látna. Ugyanígy a saját karakterünk sebessége helyett a pozíciót érdemes küldeni, mert így nem kell felesleges szinkronizációt végezni a két eszköz között.
 
+\subsection{WebSocketClass}
+A "WebSocketClass" a web socketet valósítja meg. Ennek egy belsõ osztálya a "SocketServerThread", amely egy szálat valósít meg, amelyben a we socket fut. A hálózati adatokat ebben az osztályban létrehozott web socket fogadja.
+
+\section{Hangeffektek}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=80mm,keepaspectratio]{figures/sound.png}
+\caption{A hangokért felelõs osztályok}
+\label{fig:sound}
+\end{figure}
+A hangokért alapvetõen két osztály felelõs. Az egyik a "BackgroundSoundHandler", amely a háttérzenét szolgáltatja egy MediaPlayeren keresztül. A másik a "SoundEffectsPlayer" a különbözõ effekteket játsza le, például amikor egy lövedék becsapódik. Ezeket egy "SoundPool" segítségével játszk le.
+
+\section{JavaDoc}
+Jelen dokumentumhoz egy JavaDoc dokumentum is tartozik. Ez egy HTML, CSS és javascipt alapú dokumentum, amelyet böngészõben érdemes megnyitni és megtekinteni. Ehhez a "\textbackslash Javadoc\textbackslash index.html" nevû fájlt kell megnyitni, minden más errõl a HTML oldalról érhetõ el. Ebben minden java osztály és forrásfájl benne van a szokásos java-s dokumentáció szerint.

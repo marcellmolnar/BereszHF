@@ -11,13 +11,13 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=1047
-NormalPos.bottom=362
+NormalPos.right=975
+NormalPos.bottom=477
 Class=LaTeXView
 Document=user_manual.tex
 
 [Frame0_View0,0]
-TopLine=88
+TopLine=58
 Cursor=3263
 
 [Frame1]
@@ -29,13 +29,13 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=1047
-NormalPos.bottom=362
+NormalPos.right=975
+NormalPos.bottom=477
 Class=LaTeXView
 Document=chapter1.tex
 
 [Frame1_View0,0]
-TopLine=94
+TopLine=99
 Cursor=5438
 
 [Frame2]
@@ -47,8 +47,8 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=1047
-NormalPos.bottom=362
+NormalPos.right=975
+NormalPos.bottom=477
 Class=LaTeXView
 Document=fedlap.tex
 
@@ -58,5 +58,5 @@ Cursor=554
 
 [SessionInfo]
 FrameCount=3
-ActiveFrame=1
+ActiveFrame=0
 

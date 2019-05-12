@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,oneside]{book}             % Single-side
+\documentclass[12pt,a4paper,oneside]{report}             % Single-side
 %\documentclass[11pt,a4paper,twoside,openright]{report}  % Duplex
 
 %\PassOptionsToPackage{chapternumber=Huordinal}{magyar.ldf}
@@ -13,7 +13,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{enumerate}
-%\usepackage[thmmarks]{ntheorem}
+\usepackage[thmmarks]{ntheorem}
 \usepackage{graphics}
 \usepackage{epsfig}
 \usepackage{listings}
@@ -21,15 +21,15 @@
 %\usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{anysize}
-%\usepackage{sectsty}
+\usepackage{sectsty}
 \usepackage{setspace}  % Ettol a tablazatok, abrak, labjegyzetek maradnak 1-es sorkozzel!
 \usepackage[hang]{caption}
 \usepackage{hyperref}
-%\usepackage{indentfirst}
+\usepackage{indentfirst}
 %\usepackage[normalem]{ulem}
-%\usepackage{ctable}
-%\usepackage{cleveref}
-%\usepackage{mathabx}
+\usepackage{ctable}
+\usepackage{cleveref}
+\usepackage{mathabx}
 %\usepackage{verbatim}
 %\usepackage{tocloft}
 %\usepackage{float}
@@ -39,6 +39,23 @@
 \usepackage{everypage}
 \usepackage[bottom]{footmisc}
 
+
+
+\usepackage[explicit]{titlesec}
+\usepackage{lmodern,lipsum}
+
+\newlength\chapnumb
+\setlength\chapnumb{4cm}
+\newcommand{\chaptertitlefont}{\normalfont\sffamily\Huge}
+
+\titleformat{\chapter}[block]
+{\normalfont\sffamily}{}{0pt}
+{\parbox[b]{\chapnumb}{%
+   \fontsize{120}{110}\selectfont\thechapter}%
+  \parbox[b]{\dimexpr\textwidth-\chapnumb\relax}{%
+    \raggedleft%
+    \hfill{\chaptertitlefont#1}\\
+    \rule{\dimexpr\textwidth-\chapnumb\relax}{0.4pt}}}
 
 %\usepackage[paper=portrait,pagesize]{typearea}
 
@@ -180,7 +197,7 @@
 \includeonly{
 	fedlap,%
 	chapter1,%
-	chapter2,%
+	%chapter2,%
 }
 %--------------------------------------------------------------------------------------
 %	Setup captions
@@ -221,7 +238,7 @@ aboveskip=10pt}
 \onehalfspacing
 \include{fedlap}\vfill
 \include{chapter1}
-\include{chapter2}
+%\include{chapter2}
 
 \label{page:last}
 \end{document}

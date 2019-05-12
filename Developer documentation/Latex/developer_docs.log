@@ -1,25 +1,27 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.20)  5 MAY 2019 12:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.2.20)  11 MAY 2019 19:30
 entering extended mode
-**./design.tex
-(design.tex
+**./developer_docs.tex
+(developer_docs.tex
 LaTeX2e <2018-12-01>
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.cls"
-Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\size12.clo"
-File: size12.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
+("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\book.cls"
+Document Class: book 2018/09/03 v1.4i Standard LaTeX document class
+("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\bk12.clo"
+File: bk12.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 )
 \c@part=\count80
-\c@section=\count81
-\c@subsection=\count82
-\c@subsubsection=\count83
-\c@paragraph=\count84
-\c@subparagraph=\count85
-\c@figure=\count86
-\c@table=\count87
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\t1enc.sty"
+)
+("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\t1enc.sty"
 Package: t1enc 1994/06/01 Standard LaTeX package
 )
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\inputenc.sty"
@@ -47,23 +49,16 @@ Language: magyar 2007/10/19 v1.5 Magyar support from the babel v3.7 system
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\babel.def"
 File: babel.def 2018/11/13 3.27 Babel common definitions
-\babel@savecnt=\count88
+\babel@savecnt=\count89
 \U@D=\dimen103
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/generic/babel\txtbabel.d
 ef")
-\bbl@dirlevel=\count89
+\bbl@dirlevel=\count90
 )
 Package babel Info: Making ` an active character on input line 2609.
-\c@footnote@add=\count90
-\c@footnote@ch=\count91
-))
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\fontenc.sty"
-Package: fontenc 2018/08/11 v2.0j Standard LaTeX package
-
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\t1enc.def"
-File: t1enc.def 2018/08/11 v2.0j Standard LaTeX file
-LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+\c@footnote@add=\count91
+\c@footnote@ch=\count92
 ))
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xcolor\xcolor.sty"
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
@@ -95,7 +90,7 @@ Package: array 2018/11/13 v2.4j Tabular extension package (FMi)
 \everycr=\toks17
 \minrowclearance=\skip45
 )
-\rownum=\count92
+\rownum=\count93
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
 Package xcolor Info: Model `RGB' extended on input line 1364.
@@ -110,7 +105,7 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 sty"
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen106
-\c@nlinenum=\count93
+\c@nlinenum=\count94
 \TeXr@lab=\toks18
 )
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/mathtools\mathtool
@@ -123,15 +118,15 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
 ) ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\calc.sty"
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count94
-\calc@Bcount=\count95
+\calc@Acount=\count95
+\calc@Bcount=\count96
 \calc@Adimen=\dimen107
 \calc@Bdimen=\dimen108
 \calc@Askip=\skip46
 \calc@Bskip=\skip47
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count96
+\calc@Ccount=\count97
 \calc@Cskip=\skip48
 )
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/mathtools\mhsetup.
@@ -164,13 +159,13 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 "
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count97
+\inf@bad=\count98
 LaTeX Info: Redefining \frac on input line 223.
-\uproot@=\count98
-\leftroot@=\count99
+\uproot@=\count99
+\leftroot@=\count100
 LaTeX Info: Redefining \overline on input line 385.
-\classnum@=\count100
-\DOTSCASE@=\count101
+\classnum@=\count101
+\DOTSCASE@=\count102
 LaTeX Info: Redefining \ldots on input line 482.
 LaTeX Info: Redefining \dots on input line 485.
 LaTeX Info: Redefining \cdots on input line 606.
@@ -179,15 +174,15 @@ LaTeX Info: Redefining \cdots on input line 606.
 \big@size=\dimen111
 LaTeX Font Info:    Redeclaring font encoding OML on input line 729.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 730.
-\macc@depth=\count102
-\c@MaxMatrixCols=\count103
+\macc@depth=\count103
+\c@MaxMatrixCols=\count104
 \dotsspace@=\muskip10
-\c@parentequation=\count104
-\dspbrk@lvl=\count105
+\c@parentequation=\count105
+\dspbrk@lvl=\count106
 \tag@help=\toks21
-\row@=\count106
-\column@=\count107
-\maxfields@=\count108
+\row@=\count107
+\column@=\count108
+\maxfields@=\count109
 \andhelp@=\toks22
 \eqnshift@=\dimen112
 \alignsep@=\dimen113
@@ -206,7 +201,7 @@ LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
-\g_MT_multlinerow_int=\count109
+\g_MT_multlinerow_int=\count110
 \l_MT_multwidth_dim=\dimen118
 \origjot=\skip52
 \l_MT_shortvdotswithinadjustabove_dim=\dimen119
@@ -233,48 +228,6 @@ y"
 Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
 \@enLab=\toks25
 )
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ntheorem\ntheorem.
-sty"
-Style `ntheorem', Version 1.33 <2011/08/15>
-Package: ntheorem 2011/08/15 1.33
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\ifthen.sty"
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)
-\theorem@style=\toks26
-\theorem@@style=\toks27
-\theorembodyfont=\toks28
-\theoremnumbering=\toks29
-\theorempreskipamount=\skip53
-\theorempostskipamount=\skip54
-\theoremframepreskipamount=\skip55
-\theoremframepostskipamount=\skip56
-\theoreminframepreskipamount=\skip57
-\theoreminframepostskipamount=\skip58
-\theorem@preskip=\toks30
-\theorem@postskip=\toks31
-\theorem@framepreskip=\toks32
-\theorem@framepostskip=\toks33
-\theorem@inframepreskip=\toks34
-\theorem@inframepostskip=\toks35
-\theoremindent=\dimen125
-\theorem@indent=\dimen126
-\theoremrightindent=\dimen127
-\theorem@rightindent=\dimen128
-\theoremheaderfont=\toks36
-\theoremseparator=\toks37
-\theoremprework=\toks38
-\theorempostwork=\toks39
-\theoremsymbol=\toks40
-\qedsymbol=\toks41
-\theoremkeyword=\toks42
-\qedsymbol=\toks43
-\thm@topsep=\skip59
-\thm@topsepadd=\skip60
-Package ntheorem Info: Option `thmmarks' loaded on input line 1175.
-\c@endNonectr=\count110
-\c@currNonectr=\count111
-\mysavskip=\skip61
-)
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\graphics.
 sty"
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
@@ -295,32 +248,32 @@ Package: epsfig 2017/06/25 v1.7b (e)psfig emulation (SPQR)
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\graphicx.
 sty"
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
-\Gin@req@height=\dimen129
-\Gin@req@width=\dimen130
+\Gin@req@height=\dimen125
+\Gin@req@width=\dimen126
 )
-\epsfxsize=\dimen131
-\epsfysize=\dimen132
+\epsfxsize=\dimen127
+\epsfysize=\dimen128
 )
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\listings.
 sty"
-\lst@mode=\count112
+\lst@mode=\count111
 \lst@gtempboxa=\box31
-\lst@token=\toks44
-\lst@length=\count113
-\lst@currlwidth=\dimen133
-\lst@column=\count114
-\lst@pos=\count115
-\lst@lostspace=\dimen134
-\lst@width=\dimen135
-\lst@newlines=\count116
-\lst@lineno=\count117
-\lst@maxwidth=\dimen136
+\lst@token=\toks26
+\lst@length=\count112
+\lst@currlwidth=\dimen129
+\lst@column=\count113
+\lst@pos=\count114
+\lst@lostspace=\dimen130
+\lst@width=\dimen131
+\lst@newlines=\count115
+\lst@lineno=\count116
+\lst@maxwidth=\dimen132
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\lstmisc.s
 ty"
 File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
-\c@lstnumber=\count118
-\lst@skipnumbers=\count119
+\c@lstnumber=\count117
+\lst@skipnumbers=\count118
 \lst@framebox=\box32
 )
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/listings\listings.
@@ -340,15 +293,10 @@ Package: anysize 1994/08/13 setting margin sizes
 document style option `anysize' loaded
 Michael Salzenberg, Thomas Esser, Dirk Hillbrecht
 Version 1.0, Aug 13, 1994
-\@Leftmargin=\dimen137
-\@Rightmargin=\dimen138
-\@Topmargin=\dimen139
-\@Bottommargin=\dimen140
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/sectsty\sectsty.st
-y"
-Package: sectsty 2002/02/25 v2.0.2 Commands to change all sectional heading sty
-les
+\@Leftmargin=\dimen133
+\@Rightmargin=\dimen134
+\@Topmargin=\dimen135
+\@Bottommargin=\dimen136
 )
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/setspace\setspace.
 sty"
@@ -362,17 +310,17 @@ Package: caption 2018/10/06 v3.3-154 Customizing captions (AR)
 ty"
 Package: caption3 2018/09/12 v1.8c caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 64.
-\captionmargin=\dimen141
-\captionmargin@=\dimen142
-\captionwidth=\dimen143
-\caption@tempdima=\dimen144
-\caption@indent=\dimen145
-\caption@parindent=\dimen146
-\caption@hangindent=\dimen147
+\captionmargin=\dimen137
+\captionmargin@=\dimen138
+\captionwidth=\dimen139
+\caption@tempdima=\dimen140
+\caption@indent=\dimen141
+\caption@parindent=\dimen142
+\caption@hangindent=\dimen143
 Package caption Info: magyar babel option is loaded.
 )
-\c@caption@flags=\count120
-\c@ContinuedFloat=\count121
+\c@caption@flags=\count119
+\c@ContinuedFloat=\count120
 Package caption Info: magyar babel option is loaded.
 Package caption Info: listings package is loaded.
 )
@@ -434,9 +382,9 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 .sty"
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
-\@linkdim=\dimen148
-\Hy@linkcounter=\count122
-\Hy@pagecounter=\count123
+\@linkdim=\dimen144
+\Hy@linkcounter=\count121
+\Hy@pagecounter=\count122
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\pd1enc.de
 f"
@@ -444,7 +392,7 @@ File: pd1enc.def 2018/11/30 v6.88e Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count124
+\Hy@SavedSpaceFactor=\count123
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/00miktex\hyperref.
 cfg"
@@ -457,16 +405,16 @@ Package hyperref Info: Plain pages OFF on input line 4534.
 Package hyperref Info: Backreferencing OFF on input line 4539.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4772.
-\c@Hy@tempcnt=\count125
+\c@Hy@tempcnt=\count124
  ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/url\url.sty"
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5125.
-\XeTeXLinkMargin=\dimen149
-\Fld@menulength=\count126
-\Field@Width=\dimen150
-\Fld@charsize=\dimen151
+\XeTeXLinkMargin=\dimen145
+\Fld@menulength=\count125
+\Field@Width=\dimen146
+\Fld@charsize=\dimen147
 Package hyperref Info: Hyper figures OFF on input line 6380.
 Package hyperref Info: Link nesting OFF on input line 6385.
 Package hyperref Info: Hyper index ON on input line 6388.
@@ -476,17 +424,17 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6405.
 Package hyperref Info: PDF/A mode OFF on input line 6410.
 LaTeX Info: Redefining \ref on input line 6450.
 LaTeX Info: Redefining \pageref on input line 6454.
-\Hy@abspage=\count127
-\c@Item=\count128
-\c@Hfootnote=\count129
+\Hy@abspage=\count126
+\c@Item=\count127
+\c@Hfootnote=\count128
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\hpdftex.d
 ef"
 File: hpdftex.def 2018/11/30 v6.88e Hyperref driver for pdfTeX
-\Fld@listcount=\count130
-\c@bookmark@seq@number=\count131
+\Fld@listcount=\count129
+\c@bookmark@seq@number=\count130
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\rerunfile
 check.sty"
@@ -494,706 +442,59 @@ Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip62
+\Hy@SectionHShift=\skip53
 )
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\indentfirst.
-sty"
-Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
-) ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ulem\ulem.sty"
-\UL@box=\box33
-\UL@hyphenbox=\box34
-\UL@skip=\skip63
-\UL@hook=\toks45
-\UL@height=\dimen152
-\UL@pe=\count132
-\UL@pixel=\dimen153
-\ULC@box=\box35
-Package: ulem 2012/05/18
-\ULdepth=\dimen154
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/ctable\ctable.sty"
-Package: ctable 2015/10/17 v1.31 ctable package for flexible typesetting of tab
-le and figure floats using key/value directives
-
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/etoolbox\etoolbox.
-sty"
-Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count133
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/xkeyval\xkeyval.st
-y"
-Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
-
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/generic/xkeyval\xkeyval.
-tex"
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/generic/xkeyval\xkvutils
-.tex"
-\XKV@toks=\toks46
-\XKV@tempa@toks=\toks47
-)
-\XKV@depth=\count134
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\tabularx.sty
-"
-Package: tabularx 2016/02/03 v2.11b `tabularx' package (DPC)
-\TX@col@width=\dimen155
-\TX@old@table=\dimen156
-\TX@old@col=\dimen157
-\TX@target=\dimen158
-\TX@delta=\dimen159
-\TX@cols=\count135
-\TX@ftn=\toks48
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/booktabs\booktabs.
-sty"
-Package: booktabs 2005/04/14 v1.61803 publication quality tables
-\heavyrulewidth=\dimen160
-\lightrulewidth=\dimen161
-\cmidrulewidth=\dimen162
-\belowrulesep=\dimen163
-\belowbottomsep=\dimen164
-\aboverulesep=\dimen165
-\abovetopsep=\dimen166
-\cmidrulesep=\dimen167
-\cmidrulekern=\dimen168
-\defaultaddspace=\dimen169
-\@cmidla=\count136
-\@cmidlb=\count137
-\@aboverulesep=\dimen170
-\@belowrulesep=\dimen171
-\@thisruleclass=\count138
-\@lastruleclass=\count139
-\@thisrulewidth=\dimen172
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\rotating.
-sty"
-Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
-\c@r@tfl@t=\count140
-\rotFPtop=\skip64
-\rotFPbot=\skip65
-\rot@float@box=\box36
-\rot@mess@toks=\toks49
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\transpare
-nt.sty"
-Package: transparent 2018/11/18 v1.3 Transparency via pdfTeX's color stack (HO)
-
-)
-\@CTframesep=\dimen173
-\@dfltCTframesep=\dimen174
-\@CTframerule=\dimen175
-\@dfltCTframerule=\dimen176
-\@CTwidth=\dimen177
-\@dfltCTwidth=\dimen178
-\@CTcaptionskip=\dimen179
-\@dfltCTcaptionskip=\dimen180
-\@CTmaxwidth=\dimen181
-\@dfltCTmaxwidth=\dimen182
-\@CTmincapwidth=\dimen183
-\@dfltCTmincapwidth=\dimen184
-\@CTfooterwidth=\dimen185
-\@dfltCTfooterwidth=\dimen186
-\@CTw=\dimen187
-\@CTfloatwidth=\dimen188
-\@CToldsep=\dimen189
-\@CToldrule=\dimen190
-\CT@t=\box37
-\@CTcurftwidth=\dimen191
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/cleveref\cleveref.
-sty"
-Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
-Package cleveref Info: `hyperref' support loaded on input line 2370.
-LaTeX Info: Redefining \cref on input line 2370.
-LaTeX Info: Redefining \Cref on input line 2370.
-LaTeX Info: Redefining \crefrange on input line 2370.
-LaTeX Info: Redefining \Crefrange on input line 2370.
-LaTeX Info: Redefining \cpageref on input line 2370.
-LaTeX Info: Redefining \Cpageref on input line 2370.
-LaTeX Info: Redefining \cpagerefrange on input line 2370.
-LaTeX Info: Redefining \Cpagerefrange on input line 2370.
-LaTeX Info: Redefining \labelcref on input line 2370.
-LaTeX Info: Redefining \labelcpageref on input line 2370.
-Package cleveref Info: `ntheorem' support loaded on input line 3055.
-Package cleveref Info: `listings' support loaded on input line 3131.
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/mathabx\mathabx.st
-y"
-Package: mathabx 2003/07/29 v0.0 Non-standard LaTeX package mathabx
-\symmatha=\mathgroup6
-\symmathb=\mathgroup7
-\symmathx=\mathgroup8
-
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/generic/mathabx\mathabx.
-dcl"
-LaTeX Font Info:    Redeclaring math symbol \cdotp on input line 25.
-LaTeX Font Info:    Redeclaring math symbol \times on input line 33.
-LaTeX Font Info:    Redeclaring math symbol \div on input line 34.
-LaTeX Font Info:    Redeclaring math symbol \cdot on input line 35.
-LaTeX Font Info:    Redeclaring math symbol \circ on input line 36.
-LaTeX Font Info:    Redeclaring math symbol \ast on input line 38.
-LaTeX Font Info:    Redeclaring math symbol \pm on input line 41.
-LaTeX Font Info:    Redeclaring math symbol \mp on input line 42.
-LaTeX Font Info:    Redeclaring math symbol \ltimes on input line 43.
-LaTeX Font Info:    Redeclaring math symbol \rtimes on input line 44.
-LaTeX Font Info:    Redeclaring math symbol \diamond on input line 45.
-LaTeX Font Info:    Redeclaring math symbol \bullet on input line 46.
-LaTeX Font Info:    Redeclaring math symbol \star on input line 47.
-LaTeX Font Info:    Redeclaring math symbol \amalg on input line 51.
-LaTeX Font Info:    Redeclaring math symbol \dotplus on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \square on input line 63.
-LaTeX Font Info:    Redeclaring math symbol \divideontimes on input line 71.
-LaTeX Font Info:    Redeclaring math symbol \bigstar on input line 75.
-LaTeX Font Info:    Redeclaring math symbol \equiv on input line 83.
-LaTeX Font Info:    Redeclaring math symbol \sim on input line 84.
-LaTeX Font Info:    Redeclaring math symbol \approx on input line 85.
-LaTeX Font Info:    Redeclaring math symbol \simeq on input line 86.
-LaTeX Font Info:    Redeclaring math symbol \asymp on input line 89.
-LaTeX Font Info:    Redeclaring math symbol \nsim on input line 97.
-LaTeX Font Info:    Redeclaring math symbol \ncong on input line 100.
-LaTeX Font Info:    Redeclaring math symbol \risingdotseq on input line 118.
-LaTeX Font Info:    Redeclaring math symbol \fallingdotseq on input line 119.
-LaTeX Font Info:    Redeclaring math symbol \circeq on input line 125.
-LaTeX Font Info:    Redeclaring math symbol \eqcirc on input line 126.
-LaTeX Font Info:    Redeclaring math symbol \triangleq on input line 127.
-LaTeX Font Info:    Redeclaring math symbol \neg on input line 134.
-LaTeX Font Info:    Redeclaring math symbol \ll on input line 136.
-LaTeX Font Info:    Redeclaring math symbol \gg on input line 137.
-LaTeX Font Info:    Redeclaring math symbol \vdash on input line 139.
-LaTeX Font Info:    Redeclaring math symbol \dashv on input line 140.
-LaTeX Font Info:    Redeclaring math symbol \nvdash on input line 141.
-LaTeX Font Info:    Redeclaring math symbol \vDash on input line 143.
-LaTeX Font Info:    Redeclaring math symbol \nvDash on input line 145.
-LaTeX Font Info:    Redeclaring math symbol \Vdash on input line 147.
-LaTeX Font Info:    Redeclaring math symbol \nVdash on input line 149.
-LaTeX Font Info:    Redeclaring math symbol \flat on input line 158.
-LaTeX Font Info:    Redeclaring math symbol \natural on input line 159.
-LaTeX Font Info:    Redeclaring math symbol \sharp on input line 160.
-LaTeX Font Info:    Redeclaring math symbol \infty on input line 161.
-LaTeX Font Info:    Redeclaring math symbol \propto on input line 162.
-LaTeX Font Info:    Redeclaring math symbol \dagger on input line 163.
-LaTeX Font Info:    Redeclaring math symbol \ddagger on input line 164.
-LaTeX Font Info:    Redeclaring math symbol \between on input line 170.
-LaTeX Font Info:    Redeclaring math symbol \smile on input line 171.
-LaTeX Font Info:    Redeclaring math symbol \frown on input line 172.
-LaTeX Font Info:    Redeclaring math symbol \leftthreetimes on input line 174.
-LaTeX Font Info:    Redeclaring math symbol \rightthreetimes on input line 175.
-
-LaTeX Font Info:    Redeclaring math symbol \pitchfork on input line 176.
-LaTeX Font Info:    Redeclaring math symbol \nVDash on input line 182.
-LaTeX Font Info:    Redeclaring math symbol \Vvdash on input line 184.
-LaTeX Font Info:    Redeclaring math symbol \therefore on input line 189.
-LaTeX Font Info:    Redeclaring math symbol \because on input line 190.
-LaTeX Font Info:    Redeclaring math symbol \measuredangle on input line 202.
-LaTeX Font Info:    Redeclaring math symbol \sphericalangle on input line 203.
-LaTeX Font Info:    Redeclaring math symbol \setminus on input line 218.
-LaTeX Font Info:    Redeclaring math symbol \mid on input line 222.
-LaTeX Font Info:    Redeclaring math symbol \forall on input line 279.
-LaTeX Font Info:    Redeclaring math symbol \complement on input line 280.
-LaTeX Font Info:    Redeclaring math symbol \partial on input line 281.
-LaTeX Font Info:    Redeclaring math symbol \exists on input line 284.
-LaTeX Font Info:    Redeclaring math symbol \nexists on input line 285.
-LaTeX Font Info:    Redeclaring math symbol \Finv on input line 286.
-LaTeX Font Info:    Redeclaring math symbol \Game on input line 287.
-LaTeX Font Info:    Redeclaring math symbol \emptyset on input line 288.
-LaTeX Font Info:    Redeclaring math symbol \top on input line 290.
-LaTeX Font Info:    Redeclaring math symbol \bot on input line 291.
-LaTeX Font Info:    Redeclaring math symbol \perp on input line 292.
-LaTeX Font Info:    Redeclaring math symbol \curlywedge on input line 296.
-LaTeX Font Info:    Redeclaring math symbol \curlyvee on input line 297.
-LaTeX Font Info:    Redeclaring math symbol \in on input line 299.
-LaTeX Font Info:    Redeclaring math symbol \owns on input line 300.
-LaTeX Font Info:    Redeclaring math symbol \cap on input line 312.
-LaTeX Font Info:    Redeclaring math symbol \cup on input line 313.
-LaTeX Font Info:    Redeclaring math symbol \uplus on input line 314.
-LaTeX Font Info:    Redeclaring math symbol \sqcap on input line 315.
-LaTeX Font Info:    Redeclaring math symbol \sqcup on input line 316.
-LaTeX Font Info:    Redeclaring math symbol \wedge on input line 318.
-LaTeX Font Info:    Redeclaring math symbol \vee on input line 320.
-LaTeX Font Info:    Redeclaring math symbol \barwedge on input line 327.
-LaTeX Font Info:    Redeclaring math symbol \veebar on input line 328.
-LaTeX Font Info:    Redeclaring math symbol \doublebarwedge on input line 329.
-LaTeX Font Info:    Redeclaring math symbol \doublecap on input line 331.
-LaTeX Font Info:    Redeclaring math symbol \doublecup on input line 333.
-LaTeX Font Info:    Redeclaring math symbol \subset on input line 344.
-LaTeX Font Info:    Redeclaring math symbol \supset on input line 345.
-LaTeX Font Info:    Redeclaring math symbol \subseteq on input line 348.
-LaTeX Font Info:    Redeclaring math symbol \supseteq on input line 349.
-LaTeX Font Info:    Redeclaring math symbol \nsubseteq on input line 350.
-LaTeX Font Info:    Redeclaring math symbol \nsupseteq on input line 351.
-LaTeX Font Info:    Redeclaring math symbol \subsetneq on input line 352.
-LaTeX Font Info:    Redeclaring math symbol \supsetneq on input line 353.
-LaTeX Font Info:    Redeclaring math symbol \varsubsetneq on input line 354.
-LaTeX Font Info:    Redeclaring math symbol \varsupsetneq on input line 355.
-LaTeX Font Info:    Redeclaring math symbol \subseteqq on input line 357.
-LaTeX Font Info:    Redeclaring math symbol \supseteqq on input line 358.
-LaTeX Font Info:    Redeclaring math symbol \nsubseteqq on input line 359.
-LaTeX Font Info:    Redeclaring math symbol \nsupseteqq on input line 360.
-LaTeX Font Info:    Redeclaring math symbol \subsetneqq on input line 361.
-LaTeX Font Info:    Redeclaring math symbol \supsetneqq on input line 362.
-LaTeX Font Info:    Redeclaring math symbol \varsubsetneqq on input line 363.
-LaTeX Font Info:    Redeclaring math symbol \varsupsetneqq on input line 364.
-LaTeX Font Info:    Redeclaring math symbol \Subset on input line 366.
-LaTeX Font Info:    Redeclaring math symbol \Supset on input line 367.
-LaTeX Font Info:    Redeclaring math symbol \sqsubseteq on input line 380.
-LaTeX Font Info:    Redeclaring math symbol \sqsupseteq on input line 381.
-LaTeX Font Info:    Redeclaring math symbol \triangleleft on input line 407.
-LaTeX Font Info:    Redeclaring math symbol \vartriangleleft on input line 408.
-
-LaTeX Font Info:    Redeclaring math symbol \triangleright on input line 409.
-LaTeX Font Info:    Redeclaring math symbol \vartriangleright on input line 410
-.
-LaTeX Font Info:    Redeclaring math symbol \ntriangleleft on input line 411.
-LaTeX Font Info:    Redeclaring math symbol \ntriangleright on input line 412.
-LaTeX Font Info:    Redeclaring math symbol \trianglelefteq on input line 413.
-LaTeX Font Info:    Redeclaring math symbol \trianglerighteq on input line 414.
-
-LaTeX Font Info:    Redeclaring math symbol \ntrianglelefteq on input line 415.
-
-LaTeX Font Info:    Redeclaring math symbol \ntrianglerighteq on input line 416
-.
-LaTeX Font Info:    Redeclaring math symbol \blacktriangledown on input line 42
-7.
-LaTeX Font Info:    Redeclaring math symbol \blacktriangleleft on input line 42
-8.
-LaTeX Font Info:    Redeclaring math symbol \blacktriangleright on input line 4
-29.
-LaTeX Font Info:    Redeclaring math symbol \nless on input line 437.
-LaTeX Font Info:    Redeclaring math symbol \ngtr on input line 438.
-LaTeX Font Info:    Redeclaring math symbol \leq on input line 439.
-LaTeX Font Info:    Redeclaring math symbol \geq on input line 441.
-LaTeX Font Info:    Redeclaring math symbol \nleq on input line 443.
-LaTeX Font Info:    Redeclaring math symbol \ngeq on input line 445.
-LaTeX Font Info:    Redeclaring math symbol \lneq on input line 451.
-LaTeX Font Info:    Redeclaring math symbol \gneq on input line 452.
-LaTeX Font Info:    Redeclaring math symbol \leqq on input line 453.
-LaTeX Font Info:    Redeclaring math symbol \geqq on input line 454.
-LaTeX Font Info:    Redeclaring math symbol \nleqq on input line 455.
-LaTeX Font Info:    Redeclaring math symbol \ngeqq on input line 456.
-LaTeX Font Info:    Redeclaring math symbol \lneqq on input line 457.
-LaTeX Font Info:    Redeclaring math symbol \gneqq on input line 458.
-LaTeX Font Info:    Redeclaring math symbol \lvertneqq on input line 459.
-LaTeX Font Info:    Redeclaring math symbol \gvertneqq on input line 460.
-LaTeX Font Info:    Redeclaring math symbol \eqslantless on input line 461.
-LaTeX Font Info:    Redeclaring math symbol \eqslantgtr on input line 462.
-LaTeX Font Info:    Redeclaring math symbol \lessgtr on input line 465.
-LaTeX Font Info:    Redeclaring math symbol \gtrless on input line 466.
-LaTeX Font Info:    Redeclaring math symbol \lesseqgtr on input line 467.
-LaTeX Font Info:    Redeclaring math symbol \gtreqless on input line 468.
-LaTeX Font Info:    Redeclaring math symbol \lesseqqgtr on input line 469.
-LaTeX Font Info:    Redeclaring math symbol \gtreqqless on input line 470.
-LaTeX Font Info:    Redeclaring math symbol \lesssim on input line 472.
-LaTeX Font Info:    Redeclaring math symbol \gtrsim on input line 473.
-LaTeX Font Info:    Redeclaring math symbol \lnsim on input line 476.
-LaTeX Font Info:    Redeclaring math symbol \gnsim on input line 477.
-LaTeX Font Info:    Redeclaring math symbol \lessapprox on input line 478.
-LaTeX Font Info:    Redeclaring math symbol \gtrapprox on input line 479.
-LaTeX Font Info:    Redeclaring math symbol \lnapprox on input line 482.
-LaTeX Font Info:    Redeclaring math symbol \gnapprox on input line 483.
-LaTeX Font Info:    Redeclaring math symbol \lessdot on input line 485.
-LaTeX Font Info:    Redeclaring math symbol \gtrdot on input line 486.
-LaTeX Font Info:    Redeclaring math symbol \lll on input line 488.
-LaTeX Font Info:    Redeclaring math symbol \ggg on input line 489.
-LaTeX Font Info:    Redeclaring math symbol \prec on input line 498.
-LaTeX Font Info:    Redeclaring math symbol \succ on input line 499.
-LaTeX Font Info:    Redeclaring math symbol \nprec on input line 500.
-LaTeX Font Info:    Redeclaring math symbol \nsucc on input line 501.
-LaTeX Font Info:    Redeclaring math symbol \preccurlyeq on input line 502.
-LaTeX Font Info:    Redeclaring math symbol \succcurlyeq on input line 503.
-LaTeX Font Info:    Redeclaring math symbol \preceq on input line 506.
-LaTeX Font Info:    Redeclaring math symbol \succeq on input line 507.
-LaTeX Font Info:    Redeclaring math symbol \npreceq on input line 508.
-LaTeX Font Info:    Redeclaring math symbol \nsucceq on input line 509.
-LaTeX Font Info:    Redeclaring math symbol \curlyeqprec on input line 512.
-LaTeX Font Info:    Redeclaring math symbol \curlyeqsucc on input line 513.
-LaTeX Font Info:    Redeclaring math symbol \precsim on input line 517.
-LaTeX Font Info:    Redeclaring math symbol \succsim on input line 518.
-LaTeX Font Info:    Redeclaring math symbol \precnsim on input line 521.
-LaTeX Font Info:    Redeclaring math symbol \succnsim on input line 522.
-LaTeX Font Info:    Redeclaring math symbol \precapprox on input line 523.
-LaTeX Font Info:    Redeclaring math symbol \succapprox on input line 524.
-LaTeX Font Info:    Redeclaring math symbol \precnapprox on input line 527.
-LaTeX Font Info:    Redeclaring math symbol \succnapprox on input line 528.
-LaTeX Font Info:    Redeclaring math symbol \leftarrow on input line 540.
-LaTeX Font Info:    Redeclaring math symbol \rightarrow on input line 542.
-LaTeX Font Info:    Redeclaring math symbol \nwarrow on input line 546.
-LaTeX Font Info:    Redeclaring math symbol \nearrow on input line 547.
-LaTeX Font Info:    Redeclaring math symbol \swarrow on input line 548.
-LaTeX Font Info:    Redeclaring math symbol \searrow on input line 549.
-LaTeX Font Info:    Redeclaring math symbol \leftrightarrow on input line 550.
-LaTeX Font Info:    Redeclaring math symbol \nleftarrow on input line 552.
-LaTeX Font Info:    Redeclaring math symbol \nrightarrow on input line 553.
-LaTeX Font Info:    Redeclaring math symbol \nleftrightarrow on input line 554.
-
-LaTeX Font Info:    Redeclaring math symbol \mapstochar on input line 557.
-LaTeX Font Info:    Redeclaring math symbol \leftharpoonup on input line 560.
-LaTeX Font Info:    Redeclaring math symbol \rightharpoonup on input line 561.
-LaTeX Font Info:    Redeclaring math symbol \leftharpoondown on input line 562.
-
-LaTeX Font Info:    Redeclaring math symbol \rightharpoondown on input line 563
-.
-LaTeX Font Info:    Redeclaring math symbol \upharpoonleft on input line 564.
-LaTeX Font Info:    Redeclaring math symbol \downharpoonleft on input line 565.
-
-LaTeX Font Info:    Redeclaring math symbol \upharpoonright on input line 566.
-LaTeX Font Info:    Redeclaring math symbol \restriction on input line 567.
-LaTeX Font Info:    Redeclaring math symbol \downharpoonright on input line 568
-.
-LaTeX Font Info:    Redeclaring math symbol \leftrightharpoons on input line 56
-9.
-LaTeX Font Info:    Redeclaring math symbol \Leftarrow on input line 575.
-LaTeX Font Info:    Redeclaring math symbol \Rightarrow on input line 576.
-LaTeX Font Info:    Redeclaring math symbol \Leftrightarrow on input line 579.
-LaTeX Font Info:    Redeclaring math symbol \nLeftarrow on input line 581.
-LaTeX Font Info:    Redeclaring math symbol \nRightarrow on input line 582.
-LaTeX Font Info:    Redeclaring math symbol \nLeftrightarrow on input line 583.
-
-LaTeX Font Info:    Redeclaring math symbol \leftleftarrows on input line 593.
-LaTeX Font Info:    Redeclaring math symbol \rightrightarrows on input line 594
-.
-LaTeX Font Info:    Redeclaring math symbol \upuparrows on input line 595.
-LaTeX Font Info:    Redeclaring math symbol \downdownarrows on input line 596.
-LaTeX Font Info:    Redeclaring math symbol \leftrightarrows on input line 597.
-
-LaTeX Font Info:    Redeclaring math symbol \rightleftarrows on input line 598.
-
-LaTeX Font Info:    Redeclaring math symbol \rhook on input line 612.
-LaTeX Font Info:    Redeclaring math symbol \lhook on input line 613.
-LaTeX Font Info:    Redeclaring math symbol \diagup on input line 614.
-LaTeX Font Info:    Redeclaring math symbol \diagdown on input line 615.
-LaTeX Font Info:    Redeclaring math symbol \Lsh on input line 617.
-LaTeX Font Info:    Redeclaring math symbol \Rsh on input line 619.
-LaTeX Font Info:    Redeclaring math symbol \looparrowleft on input line 624.
-LaTeX Font Info:    Redeclaring math symbol \looparrowright on input line 626.
-LaTeX Font Info:    Redeclaring math symbol \curvearrowleft on input line 631.
-LaTeX Font Info:    Redeclaring math symbol \curvearrowright on input line 633.
-
-LaTeX Font Info:    Redeclaring math symbol \circlearrowleft on input line 641.
-
-LaTeX Font Info:    Redeclaring math symbol \circlearrowright on input line 642
-.
-LaTeX Font Info:    Redeclaring math symbol \rightsquigarrow on input line 645.
-
-LaTeX Font Info:    Redeclaring math symbol \leftrightsquigarrow on input line 
-646.
-LaTeX Font Info:    Redeclaring math symbol \oplus on input line 658.
-LaTeX Font Info:    Redeclaring math symbol \ominus on input line 659.
-LaTeX Font Info:    Redeclaring math symbol \otimes on input line 661.
-LaTeX Font Info:    Redeclaring math symbol \odot on input line 663.
-LaTeX Font Info:    Redeclaring math symbol \oslash on input line 675.
-LaTeX Font Info:    Redeclaring math symbol \boxplus on input line 683.
-LaTeX Font Info:    Redeclaring math symbol \boxminus on input line 684.
-LaTeX Font Info:    Redeclaring math symbol \boxtimes on input line 686.
-LaTeX Font Info:    Redeclaring math symbol \boxdot on input line 688.
-\mayacnter=\count141
-\mayacnta=\count142
-\mayacntb=\count143
-\mayacntc=\count144
-\mayawidth=\dimen192
-LaTeX Font Info:    Redeclaring math symbol \intop on input line 753.
-LaTeX Font Info:    Redeclaring math symbol \ointop on input line 760.
-LaTeX Font Info:    Redeclaring math delimiter \lbrace on input line 842.
-LaTeX Info: Redefining \{ on input line 846.
-LaTeX Font Info:    Redeclaring math delimiter \rbrace on input line 848.
-LaTeX Info: Redefining \} on input line 852.
-LaTeX Font Info:    Redeclaring math delimiter \langle on input line 858.
-LaTeX Font Info:    Redeclaring math delimiter \rangle on input line 859.
-LaTeX Font Info:    Redeclaring math delimiter \vert on input line 863.
-LaTeX Font Info:    Redeclaring math delimiter \Vert on input line 865.
-LaTeX Font Info:    Redeclaring math delimiter \uparrow on input line 868.
-LaTeX Font Info:    Redeclaring math delimiter \downarrow on input line 869.
-LaTeX Font Info:    Redeclaring math delimiter \updownarrow on input line 870.
-LaTeX Font Info:    Redeclaring math delimiter \Uparrow on input line 871.
-LaTeX Font Info:    Redeclaring math delimiter \Downarrow on input line 872.
-LaTeX Font Info:    Redeclaring math delimiter \Updownarrow on input line 873.
-LaTeX Font Info:    Redeclaring math delimiter \lgroup on input line 880.
-LaTeX Font Info:    Redeclaring math delimiter \rgroup on input line 881.
-LaTeX Font Info:    Redeclaring math delimiter \lceil on input line 882.
-LaTeX Font Info:    Redeclaring math delimiter \rceil on input line 883.
-LaTeX Font Info:    Redeclaring math delimiter \lfloor on input line 884.
-LaTeX Font Info:    Redeclaring math delimiter \rfloor on input line 885.
-LaTeX Font Info:    Redeclaring math symbol \braceld on input line 903.
-LaTeX Font Info:    Redeclaring math symbol \bracerd on input line 905.
-LaTeX Font Info:    Redeclaring math symbol \bracelu on input line 907.
-LaTeX Font Info:    Redeclaring math symbol \braceru on input line 909.
-LaTeX Font Info:    Redeclaring math accent \widehat on input line 944.
-LaTeX Font Info:    Redeclaring math accent \widetilde on input line 946.
-))
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tools\verbatim.sty
-"
-Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks50
-\verbatim@line=\toks51
-\verbatim@in@stream=\read1
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/tocloft\tocloft.st
-y"
-Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
-Package tocloft Info: The document has section divisions on input line 51.
-\cftparskip=\skip66
-\cftbeforetoctitleskip=\skip67
-\cftaftertoctitleskip=\skip68
-\cftbeforepartskip=\skip69
-\cftpartnumwidth=\skip70
-\cftpartindent=\skip71
-\cftbeforesecskip=\skip72
-\cftsecindent=\skip73
-\cftsecnumwidth=\skip74
-\cftbeforesubsecskip=\skip75
-\cftsubsecindent=\skip76
-\cftsubsecnumwidth=\skip77
-\cftbeforesubsubsecskip=\skip78
-\cftsubsubsecindent=\skip79
-\cftsubsubsecnumwidth=\skip80
-\cftbeforeparaskip=\skip81
-\cftparaindent=\skip82
-\cftparanumwidth=\skip83
-\cftbeforesubparaskip=\skip84
-\cftsubparaindent=\skip85
-\cftsubparanumwidth=\skip86
-\cftbeforeloftitleskip=\skip87
-\cftafterloftitleskip=\skip88
-\cftbeforefigskip=\skip89
-\cftfigindent=\skip90
-\cftfignumwidth=\skip91
-\c@lofdepth=\count145
-\c@lotdepth=\count146
-\cftbeforelottitleskip=\skip92
-\cftafterlottitleskip=\skip93
-\cftbeforetabskip=\skip94
-\cfttabindent=\skip95
-\cfttabnumwidth=\skip96
-) ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/float\float.sty"
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count147
-\float@exts=\toks52
-\float@box=\box38
-\@float@everytoks=\toks53
-\@floatcapt=\box39
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\pdflscape
-.sty"
-Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
-
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/graphics\lscape.st
-y"
-Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
-)
-Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lipsum\lipsum.sty"
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3kernel\expl3.sty
-"
-Package: expl3 2019-02-15 L3 programming layer (loader) 
-
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3kernel\expl3-cod
-e.tex"
-Package: expl3 2019-02-15 L3 programming layer (code)
-\c_max_int=\count148
-\l_tmpa_int=\count149
-\l_tmpb_int=\count150
-\g_tmpa_int=\count151
-\g_tmpb_int=\count152
-\g__kernel_prg_map_int=\count153
-\c_log_iow=\count154
-\l_iow_line_count_int=\count155
-\l__iow_line_target_int=\count156
-\l__iow_one_indent_int=\count157
-\l__iow_indent_int=\count158
-\c_zero_dim=\dimen193
-\c_max_dim=\dimen194
-\l_tmpa_dim=\dimen195
-\l_tmpb_dim=\dimen196
-\g_tmpa_dim=\dimen197
-\g_tmpb_dim=\dimen198
-\c_zero_skip=\skip97
-\c_max_skip=\skip98
-\l_tmpa_skip=\skip99
-\l_tmpb_skip=\skip100
-\g_tmpa_skip=\skip101
-\g_tmpb_skip=\skip102
-\c_zero_muskip=\muskip12
-\c_max_muskip=\muskip13
-\l_tmpa_muskip=\muskip14
-\l_tmpb_muskip=\muskip15
-\g_tmpa_muskip=\muskip16
-\g_tmpb_muskip=\muskip17
-\l_keys_choice_int=\count159
-\l__intarray_loop_int=\count160
-\c__intarray_sp_dim=\dimen199
-\g__intarray_font_int=\count161
-\c__fp_leading_shift_int=\count162
-\c__fp_middle_shift_int=\count163
-\c__fp_trailing_shift_int=\count164
-\c__fp_big_leading_shift_int=\count165
-\c__fp_big_middle_shift_int=\count166
-\c__fp_big_trailing_shift_int=\count167
-\c__fp_Bigg_leading_shift_int=\count168
-\c__fp_Bigg_middle_shift_int=\count169
-\c__fp_Bigg_trailing_shift_int=\count170
-\c__kernel_randint_max_int=\count171
-\g__fp_array_int=\count172
-\l__fp_array_loop_int=\count173
-\l__sort_length_int=\count174
-\l__sort_min_int=\count175
-\l__sort_top_int=\count176
-\l__sort_max_int=\count177
-\l__sort_true_max_int=\count178
-\l__sort_block_int=\count179
-\l__sort_begin_int=\count180
-\l__sort_end_int=\count181
-\l__sort_A_int=\count182
-\l__sort_B_int=\count183
-\l__sort_C_int=\count184
-\l__tl_analysis_normal_int=\count185
-\l__tl_analysis_index_int=\count186
-\l__tl_analysis_nesting_int=\count187
-\l__tl_analysis_type_int=\count188
-\l__regex_internal_a_int=\count189
-\l__regex_internal_b_int=\count190
-\l__regex_internal_c_int=\count191
-\l__regex_balance_int=\count192
-\l__regex_group_level_int=\count193
-\l__regex_mode_int=\count194
-\c__regex_cs_in_class_mode_int=\count195
-\c__regex_cs_mode_int=\count196
-\l__regex_catcodes_int=\count197
-\l__regex_default_catcodes_int=\count198
-\c__regex_catcode_D_int=\count199
-\c__regex_catcode_S_int=\count266
-\c__regex_catcode_L_int=\count267
-\c__regex_catcode_O_int=\count268
-\c__regex_catcode_A_int=\count269
-\c__regex_all_catcodes_int=\count270
-\l__regex_show_lines_int=\count271
-\l__regex_min_state_int=\count272
-\l__regex_max_state_int=\count273
-\l__regex_left_state_int=\count274
-\l__regex_right_state_int=\count275
-\l__regex_capturing_group_int=\count276
-\l__regex_min_pos_int=\count277
-\l__regex_max_pos_int=\count278
-\l__regex_curr_pos_int=\count279
-\l__regex_start_pos_int=\count280
-\l__regex_success_pos_int=\count281
-\l__regex_curr_char_int=\count282
-\l__regex_curr_catcode_int=\count283
-\l__regex_last_char_int=\count284
-\l__regex_case_changed_char_int=\count285
-\l__regex_curr_state_int=\count286
-\l__regex_step_int=\count287
-\l__regex_min_active_int=\count288
-\l__regex_max_active_int=\count289
-\l__regex_replacement_csnames_int=\count290
-\l__regex_match_count_int=\count291
-\l__regex_min_submatch_int=\count292
-\l__regex_submatch_int=\count293
-\l__regex_zeroth_submatch_int=\count294
-\g__regex_trace_regex_int=\count295
-\c_empty_box=\box40
-\l_tmpa_box=\box41
-\l_tmpb_box=\box42
-\g_tmpa_box=\box43
-\g_tmpb_box=\box44
-\l__box_top_dim=\dimen256
-\l__box_bottom_dim=\dimen257
-\l__box_left_dim=\dimen258
-\l__box_right_dim=\dimen259
-\l__box_top_new_dim=\dimen260
-\l__box_bottom_new_dim=\dimen261
-\l__box_left_new_dim=\dimen262
-\l__box_right_new_dim=\dimen263
-\l__box_internal_box=\box45
-\l__coffin_internal_box=\box46
-\l__coffin_internal_dim=\dimen264
-\l__coffin_offset_x_dim=\dimen265
-\l__coffin_offset_y_dim=\dimen266
-\l__coffin_x_dim=\dimen267
-\l__coffin_y_dim=\dimen268
-\l__coffin_x_prime_dim=\dimen269
-\l__coffin_y_prime_dim=\dimen270
-\c_empty_coffin=\box47
-\l__coffin_aligned_coffin=\box48
-\l__coffin_aligned_internal_coffin=\box49
-\l_tmpa_coffin=\box50
-\l_tmpb_coffin=\box51
-\g_tmpa_coffin=\box52
-\g_tmpb_coffin=\box53
-\c__coffin_empty_coffin=\box54
-\l__coffin_display_coffin=\box55
-\l__coffin_display_coord_coffin=\box56
-\l__coffin_display_pole_coffin=\box57
-\l__coffin_display_offset_dim=\dimen271
-\l__coffin_display_x_dim=\dimen272
-\l__coffin_display_y_dim=\dimen273
-\g__file_internal_ior=\read2
-\l__coffin_bounding_shift_dim=\dimen274
-\l__coffin_left_corner_dim=\dimen275
-\l__coffin_right_corner_dim=\dimen276
-\l__coffin_bottom_corner_dim=\dimen277
-\l__coffin_top_corner_dim=\dimen278
-\l__coffin_scaled_total_height_dim=\dimen279
-\l__coffin_scaled_width_dim=\dimen280
-\l__seq_internal_a_int=\count296
-\l__seq_internal_b_int=\count297
-)
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3kernel\l3pdfmode
-.def"
-File: l3pdfmode.def 2019-02-15 v L3 Experimental driver: PDF mode
-\l__driver_color_stack_int=\count298
-))
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/l3packages/xparse\
-xparse.sty"
-Package: xparse 2018-10-17 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count299
-\g__xparse_grabber_int=\count300
-\l__xparse_m_args_int=\count301
-\l__xparse_mandatory_args_int=\count302
-\l__xparse_v_nesting_int=\count303
-)
-Package: lipsum 2019/01/02 v2.2 150 paragraphs of Lorem Ipsum dummy text
-
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lipsum\lipsum.ltd.
-tex"
-File: lipsum.ltd.tex 2019/01/02 v2.2 The Lorem ipsum dummy text
-))
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/everypage\everypag
 e.sty"
 Package: everypage 2007/06/20 1.1 Hooks to run on every page
 )
+("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/footmisc\footmisc.
+sty"
+Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
+\FN@temptoken=\toks27
+\footnotemargin=\dimen148
+\c@pp@next@reset=\count131
+Package footmisc Info: Declaring symbol style bringhurst on input line 855.
+Package footmisc Info: Declaring symbol style chicago on input line 863.
+Package footmisc Info: Declaring symbol style wiley on input line 872.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
+
+Package footmisc Info: Declaring symbol style lamport* on input line 903.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
+.
+)
 
 Package hyperref Warning: Option `bookmarks' has already been used,
-(hyperref)                setting the option has no effect on input line 138.
+(hyperref)                setting the option has no effect on input line 141.
 
-Package hyperref Info: Option `unicode' set `true' on input line 138.
+Package hyperref Info: Option `unicode' set `true' on input line 141.
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\puenc.def
 "
 File: puenc.def 2018/11/30 v6.88e Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `pdfnewwindow' set `true' on input line 138.
-Package hyperref Info: Option `colorlinks' set `true' on input line 138.
- (design.aux (fedlap.aux) (chapter1.aux))
-\openout1 = `design.aux'.
+Package hyperref Info: Option `pdfnewwindow' set `true' on input line 141.
+Package hyperref Info: Option `colorlinks' set `true' on input line 141.
+ (developer_docs.aux (fedlap.aux) (chapter1.aux) (chapter2.aux))
+\openout1 = `developer_docs.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for U/mathx/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 214.
-LaTeX Font Info:    ... okay on input line 214.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 217.
+LaTeX Font Info:    ... okay on input line 217.
 
 
 LaTeX Warning: Please use \usepackage[latin2]{inputenc} with
@@ -1203,17 +504,17 @@ LaTeX Warning: Please use \usepackage[latin2]{inputenc} with
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/context/base\supp-pdf.mk
 ii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count304
-\scratchdimen=\dimen281
-\scratchbox=\box58
-\nofMPsegments=\count305
-\nofMParguments=\count306
-\everyMPshowfont=\toks54
-\MPscratchCnt=\count307
-\MPscratchDim=\dimen282
-\MPnumerator=\count308
-\makeMPintoPDFobject=\count309
-\everyMPtoPDFconversion=\toks55
+\scratchcounter=\count132
+\scratchdimen=\dimen149
+\scratchbox=\box33
+\nofMPsegments=\count133
+\nofMParguments=\count134
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count135
+\MPscratchDim=\dimen150
+\MPnumerator=\count136
+\makeMPintoPDFobject=\count137
+\everyMPtoPDFconversion=\toks29
 )
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/oberdiek\epstopdf-
 base.sty"
@@ -1230,17 +531,15 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-\c@lstlisting=\count310
+\c@lstlisting=\count138
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 214.
+(lastpage)             ! on input line 217.
 Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
-Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box59
-Package hyperref Info: Link coloring ON on input line 214.
+\AtBeginShipoutBox=\box34
+Package hyperref Info: Link coloring ON on input line 217.
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/hyperref\nameref.s
 ty"
@@ -1250,24 +549,25 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 estring.sty"
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count311
+\c@section@level=\count139
 )
-LaTeX Info: Redefining \ref on input line 214.
-LaTeX Info: Redefining \pageref on input line 214.
-LaTeX Info: Redefining \nameref on input line 214.
- (design.out) (design.out)
+LaTeX Info: Redefining \ref on input line 217.
+LaTeX Info: Redefining \pageref on input line 217.
+LaTeX Info: Redefining \nameref on input line 217.
+ (developer_docs.out) (developer_docs.out)
 \@outlinefile=\write3
-\openout3 = `design.out'.
+\openout3 = `developer_docs.out'.
 
 
-("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.cls"
-LaTeX Info: Redefining \cal on input line 496.
-LaTeX Info: Redefining \mit on input line 497.
+("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\book.cls"
+LaTeX Info: Redefining \cal on input line 582.
+LaTeX Info: Redefining \mit on input line 583.
 )
 \openout2 = `fedlap.aux'.
 
+
 (fedlap.tex
-<figures/BMElogo.png, id=23, 975.645pt x 273.02pt>
+<figures/BMElogo.png, id=79, 975.645pt x 273.02pt>
 File: figures/BMElogo.png Graphic file (type png)
 <use figures/BMElogo.png>
 Package pdftex.def Info: figures/BMElogo.png  used on input line 6.
@@ -1276,84 +576,134 @@ Package pdftex.def Info: figures/BMElogo.png  used on input line 6.
 
 
 
+
 {C:/Users/Marci/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./figures/B
 MElogo.png>])
 \openout2 = `chapter1.aux'.
 
  (chapter1.tex
-<figures/package_structure.png, id=35, 224.33812pt x 181.42781pt>
+<figures/package_structure.png, id=91, 224.33812pt x 181.42781pt>
 File: figures/package_structure.png Graphic file (type png)
 <use figures/package_structure.png>
-Package pdftex.def Info: figures/package_structure.png  used on input line 18.
+Package pdftex.def Info: figures/package_structure.png  used on input line 22.
 (pdftex.def)             Requested size: 227.62204pt x 184.09053pt.
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.26   \item a
-               $MainActivity$, [1
-
-
- <./figures/package_structure.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 30.
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
-LaTeX Font Info:    Try loading font information for U+msa on input line 26.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 30.
+LaTeX Font Info:    Try loading font information for U+msa on input line 30.
 
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 26.
+LaTeX Font Info:    Try loading font information for U+msb on input line 30.
 ("C:\Users\Marci\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-<figures/layouts.png, id=44, 167.12437pt x 150.5625pt>
+)pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.34 	\item a
+              $GameThread$ osztály, amely egy szálban megfelelõ idõközönként...
+[1
+
+
+
+] [2 <./figures/package_structure.png>]
+<figures/layouts.png, id=107, 181.42781pt x 139.27031pt>
 File: figures/layouts.png Graphic file (type png)
 <use figures/layouts.png>
-Package pdftex.def Info: figures/layouts.png  used on input line 48.
-(pdftex.def)             Requested size: 227.62204pt x 205.0816pt.
-[2]) [3 <./figures/layouts.png>]
-\tf@thm=\write4
-\openout4 = `design.thm'.
+Package pdftex.def Info: figures/layouts.png  used on input line 52.
+(pdftex.def)             Requested size: 227.62204pt x 174.7356pt.
 
- 
+Overfull \hbox (37.428pt too wide) in paragraph at lines 75--76
+\T1/cmr/m/n/12 mot. A két leg-fon-to-sabb függ-vé-nye a $\OML/cmm/m/it/12 publi
+c[]void[]update\OT1/cmr/m/n/12 ()$ \T1/cmr/m/n/12 és a $\OML/cmm/m/it/12 public
+[]void[]draw\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 Canvas[]canvas\OT1/cmr/m/n/12 )$\
+T1/cmr/m/n/12 .
+ []
+
+[3 <./figures/layouts.png>]
+<figures/graphical.png, id=114, 164.11313pt x 120.45pt>
+File: figures/graphical.png Graphic file (type png)
+<use figures/graphical.png>
+Package pdftex.def Info: figures/graphical.png  used on input line 87.
+(pdftex.def)             Requested size: 227.62204pt x 167.06476pt.
+
+Overfull \hbox (49.5063pt too wide) in paragraph at lines 96--97
+\T1/cmr/m/n/12 Ez az osz-tály rep-re-zen-tál-ja a já-té-kos ka-rak-te-rét. A ké
+t leg-fon-to-sabb függ-vé-nye a $\OML/cmm/m/it/12 public[]void[]update\OT1/cmr/
+m/n/12 ()$
+ []
+
+[4 <./figures/graphical.png>]
+<figures/network.png, id=128, 196.48407pt x 88.83188pt>
+File: figures/network.png Graphic file (type png)
+<use figures/network.png>
+Package pdftex.def Info: figures/network.png  used on input line 111.
+(pdftex.def)             Requested size: 227.62204pt x 102.91626pt.
+ [5 <./figures/network.png>]
+<figures/sound.png, id=135, 197.98969pt x 91.09032pt>
+File: figures/sound.png Graphic file (type png)
+<use figures/sound.png>
+Package pdftex.def Info: figures/sound.png  used on input line 128.
+(pdftex.def)             Requested size: 227.62204pt x 104.72522pt.
+) [6 <./figures/sound.png>] [7]
+\openout2 = `chapter2.aux'.
+
+ (chapter2.tex
+
+LaTeX Warning: Command \textbackslash invalid in math mode on input line 16.
+
+) [8
+
+
+
+] 
 AED: lastpage setting LastPage
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 224.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 224.
-(design.aux (fedlap.aux) (chapter1.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 224.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 224.
-Package rerunfilecheck Info: File `design.out' has not changed.
-(rerunfilecheck)             Checksum: 6002BE63785C34B80A912864BC5B00F6;669.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 224.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 227.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 227.
+(developer_docs.aux (fedlap.aux) (chapter1.aux) (chapter2.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 227.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 227.
+Package rerunfilecheck Info: File `developer_docs.out' has not changed.
+(rerunfilecheck)             Checksum: 5F50FDB7BCB9D1769526A6FADCD5FDF3;2330.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 227.
  ) 
 Here is how much of TeX's memory you used:
- 27691 strings out of 492946
- 470386 string characters out of 3126266
- 667843 words of memory out of 3000000
- 31283 multiletter control sequences out of 15000+200000
- 552208 words of font info for 68 fonts, out of 3000000 for 9000
+ 14662 strings out of 492946
+ 217069 string characters out of 3126266
+ 313514 words of memory out of 3000000
+ 18327 multiletter control sequences out of 15000+200000
+ 23493 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,6n,79p,917b,539s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\
-ecbx1095.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/
-ec/dpi600\ecbx1440.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts
-/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\Marci\AppData\Local\MiKTeX
-\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\eccc1728.pk> <C:\Users\Marci\AppData\Lo
-cal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk> <C:\Users\Marci\
-AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Us
-ers\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.
-pk><C:/Users/Marci/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmmi12.pfb><C:/Users/Marci/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmsy10.pfb>
-Output written on design.pdf (4 pages, 130747 bytes).
+ 36i,8n,41p,831b,446s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
+st, replaced by a fixed one
+
+ <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ec
+rm1000.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec
+/dpi600\ecrm0700.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/j
+knappen/ec/dpi600\ecrm0800.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/p
+k/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2
+.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C:\Users\Marci\AppData\Loca
+l\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Marci\Ap
+pData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\User
+s\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk
+> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\e
+ccc1728.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/e
+c/dpi600\ecbx2488.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/
+jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\Marci\AppData\Local\MiKTeX\2.9\fonts/
+pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk><C:/Users/Marci/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/Marci/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Mar
+ci/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on developer_docs.pdf (9 pages, 207885 bytes).
 PDF statistics:
- 294 PDF objects out of 1000 (max. 8388607)
- 11 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 516 PDF objects out of 1000 (max. 8388607)
+ 36 named destinations out of 1000 (max. 500000)
+ 183 words of extra memory for PDF output out of 10000 (max. 10000000)
 
