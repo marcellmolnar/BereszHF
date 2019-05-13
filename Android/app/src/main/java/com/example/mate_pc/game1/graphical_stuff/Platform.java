@@ -1,5 +1,7 @@
 package com.example.mate_pc.game1.graphical_stuff;
-
+/**
+ *  Handles the drawing of the platforms.
+ */
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 

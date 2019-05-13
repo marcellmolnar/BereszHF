@@ -19,7 +19,9 @@ import static com.example.mate_pc.game1.Constants.CONNECTOR_IP_INTENT_EXTRA_KEY;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_CONNECTOR_RETURN;
 import static com.example.mate_pc.game1.Constants.RESULT_CODE_SETTINGS_MAY_CHANGED;
 import static com.example.mate_pc.game1.Constants.START_SETTINGS_CODE;
-
+/**
+ *  Implements the GUI of the pre-connection state of the game.
+ */
 public class ConnectorClass extends Activity {
 
     private Button settingsBtn;
