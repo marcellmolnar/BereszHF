@@ -1,7 +1,5 @@
 package com.example.mate_pc.game1.graphical_stuff;
-/**
- *  Handles something surprising.
- */
+
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +7,9 @@ import android.widget.VideoView;
 
 import com.example.mate_pc.game1.R;
 
+/**
+ *  Handles something surprising.
+ */
 public class Ricardo extends AppCompatActivity {
 
     //Button pauseButton;

@@ -1,10 +1,11 @@
 package com.example.mate_pc.game1.graphical_stuff;
-/**
- * Describes a gameobject abstract, which every object can use.
- */
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+/**
+ * Describes a gameobject abstract, which every object can use.
+ */
 public abstract class GameObject {
 
     private Bitmap image;

@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.net.URISyntaxException;
 /**
- *  Implements a websocket.
+ *  Implements a web socket.
  */
 public class WebSocketClass {
 

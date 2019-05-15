@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout joystickSurface;
 
+    BackgroundSoundHandler backgroundSoundHandler;
+
     /**
      * Indicates if we already showing GameMenu. It prevents multiple starting of GameMenuActivity.
      */
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        new BackgroundSoundHandler(this);
+        backgroundSoundHandler = new BackgroundSoundHandler(this);
 
         controlInputHandler = new ControlInputHandler(this, gameSurface);
         controlInputHandler.setControl();
@@ -164,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MyTAG", "resume");
 
         gameSurface.resume();
+        backgroundSoundHandler.resume();
     }
 
     @Override
@@ -172,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MyTAG", "pause");
 
         gameSurface.pause();
+        backgroundSoundHandler.pause();
     }
 
     @Override

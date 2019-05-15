@@ -1,12 +1,13 @@
 package com.example.mate_pc.game1.graphical_stuff;
-/**
- *  Handles the drawing of the opponent.
- */
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 import com.example.mate_pc.game1.GameSurface;
 
+/**
+ *  Handles the drawing of the opponent.
+ */
 public class OpponentCharacter extends Character {
 
     private int lastX;

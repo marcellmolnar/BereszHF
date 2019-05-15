@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 
 /**
  * Handles the drawing of the Bullets.
- * IsHit(..) function is written here too.
+ * isHit(..) function is written here too.
  */
 public class Bullet extends GameObject {
 

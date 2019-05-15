@@ -6,8 +6,9 @@ import com.example.mate_pc.game1.graphical_stuff.Bullet;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 /**
- *  Implements the sending of websockets.
+ *  Implements the sending of web sockets.
  */
 public class SenderClass extends Thread {
 
