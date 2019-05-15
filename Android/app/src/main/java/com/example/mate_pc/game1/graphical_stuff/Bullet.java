@@ -3,6 +3,10 @@ package com.example.mate_pc.game1.graphical_stuff;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+/**
+ * Handles the drawing of the Bullets.
+ * IsHit(..) function is written here too.
+ */
 public class Bullet extends GameObject {
 
     private Bitmap image;

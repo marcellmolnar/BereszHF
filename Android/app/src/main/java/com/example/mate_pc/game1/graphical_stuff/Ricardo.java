@@ -1,5 +1,7 @@
 package com.example.mate_pc.game1.graphical_stuff;
-
+/**
+ *  Handles something surprising.
+ */
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

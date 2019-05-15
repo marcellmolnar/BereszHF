@@ -8,6 +8,9 @@ import android.util.Log;
 import com.example.mate_pc.game1.GameSurface;
 import com.example.mate_pc.game1.R;
 
+/**
+ * Handles the drawing and the dynamics of the Character and its healths.
+ */
 public class Character extends GameObject {
 
     public static int MAX_SPEED = 0;
