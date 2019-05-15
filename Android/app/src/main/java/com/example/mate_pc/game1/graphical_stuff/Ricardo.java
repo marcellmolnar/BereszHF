@@ -19,7 +19,7 @@ public class Ricardo extends AppCompatActivity {
 
 
         videoview = findViewById(R.id.video);
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ricardo_milos);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ricardo_milos2);
         videoview.setVideoURI(uri);
         videoview.start();
     }

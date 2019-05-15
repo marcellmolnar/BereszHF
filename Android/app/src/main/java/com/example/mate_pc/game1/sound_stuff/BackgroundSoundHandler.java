@@ -25,7 +25,7 @@ public class BackgroundSoundHandler {
     public BackgroundSoundHandler(Context c){
         mainActivityContext = c;
 
-        this.mediaPlayer = MediaPlayer.create(c, R.raw.background_music);
+        this.mediaPlayer = MediaPlayer.create(c, R.raw.background_music2);
         this.mediaPlayer.seekTo(0);
     }
 
