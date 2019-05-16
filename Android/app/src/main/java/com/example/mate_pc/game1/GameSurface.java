@@ -71,6 +71,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     private MainActivity mainActivity;
 
     private BackgroundSoundHandler backgroundSoundHandler;
+    private MyBroadcastReceiver updateEventReceiver;
 
     /**
      * Constructor
@@ -92,8 +93,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
         this.gameThread = null;
 
-        MyBroadcastReceiver updateEventReceiver = new MyBroadcastReceiver();
-        activity.registerReceiver(updateEventReceiver, new IntentFilter(MyBroadcastReceiver.ACTION));
+        updateEventReceiver = new MyBroadcastReceiver();
 
 
         senderClass = new SenderClass(this);
@@ -121,12 +121,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     public void resume() {
         if (backgroundSoundHandler != null) {
             backgroundSoundHandler.resume();
+            mainActivity.registerReceiver(updateEventReceiver, new IntentFilter(MyBroadcastReceiver.ACTION));
         }
     }
 
     public void pause() {
         if (backgroundSoundHandler != null) {
             backgroundSoundHandler.pause();
+            mainActivity.unregisterReceiver(updateEventReceiver);
         }
     }
 
@@ -201,6 +203,8 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
         opponent.update();
 
         if(opponent.getHealth() <= 0){
+            senderClass.sendLastMessage();
+            resetCharactersHealth();
             mainActivity.showGameMenu(true);
         }
 
@@ -330,6 +334,14 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     /**
+     * Resetting characters' health immediately after match ends.
+     */
+    public void resetCharactersHealth() {
+        character.setHealth(3);
+        opponent.setHealth(3);
+    }
+
+    /**
      * Converts a Drawable resource to Bitmap.
      */
     public Bitmap drawableToBitmap(Drawable drawable) {
@@ -406,6 +418,7 @@ public class GameSurface extends SurfaceView implements SurfaceHolder.Callback {
             character.setHealth(hp);
         }
         if(hp == 0){
+            resetCharactersHealth();
             mainActivity.showGameMenu(false);
         }
     }

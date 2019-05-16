@@ -23,6 +23,7 @@ public class GameMenuActivity extends Activity {
     private TextView basic_text;
     private Button playAgain;
     private Button playVideo;
+    private boolean wonMatch;
 
     /**
      * The activity's result code.
@@ -36,7 +37,7 @@ public class GameMenuActivity extends Activity {
         getWindow().setBackgroundDrawableResource(R.color.transparent2);
 
         Intent creatorIntent = getIntent();
-        boolean wonMatch = creatorIntent.getBooleanExtra(WON_THE_MATCH_INTENT_EXTRA_KEY,false);
+        wonMatch = creatorIntent.getBooleanExtra(WON_THE_MATCH_INTENT_EXTRA_KEY,false);
 
         basic_text = findViewById(R.id.basic_text);
 
@@ -98,7 +99,9 @@ public class GameMenuActivity extends Activity {
         settingsBtn.setVisibility(View.VISIBLE);
         basic_text.setVisibility(View.VISIBLE);
         playAgain.setVisibility(View.VISIBLE);
-        playVideo.setVisibility(View.VISIBLE);
+        if (wonMatch) {
+            playVideo.setVisibility(View.VISIBLE);
+        }
         activityResultCode = RESULT_CODE_SETTINGS_MAY_CHANGED;
     }
 

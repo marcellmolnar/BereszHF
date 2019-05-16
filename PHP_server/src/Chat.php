@@ -73,15 +73,21 @@ class Chat implements MessageComponentInterface {
         // The connection is closed, remove it, as we can no longer send it messages
         //$this->clients->detach($conn);
         if ($conn == $this->client1) {
-			$this->client1 = $this->client2;
-			$this->connectedClients = 0;
+			if ($this->connectedClients == 2) {
+				$this->client1 = $this->client2;
+				$this->connectedClients = 1;
+				$this->client1->send("disconnected");
+			}
+			else {
+				$this->connectedClients = 0;				
+			}
 			echo "client 1 disconnected! ({$conn->resourceId})\n";			
 		}
         if ($conn == $this->client2) {
 			$this->connectedClients = 1;
-			echo "client 2 disconnected! ({$conn->resourceId})\n";			
+			$this->client1->send("disconnected");
+			echo "client 2 disconnected! ({$conn->resourceId})\n";
 		}
-		$this->client1->send("disconnected");
     }
 	
     public function onError(ConnectionInterface $conn, \Exception $e) {

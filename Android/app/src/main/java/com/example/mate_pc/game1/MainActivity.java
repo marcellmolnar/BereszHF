@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
      * Indicates if we already showing GameMenu. It prevents multiple starting of GameMenuActivity.
      */
     boolean gameMenuVISIBLE;
+    long lastGameEnd;
 
     /**
      * Creates necessary objects: GameSurface, WebSocket, ControlInputHandler.
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         gameMenuVISIBLE = false;
+        lastGameEnd = System.currentTimeMillis();
 
         gameSurface = new GameSurface(this, this);
 
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        gameSurface.restartGame();
         gameMenuVISIBLE = false;
 
         controlInputHandler.setControl();
@@ -128,8 +131,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             Log.i("MyTag", "EMPTY intent data");
         }
-        gameSurface.restartGame();
-        Log.i("MyTag", "waat");
+
         new CountDown(MainActivity.this, webSocket).execute();
 
     }
@@ -141,8 +143,13 @@ public class MainActivity extends AppCompatActivity {
      * @param wonTheMatch  indicates whether we won the match or not
      */
     public void showGameMenu(boolean wonTheMatch) {
+        webSocket.restart();
+        long timeNow = System.currentTimeMillis();
+        //Log.i("MyTag",String.valueOf(timeNow) + " " + String.valueOf(lastGameEnd));
+        //Log.i("MyTag",String.valueOf(timeNow - lastGameEnd));
         if(!gameMenuVISIBLE) {
             gameMenuVISIBLE = true;
+            lastGameEnd = timeNow;
             Intent intent = new Intent(MainActivity.this, GameMenuActivity.class);
             intent.putExtra(WON_THE_MATCH_INTENT_EXTRA_KEY, wonTheMatch);
             startActivityForResult(intent, START_GAME_MENU_CODE);

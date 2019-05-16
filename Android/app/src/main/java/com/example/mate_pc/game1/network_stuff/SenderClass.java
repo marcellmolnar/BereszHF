@@ -39,48 +39,56 @@ public class SenderClass extends Thread {
             } catch(InterruptedException ignored)  {
             }
 
-            JSONObject json = new JSONObject();  //send position, opponent's health and bullets
-
-            if (webSocket.isConnected2Player()) {
-                JSONObject characterJson = new JSONObject();
-                try {
-                    characterJson.put("x", (double) (gameSurface.getWidth() - gameSurface.getCharacter().getWidth() -
-                            gameSurface.getCharacter().getX()) / gameSurface.getWidth());
-                    characterJson.put("y", (double) (gameSurface.getCharacter().getY()) / gameSurface.getHeight());
-                    characterJson.put("opponentHealth", gameSurface.getOpponent().getHealth());
-                    json.put("character", characterJson);
-                } catch (JSONException je) {
-                    je.printStackTrace();
-                }
-
-                //send own bullets
-                JSONArray jsonArray = new JSONArray();
-                for (Bullet bullet : gameSurface.getMyBullets()) {
-                    JSONObject jbullet = new JSONObject();
-                    try {
-                        jbullet.put("x", (double) (gameSurface.getWidth() - bullet.getWidth() -
-                                bullet.getX()) / gameSurface.getWidth());
-                        jbullet.put("y", (double) (bullet.getY()) / gameSurface.getHeight());
-                        jbullet.put("isSeeingRight", bullet.isSeeingToRight());
-                        jsonArray.put(jbullet);
-                    } catch (JSONException je) {
-                        je.printStackTrace();
-                    }
-                }
-                try {
-                    json.put("bullets", jsonArray);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                webSocket.send(json.toString());
-            }
-            if(webSocket.shouldTry2ConnectPlayer()) {
-                webSocket.send("join");
-            }
+            sendAllData();
 
         }
 
+    }
+
+    public void sendLastMessage() {
+        sendAllData();
+    }
+
+    private void sendAllData() {
+        JSONObject json = new JSONObject();  //send position, opponent's health and bullets
+
+        if (webSocket.isConnected2Player()) {
+            JSONObject characterJson = new JSONObject();
+            try {
+                characterJson.put("x", (double) (gameSurface.getWidth() - gameSurface.getCharacter().getWidth() -
+                        gameSurface.getCharacter().getX()) / gameSurface.getWidth());
+                characterJson.put("y", (double) (gameSurface.getCharacter().getY()) / gameSurface.getHeight());
+                characterJson.put("opponentHealth", gameSurface.getOpponent().getHealth());
+                json.put("character", characterJson);
+            } catch (JSONException je) {
+                je.printStackTrace();
+            }
+
+            //send own bullets
+            JSONArray jsonArray = new JSONArray();
+            for (Bullet bullet : gameSurface.getMyBullets()) {
+                JSONObject jbullet = new JSONObject();
+                try {
+                    jbullet.put("x", (double) (gameSurface.getWidth() - bullet.getWidth() -
+                            bullet.getX()) / gameSurface.getWidth());
+                    jbullet.put("y", (double) (bullet.getY()) / gameSurface.getHeight());
+                    jbullet.put("isSeeingRight", bullet.isSeeingToRight());
+                    jsonArray.put(jbullet);
+                } catch (JSONException je) {
+                    je.printStackTrace();
+                }
+            }
+            try {
+                json.put("bullets", jsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            webSocket.send(json.toString());
+        }
+        if(webSocket.shouldTry2ConnectPlayer()) {
+            webSocket.send("join");
+        }
     }
 
     public void setRunning(boolean running)  {
